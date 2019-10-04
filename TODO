@@ -1,0 +1,7 @@
+- add field for history change type
+- add deep scrape
+- find 2 identical listings on yachtworld
+- add yachtworld scraper
+- check nokogiri throttling
+- Error handling (404, database blocked)
+- Scraping progress indicator

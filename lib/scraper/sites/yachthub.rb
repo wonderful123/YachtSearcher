@@ -4,7 +4,7 @@ require_relative 'listing_site'
 module Scraper
   # Scrapes data from yachthub listings
   class Yachthub < ListingSite
-    START_URL = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&hull_material=Fibreglass&price_from=1&price_to=100000000'
+    START_URL = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
 
     # Function starts the scraping process
     # Returns an array of hashes which contain the boat information

@@ -3,3 +3,6 @@
 - Can see how long boats have been listed for
 - Can see a history of price changes
 - Can search more powerfully doing thing like excluding models you're not interested in
+
+# Ideas
+- Price drop on boats listed for more than a month

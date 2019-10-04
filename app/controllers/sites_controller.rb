@@ -3,7 +3,8 @@ class SitesController < ApplicationController
 
   def update_scrape
     @site = Site.find(params[:site_id])
-    UpdateScrapeJob.perform_async @site, { page_depth: 0, starting_page: 1 }
+    url = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&&price_from=1&price_to=100000000'
+    UpdateScrapeJob.perform_async @site, { page_depth: 0, starting_page: 1, start_url: url }
   end
 
   def index
