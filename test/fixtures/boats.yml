@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  length: 1.5
+  year: 9.99
+  title: MyString
+  description: MyText
+  make: MyString
+  model: MyString
+  cabins: 9.99
+  heads: 9.99
+  location: MyString
+  country: MyString
+  city: MyString
+  state: MyString
+  state_code: MyString
+  hull_material: MyString
+  price: 1.5
+  sale_status: MyString
+  boat_name: MyString
+  first_found: 2019-09-30
+  type: 
+
+two:
+  length: 1.5
+  year: 9.99
+  title: MyString
+  description: MyText
+  make: MyString
+  model: MyString
+  cabins: 9.99
+  heads: 9.99
+  location: MyString
+  country: MyString
+  city: MyString
+  state: MyString
+  state_code: MyString
+  hull_material: MyString
+  price: 1.5
+  sale_status: MyString
+  boat_name: MyString
+  first_found: 2019-09-30
+  type: 
