@@ -34,12 +34,6 @@ class UpdateScrapeJob < ApplicationJob
       existing_listing = Listing.find_by uniq_id: l[:uniq_id]
 
       if existing_listing
-        if existing_listing[:boat_id] == 34
-          puts "*-" * 20
-          p existing_listing
-          p boat_data
-          puts "*-" * 20
-        end
         puts "Boat already in database #{l[:uniq_id]} - UPDATING..."
         Boat.update(existing_listing[:boat_id], boat_data)
 
@@ -90,11 +84,11 @@ class UpdateScrapeJob < ApplicationJob
   def update_listing(existing_listing, listing_data)
     # Record if price or sale_status changed
     if existing_listing[:price] != listing_data[:price].to_f ||
-       existing_listing[:sale_status] != existing_listing[:sale_status]
+       existing_listing[:sale_status] != listing_data[:sale_status]
 
        History.create({
          :price => existing_listing[:price].to_f,
-         :sale_status => existing_listing[:price],
+         :sale_status => existing_listing[:sale_status],
          :change_date => Time.now,
          :listing_id => existing_listing[:id]
        })
