@@ -1,6 +1,4 @@
-# README
-
-Why it's cool:
+# Why it's cool
 - Can find boats from multiple sites all in one place
 - Can see how long boats have been listed for
 - Can see a history of price changes
