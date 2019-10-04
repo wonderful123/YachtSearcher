@@ -3,5 +3,7 @@
 - find 2 identical listings on yachtworld
 - add yachtworld scraper
 - check nokogiri throttling
-- Error handling (404, database blocked)
+- Error handling (404, database locked(busy))
+- Geocode error handling
 - Scraping progress indicator
+- Make job create another job. Would that work better? I could give better status updates.

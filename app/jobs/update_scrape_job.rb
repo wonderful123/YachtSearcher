@@ -38,7 +38,7 @@ class UpdateScrapeJob < ApplicationJob
         Boat.update(existing_listing[:boat_id], boat_data)
 
         # Check if listing is updated and record history of changes
-        update_listing(existing_listing, listing_data)
+        check_listing_updated(existing_listing, listing_data)
       else # otherwise create a new listing
         # Geocode location string
         loc = Scraper::Geocode.location l[:location]
@@ -81,20 +81,31 @@ class UpdateScrapeJob < ApplicationJob
     end
   end
 
-  def update_listing(existing_listing, listing_data)
-    # Record if price or sale_status changed
-    if existing_listing[:price] != listing_data[:price].to_f ||
-       existing_listing[:sale_status] != listing_data[:sale_status]
+  # Checks for changes in listing and records in listing history
+  def check_listing_updated(existing_listing, listing_data)
+    # price change
+    if existing_listing[:price] > listing_data[:price].to_f
+      update_listing(existing_listing, listing_data, "price_down")
+    elsif existing_listing[:price] < listing_data[:price].to_f
+      update_listing(existing_listing, listing_data, "price_up")
+    end
 
-       History.create({
-         :price => existing_listing[:price].to_f,
-         :sale_status => existing_listing[:sale_status],
-         :change_date => Time.now,
-         :listing_id => existing_listing[:id]
-       })
-     end
+    # sale status change
+    if existing_listing[:sale_status] != listing_data[:sale_status]
+      update_listing(existing_listing, listing_data, "sale_status")
+    end
+  end
 
-    # Update existing listing with new values
-    existing_listing.update(listing_data)
+  # Create history then update existing listing with new data
+  def update_listing(existing_listing, listing_data, change_type)
+     History.create({
+       :price => existing_listing[:price].to_f,
+       :sale_status => existing_listing[:sale_status],
+       :change_date => Time.now,
+       :change_type => change_type,
+       :listing_id => existing_listing[:id]
+     })
+
+     existing_listing.update(listing_data)
   end
 end

@@ -16,17 +16,16 @@ module Scraper
 
       # scrape the first page's boats. No need to do 2 requests
       boat_collection = scrape_boats_from_index_page(first_page)
-      puts "@" * 50
-      puts @page_depth
+
       if @page_depth == 0 || @page_depth > @last_page_number
-        @page_depth = @last_page_number # Set in above function
+        @page_depth = @last_page_number # set from index scrape above
       end
 
       # loop through pages until page depth option
-      page_number = @starting_page
+      page_number = @starting_page - 1
 
       until page_number >= @page_depth
-        puts "Scraping page: #{page_number}/#{@page_depth} - url: #{index_pages[page_number]}"
+        puts "Scraping page: #{page_number + 1}/#{@page_depth} - url: #{index_pages[page_number]}"
         page = Nokogiri::HTML(open(index_pages[page_number]))
         boat_collection += scrape_boats_from_index_page(page)
 
