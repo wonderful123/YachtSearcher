@@ -1,9 +1,9 @@
-- add field for history change type
 - add deep scrape
+- add regions
+- rake task for cron job
 - find 2 identical listings on yachtworld
 - add yachtworld scraper
 - check nokogiri throttling
-- Error handling (404, database locked(busy))
+- Error handling (404, database locked(busy), SocketError Failed to open TCP connection to yachthub.com:443 (getaddrinfo: No such host is known.
 - Geocode error handling
-- Scraping progress indicator
 - Make job create another job. Would that work better? I could give better status updates.

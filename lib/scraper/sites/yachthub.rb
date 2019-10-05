@@ -4,30 +4,30 @@ require_relative 'listing_site'
 module Scraper
   # Scrapes data from yachthub listings
   class Yachthub < ListingSite
-    START_URL = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
+    DEFAULT_START_URL = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
 
     # Function starts the scraping process
     # Returns an array of hashes which contain the boat information
     # Data of each listing returned can be seen in next function.
     def scrape
       # scrape first page and create list of index pages
-      first_page = Nokogiri::HTML(open(@start_url || START_URL))
+      @start_url = @start_url || DEFAULT_START_URL
+      first_page = Nokogiri::HTML(open(@start_url))
       index_pages = get_index_pages(first_page)
 
-      # scrape the first page's boats. No need to do 2 requests
-      boat_collection = scrape_boats_from_index_page(first_page)
+      boat_collection = scrape_boats_from_index_page(@start_url)
 
       if @page_depth == 0 || @page_depth > @last_page_number
         @page_depth = @last_page_number # set from index scrape above
       end
 
       # loop through pages until page depth option
-      page_number = @starting_page - 1
+      page_number = @starting_page
 
       until page_number >= @page_depth
-        puts "Scraping page: #{page_number + 1}/#{@page_depth} - url: #{index_pages[page_number]}"
-        page = Nokogiri::HTML(open(index_pages[page_number]))
-        boat_collection += scrape_boats_from_index_page(page)
+        puts "Scraping index [#{page_number + 1}/#{@page_depth}] - #{index_pages[page_number]}"
+
+        boat_collection += scrape_boats_from_index_page(index_pages[page_number])
 
         page_number += 1
       end
@@ -35,18 +35,20 @@ module Scraper
       return boat_collection
     end
 
-    def scrape_boats_from_index_page(index_page)
-      boat_urls = scrape_index_boat_urls(index_page)
-      boat_thumbnails = scrape_index_thumbnails(index_page)
-      boat_prices = scrape_index_prices(index_page)
-      boat_years = scrape_index_years(index_page)
-      boat_lengths = scrape_index_lengths(index_page)
-      boat_locations = scrape_index_locations(index_page)
-      boat_titles = scrape_index_titles(index_page)
-      boat_descriptions = scrape_index_descriptions(index_page)
-      boat_sale_status = scrape_index_sale_status(index_page)
+    def scrape_boats_from_index_page(index_url)
+      html = Nokogiri::HTML(open(index_url))
 
-      # combine all the data
+      boat_urls = scrape_index_boat_urls(html)
+      boat_thumbnails = scrape_index_thumbnails(html)
+      boat_prices = scrape_index_prices(html)
+      boat_years = scrape_index_years(html)
+      boat_lengths = scrape_index_lengths(html)
+      boat_locations = scrape_index_locations(html)
+      boat_titles = scrape_index_titles(html)
+      boat_descriptions = scrape_index_descriptions(html)
+      boat_sale_status = scrape_index_sale_status(html)
+
+      # Combine all the data
       boats = []
       boat_urls.each_with_index do |url, i|
         if i != 0 # skip first element because it's an ad
@@ -124,53 +126,44 @@ module Scraper
       image_container_tags.map {|tag| tag.css("span.text-overlay").text }
     end
 
+#######################################
+
     def get_index_pages(first_page)
       last_page_link = first_page.css("ul.pagination li a").last['href']
       @last_page_number = last_page_link.match(/(?<=page=)\d+/).to_s.to_i
 
       pages = []
-      (1..@last_page_number).each { |n| pages << START_URL.gsub('page=1', "page=#{n}") }
+      (1..@last_page_number).each { |n| pages << @start_url.gsub('page=1', "page=#{n}") }
 
       return pages
     end
+
+########################################
+    def scrape_listing_page(url)
+      html = Nokogiri::HTML(open(url))
+
+      boat_data = {}
+
+      # Make & Model
+      script_meta_data = html.css("script#loopa_info").text
+      meta_data = Shellwords.split(script_meta_data)
+
+      index = meta_data.index("make:")
+      boat_data[:make] = meta_data[index + 1].gsub(',', '')
+
+      index = meta_data.index("model:")
+      boat_data[:model] = meta_data[index + 1].gsub(',', '')
+
+      # Full description
+      boat_data[:description] = html.css("div.Yacht_Desc div.Field").text
+
+      # boat_name
+      boat_data[:boat_name] = html.css("div.Field.Yacht_Region_Field").first.text
+
+      # hull
+      boat_data[:hull_material] = html.css("div.Field.Yacht_HullMaterial_Field").first.text
+
+      return boat_data
+    end
   end
 end
-
-
-  # def extract_boat_listing_info(link)
-  #   html = Nokogiri::HTML(open('https://yachthub.com' + link))
-  #
-  #   boat_data = {}
-  #
-  #   # Make & Model
-  #   breadcrumb_link = html.css("div[id*=breadcrumb] h2 a").last['href']
-  #   boat_data[:builder] = breadcrumb_link.match(/(?<=Make_Model=)[^&]*/).to_s.gsub('+',' ').split(" ").map {|word| word.capitalize}.join(" ")
-  #   boat_data[:model] = breadcrumb_link.match(/(?<=keywords=).*/).to_s.gsub '+', ' '
-  #
-  #   # Price
-  #   price = html.css("div.Yacht_Price div.Field")
-  #   price = price.first.text.match(/\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/)
-  #   boat_data[:price] = price.to_s.gsub(/\D/,'').to_i
-  #
-  #   # Length
-  #   length = html.css("div.Yacht_Length div.Field").text
-  #   length = length.match(/^(.*?)\s+-/).to_s
-  #   feet = length.match(/^(.*?)'/).to_s.to_i
-  #   inches = length.match(/\s\d+\"/).to_s.to_i
-  #   boat_data[:total_inches] = feet * 12 + inches
-  #
-  #   # Year
-  #   boat_data[:year] = html.css("div.Yacht_Year div.Field").first.text
-  #
-  #   # Unique ID (created from yachthub number in link)
-  #   boat_data[:] = "yachthub-" + link.match(/\d*$/).to_s
-  #
-  #   return boat_data
-  # end
-  #
-  # def create_boat(boat_data)
-  #   boat_data = Boat.new(:year => year, :builder => builder, :model => model, :price => price, : => )
-  #   boat = Boat.find_by :
-  #   puts "Boat already in database: " + boat.inspect
-  #   puts "*" * 30
-  # end
