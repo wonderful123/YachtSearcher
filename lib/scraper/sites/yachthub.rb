@@ -6,6 +6,26 @@ module Scraper
   class Yachthub < ListingSite
     DEFAULT_START_URL = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
 
+    # Gets list of index page urls. Amount depends on options given.
+    def get_index_pages
+      start_url = @start_url || DEFAULT_START_URL
+      html = Nokogiri::HTML(open(start_url))
+
+      # Scrape the last page number available
+      last_page_link = html.css("ul.pagination li a").last['href']
+      last_page_number = last_page_link.match(/(?<=page=)\d+/).to_s.to_i
+
+      number_of_pages = @page_depth
+      if @page_depth == 0 || @page_depth > last_page_number
+        number_of_pages = last_page_number # set from index scrape above
+      end
+
+      pages = []
+      (1..number_of_pages).each { |n| pages << start_url.gsub('page=1', "page=#{n}") }
+
+      return pages
+    end
+
     # Function starts the scraping process
     # Returns an array of hashes which contain the boat information
     # Data of each listing returned can be seen in next function.
@@ -13,9 +33,9 @@ module Scraper
       # scrape first page and create list of index pages
       @start_url = @start_url || DEFAULT_START_URL
       first_page = Nokogiri::HTML(open(@start_url))
-      index_pages = get_index_pages(first_page)
+      index_pages = get_index_pages_old(first_page)
 
-      boat_collection = scrape_boats_from_index_page(@start_url)
+      boat_collection = scrape_index_page(@start_url)
 
       if @page_depth == 0 || @page_depth > @last_page_number
         @page_depth = @last_page_number # set from index scrape above
@@ -27,7 +47,7 @@ module Scraper
       until page_number >= @page_depth
         puts "Scraping index [#{page_number + 1}/#{@page_depth}] - #{index_pages[page_number]}"
 
-        boat_collection += scrape_boats_from_index_page(index_pages[page_number])
+        boat_collection += scrape_index_page(index_pages[page_number])
 
         page_number += 1
       end
@@ -35,7 +55,7 @@ module Scraper
       return boat_collection
     end
 
-    def scrape_boats_from_index_page(index_url)
+    def scrape_index_page(index_url)
       html = Nokogiri::HTML(open(index_url))
 
       boat_urls = scrape_index_boat_urls(html)
@@ -128,7 +148,7 @@ module Scraper
 
 #######################################
 
-    def get_index_pages(first_page)
+    def get_index_pages_old(first_page)
       last_page_link = first_page.css("ul.pagination li a").last['href']
       @last_page_number = last_page_link.match(/(?<=page=)\d+/).to_s.to_i
 

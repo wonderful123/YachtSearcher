@@ -22,5 +22,13 @@ module Scraper
     def scrape_listings
       @site.scrape
     end
+
+    def scrape_index_page(url)
+      @site.scrape_index_page(url)
+    end
+
+    def get_index_pages
+      @site.get_index_pages
+    end
   end
 end

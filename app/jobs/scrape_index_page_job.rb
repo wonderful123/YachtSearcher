@@ -1,40 +1,29 @@
 require 'scraper'
 require 'geocode'
 
-class UpdateScrapeJob < ApplicationJob
+class ScrapeIndexPageJob < ApplicationJob
   include SuckerPunch::Job
+  workers 1
   queue_as :default
 
-  # Arg:update_existing = true will overwrite existing listing information.
-  def perform(site, options={}, update_existing=false)
-    count_info = { new_boats: 0, listing_changes: 0 } # For feedback status update
-
+  def perform(index_url, site, options)
     scraper = Scraper::Scrape.new(site.name, options)
-    boat_listings = scraper.scrape_listings
+    boat_listings = scraper.scrape_index_page(index_url)
 
     boat_listings.each do |listing|
-      # Create 2 boat and listing with information scraped
+      # Create boat and listing objects with information scraped
       boat_data, listing_data = build_data_objects(listing)
 
       # Check if this listing is new
       existing_listing = Listing.find_by uniq_id: listing[:uniq_id]
 
       if existing_listing
+
         puts "Boat already in database [#{listing[:uniq_id]}] - UPDATING..."
         Boat.update(existing_listing[:boat_id], boat_data)
 
-        b = Boat.find existing_listing[:boat_id]
-        if !b.thumbnail.attached?
-          puts "@" * 50
-          puts listing[:thumbnail]
-          puts listing
-          puts "@" * 50
-          b.thumbnail.attach(io: open(listing[:thumbnail]), filename: "thumbnail-#{listing[:uniq_id]}.jpg")
-        end
         # Check if listing should be updated and record history of changes
-        if check_listing_change(existing_listing, listing_data)
-          count_info[:listing_changes] += 1
-        end
+        check_listing_change(existing_listing, listing_data)
 
       else # otherwise create a new listing
         # Merge in the geocode data
@@ -43,35 +32,17 @@ class UpdateScrapeJob < ApplicationJob
         # Create boat and listing
         boat = Boat.create(**boat_data, :first_found => Time.now)
 
-        listing = Listing.create(
+        Listing.create(
           **listing_data,
           :first_found => Time.now,
           :boat_id => boat.id,
           :site_id => site.id,
         )
 
-        # # include other region locations if unique
-        # region_list = loc[:regions]
-        # region_list |= [loc[:country]]
-        # region_list |= [loc[:state]]
-        # region_list |= [loc[:continent]]
-        # region_list |= [loc[:state_code]]
-        #
-        # # add each region
-        # region_list.each do |region|
-        #   boat.regions << Region.find_or_create_by(region: region) if region != nil
-        # end
-
         # attach thumbnail image
         boat.thumbnail.attach(io: open(listing[:thumbnail]), filename: "thumbnail-#{listing[:uniq_id]}.jpg")
-
-        count_info[:new_boats] += 1
       end
     end
-
-    puts "-" * 50
-    puts "SCRAPE COMPLETE - Checked #{boat_listings.length} listings [new: #{count_info[:new_boats]}, changes: #{count_info[:listing_changes]}]"
-    puts "-" * 50
   end
 
   # Build boat and listing from scraped listing data
