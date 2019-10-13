@@ -1,2 +1,5 @@
 unique id
 change spider to site name
+
+- Don't deep visit already visited pages. See http://doc.scrapy.org/en/latest/topics/item-pipeline.html#duplicates-filter
+- Deep scraping: pass the item through the meta value and add to it there.

@@ -1,3 +1,5 @@
+from scrapy.loader import ItemLoader
+from scraper.items import Location, Price, Listing, Length, DefaultLoader, printer
 import scrapy
 import re
 from furl import furl
@@ -36,19 +38,30 @@ class QuotesSpider(scrapy.Spider):
         listings = response.xpath("//div[contains(@class, 'List_Row_Listing')]")
 
         for l in listings:
-            listing = Listing()
-            listing["description"] = l.xpath('.//div[contains(@class, "bw_List_Text")]/text()').get()
-            listing["year"] = l.xpath('.//div[contains(@class, "bw_List_Year")]/text()').get()
-            listing["sale_status"] = l.xpath('.//span[contains(@class, "text-overlay")]/text()').get()
-            listing["length"] = l.xpath('.//div[contains(@class, "bw_List_Length")]/text()').get()
-            listing["title"] = l.xpath('.//div[contains(@class, "List_MakeModel")]/a/text()').get()
-            listing["url"] = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
-            listing["thumbnail"] = l.xpath('.//span[contains(@class, "thumb-info")]/img/@src').get()
+            location = DefaultLoader(item=Location(), selector=l)
+            location.add_xpath('location', './/div[contains(@class, "bw_List_Location")]/text()')
+            location.load_item()
 
-            location = Location()
-            location["location"] = l.xpath('.//div[contains(@class, "bw_List_Location")]/text()').get()
+            price = DefaultLoader(item=Price(), selector=l)
+            price.add_xpath('original', './/span[contains(@class, "bw_List_Price")]/text()', printer)
+            price.load_item()
 
-            price = Price()
-            price["price"] = l.xpath('.//span[contains(@class, "bw_List_Price")]/text()').get()
+            length = DefaultLoader(item=Length(), selector=l)
+            length.add_xpath('length', './/div[contains(@class, "bw_List_Length")]/text()')
+            length.load_item()
 
-            yield listing, location, price
+            listing = DefaultLoader(item=Listing(), selector=l)
+            listing.add_xpath('description', './/div[contains(@class, "bw_List_Text")]/text()')
+            listing.add_xpath('year', './/div[contains(@class, "bw_List_Year")]/text()')
+            listing.add_xpath('sale_status', './/span[contains(@class, "text-overlay")]/text()')
+            listing.add_xpath('title', './/div[contains(@class, "List_MakeModel")]/a/text()')
+            url = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
+            listing.add_value('url', url)
+            listing.add_xpath('thumbnail', './/span[contains(@class, "thumb-info")]/img/@src')
+            listing.add_value('location', location)
+            listing.add_value('length', length)
+            listing.add_value('price', price)
+
+            x= listing.load_item()
+            print(x)
+            yield x
