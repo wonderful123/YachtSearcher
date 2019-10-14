@@ -1,5 +1,6 @@
 import scrapy, re
 from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
+from w3lib.html import replace_escape_chars
 from scrapy.loader import ItemLoader
 
 class DefaultLoader(ItemLoader):
@@ -32,7 +33,7 @@ class Location(scrapy.Item):
 class Listing(scrapy.Item):
     title = scrapy.Field()
     url = scrapy.Field()
-    description = scrapy.Field()
+    description = scrapy.Field(input_processor=MapCompose(replace_escape_chars))
     sale_status = scrapy.Field(input_processor=MapCompose(str.title))
     length = scrapy.Field()
     thumbnail = scrapy.Field()
