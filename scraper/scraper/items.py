@@ -2,6 +2,12 @@ import scrapy, re
 from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
 from scrapy.loader import ItemLoader
 
+def printer(values):
+    for v in values:
+        print("PRINTER"* 20)
+        print(v)
+        yield v
+
 class DefaultLoader(ItemLoader):
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
@@ -33,14 +39,15 @@ class Listing(scrapy.Item):
     title = scrapy.Field()
     url = scrapy.Field()
     description = scrapy.Field()
-    sale_status = scrapy.Field(input_processor=MapCompose(str.title))
+    full_description = scrapy.Field()
+    sale_status = scrapy.Field(input_processor=MapCompose(str.title), output_processor=TakeFirst())
     length = scrapy.Field()
     thumbnail = scrapy.Field()
     images = scrapy.Field()
-    hull_material = scrapy.Field()
+    hull_material = scrapy.Field(output_processor=TakeFirst())
     uniq_id = scrapy.Field()
-    make = scrapy.Field()
-    model = scrapy.Field()
-    year = scrapy.Field(input_processor=MapCompose(str.strip))
+    make = scrapy.Field(output_processor=TakeFirst())
+    model = scrapy.Field(output_processor=TakeFirst())
+    year = scrapy.Field(input_processor=MapCompose(str.strip), output_processor=TakeFirst())
     location = scrapy.Field()
     price = scrapy.Field()

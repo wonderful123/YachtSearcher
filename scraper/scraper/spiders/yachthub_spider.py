@@ -1,7 +1,6 @@
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
-import scrapy
-import re
+import scrapy, re, json
 from furl import furl
 
 class YachthubSpider(scrapy.Spider):
@@ -45,33 +44,48 @@ class YachthubSpider(scrapy.Spider):
 
     def parse_listings(self, response):
         listings = response.xpath("//div[contains(@class, 'List_Row_Listing')]")
+        l = listings[0]
+        # for l in listings:
+        location = DefaultLoader(item=Location(), selector=l)
+        location.add_xpath('location', './/div[contains(@class, "bw_List_Location")]/text()')
+        location.load_item()
 
-        for l in listings:
-            location = DefaultLoader(item=Location(), selector=l)
-            location.add_xpath('location', './/div[contains(@class, "bw_List_Location")]/text()')
-            location.load_item()
+        price = DefaultLoader(item=Price(), selector=l)
+        price.add_xpath('original', './/span[contains(@class, "bw_List_Price")]/text()')
+        price.load_item()
 
-            price = DefaultLoader(item=Price(), selector=l)
-            price.add_xpath('original', './/span[contains(@class, "bw_List_Price")]/text()')
-            price.load_item()
+        length = DefaultLoader(item=Length(), selector=l)
+        length.add_xpath('length', './/div[contains(@class, "bw_List_Length")]/text()')
+        length.load_item()
 
-            length = DefaultLoader(item=Length(), selector=l)
-            length.add_xpath('length', './/div[contains(@class, "bw_List_Length")]/text()')
-            length.load_item()
+        listing = DefaultLoader(item=Listing(), selector=l)
+        listing.add_xpath('description', 'normalize-space(.//div[contains(@class, "bw_List_Text")]/text())')
+        listing.add_xpath('year', './/div[contains(@class, "bw_List_Year")]/text()')
+        listing.add_xpath('sale_status', './/span[contains(@class, "text-overlay")]/text()')
+        listing.add_xpath('title', './/div[contains(@class, "List_MakeModel")]/a/text()')
+        url = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
+        listing.add_value('url', url)
+        listing.add_value('uniq_id', 'yachthub-' + re.search('\d*$', url).group(0))
+        listing.add_xpath('thumbnail', './/span[contains(@class, "thumb-info")]/img/@src')
+        listing.add_value('location', location)
+        listing.add_value('length', length)
+        listing.add_value('price', price)
 
-            listing = DefaultLoader(item=Listing(), selector=l)
-            listing.add_xpath('description', 'normalize-space(.//div[contains(@class, "bw_List_Text")]/text())')
-            listing.add_xpath('year', './/div[contains(@class, "bw_List_Year")]/text()')
-            listing.add_xpath('sale_status', './/span[contains(@class, "text-overlay")]/text()')
-            listing.add_xpath('title', './/div[contains(@class, "List_MakeModel")]/a/text()')
-            url = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
-            listing.add_value('url', url)
-            listing.add_value('uniq_id', 'yachthub-' + re.search('\d*$', url).group(0))
-            listing.add_xpath('thumbnail', './/span[contains(@class, "thumb-info")]/img/@src')
-            listing.add_value('location', location)
-            listing.add_value('length', length)
-            listing.add_value('price', price)
+        request = scrapy.Request(url, self.parse_listing_page, dont_filter=True)
+        request.cb_kwargs['listing'] = listing.load_item()
+        yield request
 
-            x= listing.load_item()
-            print(x)
-            yield x
+    def parse_listing_page(self, response, listing):
+        # need to check if page is in already deep scraped listings
+        loader = ItemLoader(item=listing, response=response)
+        loader.add_xpath('hull_material', '//div[contains(@class, "Yacht_HullMaterial")]/div[contains(@class,"Field")]/text()')
+        loader.add_xpath('full_description', '//div[contains(@class, "Yacht_Desc")]/div[contains(@class,"Field")]/text()')
+        loader.add_xpath('images', '//div[@id="galleria"]/a/img/@src')
+        # get make and model hidden in script meta data
+        script_meta_data = response.xpath('normalize-space(//script[@id="loopa_info"])').get()
+        meta_data = json.loads('{' + script_meta_data + '}')
+        loader.add_value('make', meta_data['make'])
+        loader.add_value('model', meta_data['model'])
+        listing = loader.load_item()
+        print(listing)
+        return listing
