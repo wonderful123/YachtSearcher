@@ -14,7 +14,7 @@ API_KEY = "a7230342313c439593062d9bd7a4530f"
 geocoder = OpenCageGeocode(API_KEY)
 
 def parse_location(query):
-    return { 'location': query }
+    # return { 'location': query }
     try:
         results = geocoder.geocode(query)
         if results and len(results):
@@ -25,15 +25,15 @@ def parse_location(query):
                 'latitude': r['geometry']['lat'],
                 'longitude': r['geometry']['lng'],
             }
-            c = r["components"]
+            c = r.get("components")
             # Some general locations like "Europe" won't provide this info so check
-            if c["_type"] != "unknown":
+            if c.get("_type") != "unknown":
                 # extract all data from JSON response
-                data['country'] = c["country"]
-                data['continent'] = c["continent"]
-                data['state'] = c["state"]
-                data['state_code'] = c["state_code"]
-                data['city'] = c["city"] or c["town"] or c["county"]
+                data['country'] = c.get('country', "")
+                data['continent'] = c.get('continent', "")
+                data['state'] = c.get("state", "")
+                data['state_code'] = c.get("state_code", "")
+                data['city'] = c.get("city", False) or c.get("town", False) or c.get("county", "")
 
             # Extract regions data.
             data['regions'] = []
