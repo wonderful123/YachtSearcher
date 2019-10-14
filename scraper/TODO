@@ -2,5 +2,4 @@
 - Deep scraping: pass the item through the meta value and add to it there.
 - Command line optional location data
 - Location optional from command line. Or process afterwards as seperate pipeline. Makes more sense.
-- Add scrape depth to command line
 - Add to deep scraped if visited

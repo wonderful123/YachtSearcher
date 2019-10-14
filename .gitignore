@@ -27,4 +27,4 @@
 
 # Ignore scraper files
 /scraper/data/*
-**/__pycache__
+**/__pycache__/*

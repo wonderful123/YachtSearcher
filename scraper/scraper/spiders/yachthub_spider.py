@@ -8,6 +8,9 @@ class YachthubSpider(scrapy.Spider):
     name = "yachthub"
     start_url = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
     start_index = 1
+    # this can be overridden from the command line:
+    # scrapy crawl spidername -a page_depth=100
+    page_depth = 1
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
@@ -17,12 +20,16 @@ class YachthubSpider(scrapy.Spider):
         # e.g. 'http://shop.com/products?page=1'
         url = response.url
 
-        start = self.start_index or 1  # from arguments
+        start = int(self.start_index) or 1  # from arguments
         # Get total pages
         last_page_link = response.css("ul.pagination li a")[-1].attrib['href']
         total_pages = furl(last_page_link).args["page"]
 
-        total_pages = 1
+        # convert to int in case it was passed as string from command line
+        self.page_depth = int(self.page_depth)
+        # leave at all for 0 or set less.
+        if self.page_depth != 0 or self.page_depth < total_pages:
+            total_pages = self.page_depth
 
         # don't forget to also parse listings on first page!
         yield from self.parse_listings(response)
@@ -32,7 +39,9 @@ class YachthubSpider(scrapy.Spider):
             page_url = furl(url)
             page_url.args["page"] = page
             page_url = page_url.url
-            yield from scrapy.Request(page_url, self.parse_listings)
+            print('PAGEURL', page_url)
+            yield scrapy.Request(page_url, self.parse_listings)
+
 
     def parse_listings(self, response):
         listings = response.xpath("//div[contains(@class, 'List_Row_Listing')]")
