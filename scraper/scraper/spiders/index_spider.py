@@ -1,5 +1,5 @@
 from scrapy.loader import ItemLoader
-from scraper.items import Location, Price, Listing, Length, DefaultLoader, printer
+from scraper.items import Location, Price, Listing, Length, DefaultLoader
 import scrapy
 import re
 from furl import furl
@@ -43,7 +43,7 @@ class QuotesSpider(scrapy.Spider):
             location.load_item()
 
             price = DefaultLoader(item=Price(), selector=l)
-            price.add_xpath('original', './/span[contains(@class, "bw_List_Price")]/text()', printer)
+            price.add_xpath('original', './/span[contains(@class, "bw_List_Price")]/text()')
             price.load_item()
 
             length = DefaultLoader(item=Length(), selector=l)
@@ -57,6 +57,7 @@ class QuotesSpider(scrapy.Spider):
             listing.add_xpath('title', './/div[contains(@class, "List_MakeModel")]/a/text()')
             url = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
             listing.add_value('url', url)
+            listing.add_value('uniq_id', 'yachthub-' + re.search('\d*$', url).group(0))
             listing.add_xpath('thumbnail', './/span[contains(@class, "thumb-info")]/img/@src')
             listing.add_value('location', location)
             listing.add_value('length', length)

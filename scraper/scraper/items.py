@@ -6,14 +6,6 @@ class DefaultLoader(ItemLoader):
     default_input_processor = Identity()
     default_output_processor = TakeFirst()
 
-def printer(v):
-    print("PRINTER IN: ", v)
-    return v
-
-def printer_out(v):
-    print("PRINTER OUT: ", v)
-    return v
-
 class Length(scrapy.Item):
     length = scrapy.Field()
     meters = scrapy.Field()
@@ -28,7 +20,7 @@ class Price(scrapy.Item):
     original = scrapy.Field()
 
 class Location(scrapy.Item):
-    location = scrapy.Field()
+    location = scrapy.Field(input_processor=MapCompose(str.strip))
     latitude = scrapy.Field()
     longitude = scrapy.Field()
     country = scrapy.Field()

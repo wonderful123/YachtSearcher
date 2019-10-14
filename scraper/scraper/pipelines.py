@@ -14,11 +14,13 @@ API_KEY = "a7230342313c439593062d9bd7a4530f"
 geocoder = OpenCageGeocode(API_KEY)
 
 def parse_location(query):
+    return { 'location': query }
     try:
         results = geocoder.geocode(query)
         if results and len(results):
             r = results[0]
             data = {
+                'location': query,
                 'formatted': r['formatted'],
                 'latitude': r['geometry']['lat'],
                 'longitude': r['geometry']['lng'],
