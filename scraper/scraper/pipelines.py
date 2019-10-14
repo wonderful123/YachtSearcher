@@ -88,26 +88,23 @@ class ScraperPipeline(object):
         return item
 
 class PreviouslyVisitedWriterPipeline(object):
-    FILENAME = 'prev_visited_listings_yachthub.jl'
-
     def open_spider(self, spider):
+        self.filename = f"data/[{spider.name}]-deep-scraped-listings.jl"
         # Read in the previously visited lsitings
         try:
-            contents = open(self.FILENAME, "r").read()
+            contents = open(self.filename, "r").read()
             self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
         except IOError:
             # If not exists, create the file
-            f = open(self.FILENAME, 'w')
+            f = open(self.filename, 'w')
             f.write(json.dumps([]))
             f.close()
             self.prev_visited_listings = []
 
         # Open it again for rewriting
-        self.visited_listing_file = open(self.FILENAME, 'w')
+        self.visited_listing_file = open(self.filename, 'w')
 
     def close_spider(self, spider):
-        print(self.prev_visited_listings)
-        # self.file.close()
         self.visited_listing_file.close();
 
     def process_item(self, item, spider):

@@ -1,3 +1,4 @@
+"https://yachthub.com/list/yachts-for-sale/used/sail-monohulls/hanse-400e/239192"
 "https://yachthub.com/list/yachts-for-sale/used/sail-monohulls/sparkman-stephens-34/224797"
 "https://yachthub.com/list/boats-for-sale/used/trailer-boats/little-barrier-6-catamaran-trailercat/239174"
 "https://yachthub.com/list/yachts-for-sale/used/sail-catamarans/seawind-1000/238819"
@@ -21,4 +22,3 @@
 "https://yachthub.com/list/yachts-for-sale/used/sail-catamarans/schionning-cosmos-1320/239016"
 "https://yachthub.com/list/yachts-for-sale/used/sail-monohulls/bavaria-cruiser-42/239072"
 "https://yachthub.com/list/yachts-for-sale/used/sail-catamarans/schionning-wilderness-1480/236649"
-"https://yachthub.com/list/yachts-for-sale/used/sail-monohulls/top-hat-25-mk3/239066"

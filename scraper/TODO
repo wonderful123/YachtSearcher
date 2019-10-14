@@ -4,4 +4,4 @@
 - Output to JSON
 - Output with date/time
 - Command line optional location data
-- Add spidername to filenames
+- Add scrape depth to command line
