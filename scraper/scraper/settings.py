@@ -67,7 +67,7 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
    'scraper.pipelines.ScraperPipeline': 300,
    'scraper.pipelines.PreviouslyVisitedUrlPipeline': 800,
-   # 'scraper.pipelines.JsonItemWriterPipeline': 801,
+   'scraper.pipelines.JsonItemWriterPipeline': 801,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -120,19 +120,17 @@ class PreviouslyVisitedUrlPipeline(object):
 
         return item
 
-# class JsonItemWriterPipeline(object):
-#     def open_spider(self, spider):
-#         timestamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-#         filename = f"data/[{spider.name}]-{timestamp}.jl"
-#         # with open(filename, 'w') as self.file
-#         self.file = open(filename, 'w')
-#
-#     def close_spider(self, spider):
-#         self.file.close()
-#         # pass
-#
-#     def process_item(self, item, spider):
-#         print(item)
-#         line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
-#         self.file.write(line)
-#         return item
+class JsonItemWriterPipeline(object):
+    def open_spider(self, spider):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
+        filename = f"data/[{spider.name}]-{timestamp}.jl"
+        self.file = open(filename, 'w')
+
+    def close_spider(self, spider):
+        self.file.close()
+
+    def process_item(self, item, spider):
+        print(item)
+        line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
+        self.file.write(line)
+        return item
