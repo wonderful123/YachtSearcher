@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import re, json, iso4217parse
+import re, json, iso4217parse, datetime
 from opencage.geocoder import OpenCageGeocode
 from opencage.geocoder import InvalidInputError, RateLimitExceededError, UnknownError
 
@@ -87,43 +87,52 @@ class ScraperPipeline(object):
 
         return item
 
-class PreviouslyVisitedWriterPipeline(object):
+class PreviouslyVisitedUrlPipeline(object):
     def open_spider(self, spider):
         self.filename = f"data/[{spider.name}]-deep-scraped-listings.jl"
+        self.prev_visited_listings = []
         # Read in the previously visited lsitings
         try:
-            contents = open(self.filename, "r").read()
-            self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
+            f = open(self.filename, "r")
+            if f.read(1): # if not empty
+                f.seek(0)
+                contents = f.read()
+                self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
+            f.close()
         except IOError:
             # If not exists, create the file
             f = open(self.filename, 'w')
-            f.write(json.dumps([]))
             f.close()
-            self.prev_visited_listings = []
 
-        # Open it again for rewriting
-        self.visited_listing_file = open(self.filename, 'w')
+        # Open it again for further writing
+        self.file = open(self.filename, 'a')
 
     def close_spider(self, spider):
-        self.visited_listing_file.close();
+        self.file.close()
 
     def process_item(self, item, spider):
         url = item["url"]
         # Add url to visited urls
         line = json.dumps(url, ensure_ascii=False, indent=4) + "\n"
-        self.prev_visited_listings.append(url)
-        self.visited_listing_file.write(line)
+        if url not in self.prev_visited_listings:
+            self.file.write(line)
+            self.prev_visited_listings.append(url)
+
         return item
 
-class JsonWriterPipeline(object):
-    def open_spider(self, spider):
-        pass
-
-    def close_spider(self, spider):
-        # self.file = open('items.jl', 'w')
-        pass
-
-    def process_item(self, item, spider):
-        # line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
-        # self.file.write(line)
-        return item
+# class JsonItemWriterPipeline(object):
+#     def open_spider(self, spider):
+#         timestamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
+#         filename = f"data/[{spider.name}]-{timestamp}.jl"
+#         # with open(filename, 'w') as self.file
+#         self.file = open(filename, 'w')
+#
+#     def close_spider(self, spider):
+#         self.file.close()
+#         # pass
+#
+#     def process_item(self, item, spider):
+#         print(item)
+#         line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
+#         self.file.write(line)
+#         return item
