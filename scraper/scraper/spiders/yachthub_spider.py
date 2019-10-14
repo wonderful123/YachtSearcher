@@ -4,8 +4,8 @@ import scrapy
 import re
 from furl import furl
 
-class QuotesSpider(scrapy.Spider):
-    name = "index"
+class YachthubSpider(scrapy.Spider):
+    name = "yachthub"
     start_url = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
     start_index = 1
 

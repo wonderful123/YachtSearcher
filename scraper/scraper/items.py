@@ -38,7 +38,7 @@ class Listing(scrapy.Item):
     thumbnail = scrapy.Field()
     images = scrapy.Field()
     hull_material = scrapy.Field()
-    unique_id = scrapy.Field()
+    uniq_id = scrapy.Field()
     make = scrapy.Field()
     model = scrapy.Field()
     year = scrapy.Field(input_processor=MapCompose(str.strip))
