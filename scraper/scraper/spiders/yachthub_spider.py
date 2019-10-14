@@ -51,7 +51,7 @@ class YachthubSpider(scrapy.Spider):
             length.load_item()
 
             listing = DefaultLoader(item=Listing(), selector=l)
-            listing.add_xpath('description', './/div[contains(@class, "bw_List_Text")]/text()')
+            listing.add_xpath('description', 'normalize-space(.//div[contains(@class, "bw_List_Text")]/text())')
             listing.add_xpath('year', './/div[contains(@class, "bw_List_Year")]/text()')
             listing.add_xpath('sale_status', './/span[contains(@class, "text-overlay")]/text()')
             listing.add_xpath('title', './/div[contains(@class, "List_MakeModel")]/a/text()')

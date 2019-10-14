@@ -1,7 +1,5 @@
 - Don't deep visit already visited pages. See http://doc.scrapy.org/en/latest/topics/item-pipeline.html#duplicates-filter
 - Deep scraping: pass the item through the meta value and add to it there.
-- Output to JSON
-- Output with date/time
 - Command line optional location data
 - Location optional from command line. Or process afterwards as seperate pipeline. Makes more sense.
 - Add scrape depth to command line
