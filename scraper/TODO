@@ -1,5 +1,3 @@
 - Don't deep visit already visited pages. See http://doc.scrapy.org/en/latest/topics/item-pipeline.html#duplicates-filter
-- Deep scraping: pass the item through the meta value and add to it there.
-- Command line optional location data
-- Location optional from command line. Or process afterwards as separate pipeline. Makes more sense.
 - Add to deep scraped if visited
+- Location optional from command line. Or process afterwards as separate pipeline. Makes more sense.

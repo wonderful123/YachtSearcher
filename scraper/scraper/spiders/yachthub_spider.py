@@ -11,6 +11,20 @@ class YachthubSpider(scrapy.Spider):
     # scrapy crawl spidername -a page_depth=100
     page_depth = 1
 
+    def __init__(self, category=None, *args, **kwargs):
+        super(YachthubSpider, self).__init__(*args, **kwargs)
+        self.prev_visited_listings = []
+        filename = f"data/[{self.name}]-deep-scraped-listings.jl"
+        try:
+            f = open(filename, "r")
+            if f.read(1): # if not empty
+                f.seek(0)
+                contents = f.read()
+                self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
+            f.close()
+        except:
+            print('No previously deep scraped listings')
+
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
 
@@ -71,9 +85,12 @@ class YachthubSpider(scrapy.Spider):
         listing.add_value('length', length)
         listing.add_value('price', price)
 
-        request = scrapy.Request(url, self.parse_listing_page, dont_filter=True)
-        request.cb_kwargs['listing'] = listing.load_item()
-        yield request
+        if url not in self.prev_visited_listings:
+            request = scrapy.Request(url, self.parse_listing_page, dont_filter=True)
+            request.cb_kwargs['listing'] = listing.load_item()
+            yield request
+        else:
+            yield listing.load_item()
 
     def parse_listing_page(self, response, listing):
         # need to check if page is in already deep scraped listings
