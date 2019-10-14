@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-import re
-import iso4217parse
+import re, json, iso4217parse
 from opencage.geocoder import OpenCageGeocode
 from opencage.geocoder import InvalidInputError, RateLimitExceededError, UnknownError
 
@@ -94,36 +87,46 @@ class ScraperPipeline(object):
 
         return item
 
-import json
+class PreviouslyVisitedWriterPipeline(object):
+    FILENAME = 'prev_visited_listings_yachthub.jl'
+
+    def open_spider(self, spider):
+        # Read in the previously visited lsitings
+        try:
+            contents = open(self.FILENAME, "r").read()
+            self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
+        except IOError:
+            # If not exists, create the file
+            f = open(self.FILENAME, 'w')
+            f.write(json.dumps([]))
+            f.close()
+            self.prev_visited_listings = []
+
+        # Open it again for rewriting
+        self.visited_listing_file = open(self.FILENAME, 'w')
+
+    def close_spider(self, spider):
+        print(self.prev_visited_listings)
+        # self.file.close()
+        self.visited_listing_file.close();
+
+    def process_item(self, item, spider):
+        url = item["url"]
+        # Add url to visited urls
+        line = json.dumps(url, ensure_ascii=False, indent=4) + "\n"
+        self.prev_visited_listings.append(url)
+        self.visited_listing_file.write(line)
+        return item
 
 class JsonWriterPipeline(object):
     def open_spider(self, spider):
-        # self.file = open('items.jl', 'w')
-        #
-        # # Read in the previously visited lsitings
-        # try:
-        #     contents = open('prev_visited_listings.jl', "r").read()
-        #     self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
-        # except IOError:
-        #     # If not exists, create the file
-        #     f = open('prev_visited_listings.jl', 'w')
-        #     f.write(json.dumps([]))
-        #     f.close()
-        #     self.prev_visited_listings = []
-        #
-        # # # Open it again for rewriting
-        # self.visited_listing_file = open('prev_visited_listings.jl', 'w')
         pass
 
     def close_spider(self, spider):
+        # self.file = open('items.jl', 'w')
         pass
-        # self.file.close()
 
     def process_item(self, item, spider):
         # line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
         # self.file.write(line)
-        #
-        # # Add url to visited urls
-        # line = json.dumps(item["url"], ensure_ascii=False, indent=4) + "\n"
-        # self.visited_listing_file.write(line)
         return item

@@ -1,4 +1,4 @@
-d = { 'state': 'NSW' }
+l = [1,2,3,4,5]
 
-x = d.get('asdf', False) or d.get('state')
-print(x)
+if 1 in l: print('1 in l')
+if 6 not in l: print('6 not in l')
