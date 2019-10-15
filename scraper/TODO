@@ -1,3 +1,2 @@
-- Don't deep visit already visited pages. See http://doc.scrapy.org/en/latest/topics/item-pipeline.html#duplicates-filter
-- Add to deep scraped if visited
 - Location optional from command line. Or process afterwards as separate pipeline. Makes more sense.
+- Download images and thumbnails: https://docs.scrapy.org/en/latest/topics/media-pipeline.html#topics-images-thumbnails
