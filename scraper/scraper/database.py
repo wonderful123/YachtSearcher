@@ -10,6 +10,7 @@ def create_table(conn):
       ) '''
     cur = conn.cursor()
     cur.execute(sql)
+    conn.commit()
 
 def load_prev_visited(db_name):
     db_file = f"./data/{db_name}.db"

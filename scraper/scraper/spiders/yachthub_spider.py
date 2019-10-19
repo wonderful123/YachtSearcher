@@ -98,6 +98,6 @@ class YachthubSpider(scrapy.Spider):
         meta_data = json.loads('{' + script_meta_data + '}')
         loader.add_value('make', meta_data['make'])
         loader.add_value('model', meta_data['model'])
-        loader.add_value('is_deep_scraped', True) # flag item for database
+        loader.add_value('is_deep_scraped', 'true') # flag item for database
         listing = loader.load_item()
         return listing

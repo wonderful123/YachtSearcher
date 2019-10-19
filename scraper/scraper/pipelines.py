@@ -83,7 +83,7 @@ class ScraperPipeline(object):
             if spider.scrape_location == "true":
                 location_data = parse_location(item['location'])
                 item['location'] = location_data
-                item['is_location_scraped'] = True # set flag so location scrape is not done twice later on
+                item['is_location_scraped'] = 'true' # set flag so location scrape is not done twice later on
 
         if item.get('listing'):
             print(item['listing'])
@@ -108,32 +108,22 @@ class DatabasePipeline(object):
 
         return self.conn
 
-    def create_table(self):
-        sql = ''' CREATE TABLE IF NOT EXISTS listing_data (
-          listing_id INTEGER PRIMARY KEY,
-          url TEXT NOT NULL UNIQUE,
-          is_deep_scraped TEXT,
-          is_location_scraped TEXT
-          ) '''
-        cur = self.conn.cursor()
-        cur.execute(sql)
-
     def flag_listing_data(self, url, field):
         # 2 queries to accomplish upsert
         sql = f''' UPDATE listing_data
-            SET {field} = True
+            SET {field} = "true"
             WHERE url = "{url}" '''
         cur = self.conn.cursor()
         cur.execute(sql)
+        
         sql = f''' INSERT OR IGNORE INTO listing_data
             (url, {field})
-            VALUES ( "{url}", True ) '''
+            VALUES ( "{url}", 'true' ) '''
         cur.execute(sql)
         self.conn.commit()
 
     def open_spider(self, spider):
         self.create_connection(spider.name)
-        self.create_table()
 
     def close_spider(self, spider):
         self.conn.close()
