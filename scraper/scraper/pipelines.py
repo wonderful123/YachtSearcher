@@ -77,10 +77,13 @@ class ScraperPipeline(object):
               'value': float(re.sub("\D", "", price))
             }
             item['price'] = data
+
         if item.get('location'):
             item['location'] = item['location'].get_collected_values('location')[0]
-            location_data = parse_location(item['location'])
-            item['location'] = location_data
+            # parse location with API - this can be set to false for testing
+            if spider.scrape_location == "true":
+                location_data = parse_location(item['location'])
+                item['location'] = location_data
 
         if item.get('listing'):
             print(item['listing'])

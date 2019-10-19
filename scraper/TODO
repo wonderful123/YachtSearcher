@@ -1,2 +1,2 @@
-- Location optional from command line. Or process afterwards as separate pipeline. Makes more sense.
 - Download images and thumbnails: https://docs.scrapy.org/en/latest/topics/media-pipeline.html#topics-images-thumbnails
+- Set previously visited urls to have have options so location data and deep scrape can be flagged

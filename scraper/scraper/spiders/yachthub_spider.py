@@ -10,10 +10,11 @@ class YachthubSpider(scrapy.Spider):
     # this can be overridden from the command line:
     # scrapy crawl spidername -a page_depth=100
     page_depth = 1
+    scrape_location = "false"
 
-    # init function to load previously visited listings then we can check if we need to deep scrape the page later
     def __init__(self, category=None, *args, **kwargs):
         super(YachthubSpider, self).__init__(*args, **kwargs)
+        # init function to load previously visited listings then we can check if we need to deep scrape the page later
         self.prev_visited_listings = []
         filename = f"data/[{self.name}]-deep-scraped-listings.jl"
         try:
@@ -34,7 +35,7 @@ class YachthubSpider(scrapy.Spider):
         # e.g. 'http://shop.com/products?page=1'
         url = response.url
 
-        start = int(self.start_index) or 1  # from arguments
+        start = int(self.start_index) or 1  # from command line arguments or default
         # Get total pages
         last_page_link = response.css("ul.pagination li a")[-1].attrib['href']
         total_pages = furl(last_page_link).args["page"]
