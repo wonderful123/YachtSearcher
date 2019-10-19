@@ -26,5 +26,5 @@
 /config/master.key
 
 # Ignore scraper files
-/scraper/data/*
-**/__pycache__/*
+**/scraper/data/
+**/__pycache__
