@@ -79,46 +79,71 @@ class ScraperPipeline(object):
 
         if item.get('location'):
             item['location'] = item['location'].get_collected_values('location')[0]
-            # parse location with API - this can be set to false for testing
+            # parse location with API - this can be set to false fo`r testing
             if spider.scrape_location == "true":
                 location_data = parse_location(item['location'])
                 item['location'] = location_data
+                item['is_location_scraped'] = True # set flag so location scrape is not done twice later on
 
         if item.get('listing'):
             print(item['listing'])
 
         return item
 
-class PreviouslyVisitedUrlPipeline(object):
-    def open_spider(self, spider):
-        self.filename = f"data/[{spider.name}]-deep-scraped-listings.jl"
-        self.prev_visited_listings = []
-        # Read in the previously visited lsitings
-        try:
-            f = open(self.filename, "r")
-            if f.read(1): # if not empty
-                f.seek(0)
-                contents = f.read()
-                self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
-            f.close()
-        except IOError:
-            # If not exists, create the file
-            f = open(self.filename, 'w')
-            f.close()
+import sqlite3
+from sqlite3 import Error
 
-        # Open it again for further writing
-        self.file = open(self.filename, 'a')
+class DatabasePipeline(object):
+    def create_connection(self, db_file):
+        """ create a database connection to the SQLite database
+            specified by db_file
+        :param db_file: database file
+        :return: Connection object or None
+        """
+        self.conn = None
+        try:
+            self.conn = sqlite3.connect("./data/" + db_file + ".db")
+        except Error as e:
+            print(e)
+
+        return self.conn
+
+    def create_table(self):
+        sql = ''' CREATE TABLE IF NOT EXISTS listing_data (
+          listing_id INTEGER PRIMARY KEY,
+          url TEXT NOT NULL UNIQUE,
+          is_deep_scraped TEXT,
+          is_location_scraped TEXT
+          ) '''
+        cur = self.conn.cursor()
+        cur.execute(sql)
+
+    def flag_listing_data(self, url, field):
+        # 2 queries to accomplish upsert
+        sql = f''' UPDATE listing_data
+            SET {field} = True
+            WHERE url = "{url}" '''
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        sql = f''' INSERT OR IGNORE INTO listing_data
+            (url, {field})
+            VALUES ( "{url}", True ) '''
+        cur.execute(sql)
+        self.conn.commit()
+
+    def open_spider(self, spider):
+        self.create_connection(spider.name)
+        self.create_table()
 
     def close_spider(self, spider):
-        self.file.close()
+        self.conn.close()
 
     def process_item(self, item, spider):
-        url = item["url"]
-        # Add url to visited urls
-        line = json.dumps(url, ensure_ascii=False, indent=4) + "\n"
-        if url not in self.prev_visited_listings:
-            self.file.write(line)
-            self.prev_visited_listings.append(url)
+        # Remove key if available then flag the data in database
+        if item.pop('is_deep_scraped', False):
+            self.flag_listing_data(item['url'], 'is_deep_scraped')
+        if item.pop('is_location_scraped', False):
+            self.flag_listing_data(item['url'], 'is_location_scraped')
 
         return item
 
@@ -132,7 +157,6 @@ class JsonItemWriterPipeline(object):
         self.file.close()
 
     def process_item(self, item, spider):
-        print(item)
         line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
         self.file.write(line)
         return item

@@ -66,7 +66,7 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'scraper.pipelines.ScraperPipeline': 300,
-   'scraper.pipelines.PreviouslyVisitedUrlPipeline': 800,
+   'scraper.pipelines.DatabasePipeline': 799,
    'scraper.pipelines.JsonItemWriterPipeline': 801,
 }
 

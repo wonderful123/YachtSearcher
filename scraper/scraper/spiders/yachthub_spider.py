@@ -2,6 +2,7 @@ from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 import scrapy, re, json
 from furl import furl
+from scraper.database import load_prev_visited
 
 class YachthubSpider(scrapy.Spider):
     name = "yachthub"
@@ -15,17 +16,7 @@ class YachthubSpider(scrapy.Spider):
     def __init__(self, category=None, *args, **kwargs):
         super(YachthubSpider, self).__init__(*args, **kwargs)
         # init function to load previously visited listings then we can check if we need to deep scrape the page later
-        self.prev_visited_listings = []
-        filename = f"data/[{self.name}]-deep-scraped-listings.jl"
-        try:
-            f = open(filename, "r")
-            if f.read(1): # if not empty
-                f.seek(0)
-                contents = f.read()
-                self.prev_visited_listings = [json.loads(str(item)) for item in contents.strip().split('\n')]
-            f.close()
-        except:
-            print('No previously deep scraped listings')
+        self.prev_visited_listings = load_prev_visited(self.name)
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
@@ -54,13 +45,13 @@ class YachthubSpider(scrapy.Spider):
             page_url = furl(url)
             page_url.args["page"] = page
             page_url = page_url.url
-            print('PAGEURL', page_url)
             yield scrapy.Request(page_url, self.parse_listings)
 
 
     def parse_listings(self, response):
         listings = response.xpath("//div[contains(@class, 'List_Row_Listing')]")
-        # l = listings[0]
+
+        # listings = [listings[0]]
         for l in listings:
             location = DefaultLoader(item=Location(), selector=l)
             location.add_xpath('location', './/div[contains(@class, "bw_List_Location")]/text()')
@@ -87,15 +78,17 @@ class YachthubSpider(scrapy.Spider):
             listing.add_value('length', length)
             listing.add_value('price', price)
 
-            if url not in self.prev_visited_listings:
+            # Check if deep scraping the listing is required
+            if (self.prev_visited_listings.get(url) or {}).get('is_deep_scraped'):
+                yield listing.load_item()
+            else:
                 request = scrapy.Request(url, self.parse_listing_page, dont_filter=True)
+                # Pass listing to next function
                 request.cb_kwargs['listing'] = listing.load_item()
                 yield request
-            else:
-                yield listing.load_item()
 
+    # This is the parser for the deep scraped listing page
     def parse_listing_page(self, response, listing):
-        # need to check if page is in already deep scraped listings
         loader = ItemLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//div[contains(@class, "Yacht_HullMaterial")]/div[contains(@class,"Field")]/text()')
         loader.add_xpath('full_description', '//div[contains(@class, "Yacht_Desc")]/div[contains(@class,"Field")]/text()')
@@ -105,6 +98,6 @@ class YachthubSpider(scrapy.Spider):
         meta_data = json.loads('{' + script_meta_data + '}')
         loader.add_value('make', meta_data['make'])
         loader.add_value('model', meta_data['model'])
+        loader.add_value('is_deep_scraped', True) # flag item for database
         listing = loader.load_item()
-        print(listing)
         return listing

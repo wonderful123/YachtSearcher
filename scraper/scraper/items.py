@@ -35,6 +35,7 @@ class Location(scrapy.Item):
     state_code = scrapy.Field()
     regions = scrapy.Field()
 
+# Note: have to add TakeFirst to fields that are deep scraped because of how item loader works
 class Listing(scrapy.Item):
     title = scrapy.Field()
     url = scrapy.Field()
@@ -51,3 +52,5 @@ class Listing(scrapy.Item):
     year = scrapy.Field(input_processor=MapCompose(str.strip), output_processor=TakeFirst())
     location = scrapy.Field()
     price = scrapy.Field()
+    is_deep_scraped = scrapy.Field(input_process=MapCompose(printer), output_process=TakeFirst())
+    is_location_scraped = scrapy.Field(output_process=TakeFirst())
