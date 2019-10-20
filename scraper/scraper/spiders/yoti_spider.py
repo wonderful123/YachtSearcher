@@ -1,6 +1,6 @@
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
-from scrapy.loader.processors import MapCompose
+from scrapy.loader.processors import MapCompose, Join
 import scrapy, re, json
 from furl import furl
 from scraper.database import Database
@@ -57,8 +57,8 @@ class YotiSpider(scrapy.Spider):
             location.load_item()
 
             price = DefaultLoader(item=Price(), selector=l)
-            # Price is in title "Farr 30 - Brannew - $65,000" - split right then add AUD
-            price.add_xpath('original', ".//span[@class='title']/a/text()", MapCompose(lambda s: "AUD "+s.rsplit(' ',1)[1]))
+            # Price is in title "Farr 30 - Brannew - $65,000" - split right then add AUD unless other currency
+            price.add_xpath('original', ".//span[@class='title']/a/text()", MapCompose(lambda s: ("AUD "+s.rsplit(' ',1)[1]) if re.search('\$',s) else s))
             price.load_item()
 
             length = DefaultLoader(item=Length(), selector=l)
@@ -66,10 +66,10 @@ class YotiSpider(scrapy.Spider):
             length.load_item()
 
             listing = DefaultLoader(item=Listing(), selector=l)
-            listing.add_xpath('description', 'normalize-space(.//div[@class="text"]/text())')
+            listing.add_xpath('description', 'normalize-space(.//div[@class="text"]/p/text())')
             listing.add_xpath('year', './/span[contains(@class, "search-result-year")]/text()', re='\d+')
             listing.add_xpath('sale_status', './/span[@class="price"]/text()', MapCompose(parse_sale_status))
-            listing.add_xpath('title', './/span[@class=title]/a/text()', MapCompose(parse_title))
+            listing.add_xpath('title', './/span[@class="title"]/a/text()', MapCompose(parse_title))
             url = response.urljoin(l.xpath(".//span[@class='title']/a/@href").get())
             listing.add_value('url', url)
             listing.add_value('uniq_id', 'yoti-' + re.findall('(?<=listing\/).*', url)[0])
@@ -91,10 +91,10 @@ class YotiSpider(scrapy.Spider):
     def parse_listing_page(self, response, listing):
         loader = ItemLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//strong[text()="Hull Type"]/../span/text()', re='(?<=: ).*')
-        loader.add_xpath('full_description', '//div[@class="desc"]/text()')
-        loader.add_xpath('images', '//div[@class="galleria-thumbnails"]//div[contains(@class,"galleria-image")]//img/@src', re=r'_thumb') # strip thumb from thumbnail filename to get full image
-        loader.add_value('make', '//strong[text()="Brand"]/../span/text()', re='(?<=: ).*')
-        loader.add_value('model', '//strong[text()="Model"]/../span/text()', re='(?<=: ).*')
+        loader.add_xpath('full_description', '//div[@class="desc"]/p/text()', Join())
+        loader.add_xpath('images', '//div[@id="galleria"]//a/@href')
+        loader.add_xpath('make', '//strong[text()="Brand"]/../span/text()', re='(?<=: ).*')
+        loader.add_xpath('model', '//strong[text()="Model"]/../span/text()', re='(?<=: ).*')
         loader.add_value('is_deep_scraped', 'true') # flag item for database
         listing = loader.load_item()
         return listing
@@ -108,6 +108,5 @@ def parse_sale_status(s):
     return s
 
 def parse_title(s):
-    # return first 2 segments only
-    split = s.split(' - ')
-    return f"{split[0]} - {split[1]}"
+    # Remove price from title
+    return re.sub(' - .\d*,\d*$', '', s)
