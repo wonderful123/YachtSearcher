@@ -44,19 +44,74 @@ def parse_location(query):
 # Return dict with meters, imperial string and total inches
 def parse_length(length):
     obj = {}
-    m = re.search('(\d+).?(\d*)\s?(?=m)', length)
-    obj["meters"] = float(m.group(0)) if m else None
+
+    # Search containing 34' 26", etc
     imperial = re.search('(\d+)\'\s?((\d*)")?', length)
-    obj["imperial"] = imperial.group(0) if imperial else None
     if imperial:
-        feet = re.search("(\d+)(?=')", obj["imperial"]).group(0)
-        inches = re.search('(\d+)(?=")', obj["imperial"])
-        inches = inches.group(0) if inches else 0
-        obj["total_inches"] = int(feet) * 12 + int(inches)
-    else:
-        obj["total_inches"] = None
+      obj["imperial"] = imperial.group(0).strip()
+      feet = re.search("(\d+)(?=')", obj["imperial"]).group(0)
+      inches = re.search('(\d+)(?=")', obj["imperial"])
+      inches = inches.group(0) if inches else 0
+      obj["total_inches"] = int(feet) * 12 + int(inches)
+
+    elif not imperial:
+      # Search containing 34.00 Feet
+      imperial = re.search('\d+.?\d+?(?=\s?(?i)feet)', length)
+      if imperial:
+        l = float(imperial.group(0))
+        obj["total_inches"] = int(l) * 12
+        feet = round(int(l))
+        inches = int(l%12)
+        obj["imperial"] = f"{feet}' {inches}\""
+
+    elif not imperial:
+      obj["imperial"] = None
+
+    # search for meters string, otherwise calculate from total_inches if available
+    m = re.search('(\d+).?(\d*)\s?(?=m)', length)
+    if m:
+      obj["meters"] = float(m.group(0))
+    elif obj.get("total_inches"):
+      obj["meters"] = obj["total_inches"] * 0.0254
 
     return obj
+
+def parse_price(price):
+    """Parses price string into currency object
+
+    Parameters
+    ----------
+    price : string
+        String with currency, symbol, etc.
+        Can handle "$1.29 Million"
+
+    Returns
+    -------
+    dict
+        Returns dict containing - original, currency code, name, symbol, value
+
+    """
+    original = price
+    # Check for "million" or "M", etc
+    for token in price.split(' '):
+      token = token.lower()
+      if token in ['million','m','mm']:
+        multiplier = 1e6
+        amount = float(re.findall("\d+\.\d+", price)[0])
+        price = re.sub("\d+\.\d+", str(amount * multiplier), price) # replace price with multiplied amount
+        price = re.sub(token, "", price, flags=re.IGNORECASE) # remove token
+        price = price.strip()
+
+    # Parses doesn't seem to handle just 'AU'
+    price = price.replace('AU','AUD').replace('NZ','NZD').replace('US','USD')
+    currency = iso4217parse.parse(price)[0]
+    return {
+      'original': original,
+      'code': currency.alpha3,
+      'name': currency.name,
+      'symbol': currency.symbols[0],
+      'value': float(re.sub("\D", "", price))
+    }
 
 class ScraperPipeline(object):
     def process_item(self, item, spider):
@@ -66,16 +121,8 @@ class ScraperPipeline(object):
             item['length'] = lengths
 
         if item.get('price'):
-            original = item['price'].get_collected_values('original')[0]
-            price = original.replace('AU','AUD').replace('NZ','NZD').replace('US','USD')
-            currency = iso4217parse.parse(price)[0]
-            data = {
-              'original': original,
-              'code': currency.alpha3,
-              'name': currency.name,
-              'symbol': currency.symbols[0],
-              'value': float(re.sub("\D", "", price))
-            }
+            item['price'] = item['price'].get_collected_values('original')[0]
+            data = parse_price(item['price'])
             item['price'] = data
 
         if item.get('location'):
