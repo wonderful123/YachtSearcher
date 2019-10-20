@@ -44,35 +44,34 @@ def parse_location(query):
 # Return dict with meters, imperial string and total inches
 def parse_length(length):
     obj = {}
+    # Replace "Feet" with '
+    length = re.sub(r'(?i)\s*feet', "'", length)
 
-    # Search containing 34' 26", etc
-    imperial = re.search('(\d+)\'\s?((\d*)")?', length)
-    if imperial:
-      obj["imperial"] = imperial.group(0).strip()
-      feet = re.search("(\d+)(?=')", obj["imperial"]).group(0)
-      inches = re.search('(\d+)(?=")', obj["imperial"])
+    # Check if string contains imperial symbol ' or "
+    is_imperial = re.search(r"'|\"", length)
+    is_metric = re.search(r'\d+.?\d*\s*(?=m)', length)
+
+    if is_imperial:
+      imperial = re.search(r'(\d*(.\d*)?\')(\s*\d+")?', length).group(0)
+      feet = re.search(r"\d+.?\d*(?=')", imperial)
+      feet = feet.group(0) if feet else 0
+      inches = re.search(r'(\d+)(?=")', imperial)
       inches = inches.group(0) if inches else 0
-      obj["total_inches"] = int(feet) * 12 + int(inches)
+      total_inches = int(float(feet) * 12 + int(inches))
+      obj["total_inches"] = total_inches
+      obj["imperial"] = f"{int(total_inches/12)}' {total_inches%12}\""
+      obj["meters"] = total_inches * 0.0254
 
-    elif not imperial:
-      # Search containing 34.00 Feet
-      imperial = re.search('\d+.?\d+?(?=\s?(?i)feet)', length)
-      if imperial:
-        l = float(imperial.group(0))
-        obj["total_inches"] = int(l) * 12
-        feet = round(int(l))
-        inches = int(l%12)
-        obj["imperial"] = f"{feet}' {inches}\""
+    elif is_metric:
+      obj["meters"] = float(is_metric.group(0))
+      total_inches = int(obj["meters"] / 0.0254)
+      obj["total_inches"] = total_inches
+      obj["imperial"] = f"{int(total_inches/12)}' {total_inches%12}\""
 
-    elif not imperial:
-      obj["imperial"] = None
-
-    # search for meters string, otherwise calculate from total_inches if available
-    m = re.search('(\d+).?(\d*)\s?(?=m)', length)
-    if m:
-      obj["meters"] = float(m.group(0))
-    elif obj.get("total_inches"):
-      obj["meters"] = obj["total_inches"] * 0.0254
+    # replace 0" and 0' if that is added
+    if obj.get('imperial'):
+        obj["imperial"] = re.sub("^0' ", '', obj["imperial"])
+        obj["imperial"] = re.sub(' 0"$', '', obj["imperial"])
 
     return obj
 
@@ -97,8 +96,8 @@ def parse_price(price):
       token = token.lower()
       if token in ['million','m','mm']:
         multiplier = 1e6
-        amount = float(re.findall("\d+\.\d+", price)[0])
-        price = re.sub("\d+\.\d+", str(amount * multiplier), price) # replace price with multiplied amount
+        amount = float(re.findall(r"\d+\.\d+", price)[0])
+        price = re.sub(r"\d+\.\d+", str(amount * multiplier), price) # replace price with multiplied amount
         price = re.sub(token, "", price, flags=re.IGNORECASE) # remove token
         price = price.strip()
 
@@ -110,7 +109,7 @@ def parse_price(price):
       'code': currency.alpha3,
       'name': currency.name,
       'symbol': currency.symbols[0],
-      'value': float(re.sub("\D", "", price))
+      'value': float(re.sub(r"\D", "", price))
     }
 
 class ScraperPipeline(object):
