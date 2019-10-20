@@ -2,7 +2,7 @@ from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 import scrapy, re, json
 from furl import furl
-from scraper.database import load_prev_visited
+from scraper.database import Database
 
 class YachthubSpider(scrapy.Spider):
     name = "yachthub"
@@ -16,7 +16,7 @@ class YachthubSpider(scrapy.Spider):
     def __init__(self, category=None, *args, **kwargs):
         super(YachthubSpider, self).__init__(*args, **kwargs)
         # init function to load previously visited listings then we can check if we need to deep scrape the page later
-        self.prev_visited_listings = load_prev_visited(self.name)
+        self.prev_visited_listings = Database(self.name).load_prev_visited()
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)

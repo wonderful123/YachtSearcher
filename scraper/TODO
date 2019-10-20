@@ -1,2 +1,3 @@
 - Download images and thumbnails: https://docs.scrapy.org/en/latest/topics/media-pipeline.html#topics-images-thumbnails
 - Refactor database code into module
+- Add another listing site

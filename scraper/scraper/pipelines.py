@@ -2,6 +2,7 @@
 import re, json, iso4217parse, datetime
 from opencage.geocoder import OpenCageGeocode
 from opencage.geocoder import InvalidInputError, RateLimitExceededError, UnknownError
+from scraper.database import Database
 
 API_KEY = "a7230342313c439593062d9bd7a4530f"
 geocoder = OpenCageGeocode(API_KEY)
@@ -90,50 +91,19 @@ class ScraperPipeline(object):
 
         return item
 
-import sqlite3
-from sqlite3 import Error
-
 class DatabasePipeline(object):
-    def create_connection(self, db_file):
-        """ create a database connection to the SQLite database
-            specified by db_file
-        :param db_file: database file
-        :return: Connection object or None
-        """
-        self.conn = None
-        try:
-            self.conn = sqlite3.connect("./data/" + db_file + ".db")
-        except Error as e:
-            print(e)
-
-        return self.conn
-
-    def flag_listing_data(self, url, field):
-        # 2 queries to accomplish upsert
-        sql = f''' UPDATE listing_data
-            SET {field} = "true"
-            WHERE url = "{url}" '''
-        cur = self.conn.cursor()
-        cur.execute(sql)
-        
-        sql = f''' INSERT OR IGNORE INTO listing_data
-            (url, {field})
-            VALUES ( "{url}", 'true' ) '''
-        cur.execute(sql)
-        self.conn.commit()
-
     def open_spider(self, spider):
-        self.create_connection(spider.name)
+        self.db = Database(spider.name)
 
     def close_spider(self, spider):
-        self.conn.close()
+        self.db.close_connection()
 
     def process_item(self, item, spider):
         # Remove key if available then flag the data in database
         if item.pop('is_deep_scraped', False):
-            self.flag_listing_data(item['url'], 'is_deep_scraped')
+            self.db.flag_listing_data(item['url'], 'is_deep_scraped')
         if item.pop('is_location_scraped', False):
-            self.flag_listing_data(item['url'], 'is_location_scraped')
+            self.db.flag_listing_data(item['url'], 'is_location_scraped')
 
         return item
 
