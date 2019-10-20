@@ -8,8 +8,11 @@ def printer(values):
         print(v)
         yield v
 
+def strip_string(v):
+    return v.strip() if type(v) is str else v
+
 class DefaultLoader(ItemLoader):
-    default_input_processor = Identity()
+    default_input_processor = MapCompose(strip_string)
     default_output_processor = TakeFirst()
 
 class Length(scrapy.Item):
@@ -41,15 +44,15 @@ class Listing(scrapy.Item):
     url = scrapy.Field()
     description = scrapy.Field()
     full_description = scrapy.Field()
-    sale_status = scrapy.Field(input_processor=MapCompose(str.title), output_processor=TakeFirst())
+    sale_status = scrapy.Field(input_processor=MapCompose(str.title))
     length = scrapy.Field()
     thumbnail = scrapy.Field()
     images = scrapy.Field()
     hull_material = scrapy.Field(output_processor=TakeFirst())
     uniq_id = scrapy.Field()
-    make = scrapy.Field(output_processor=TakeFirst())
+    make = scrapy.Field()
     model = scrapy.Field(output_processor=TakeFirst())
-    year = scrapy.Field(input_processor=MapCompose(str.strip), output_processor=TakeFirst())
+    year = scrapy.Field(input_processor=MapCompose(str.strip))
     location = scrapy.Field()
     price = scrapy.Field()
     is_deep_scraped = scrapy.Field(input_process=MapCompose(printer), output_process=TakeFirst())

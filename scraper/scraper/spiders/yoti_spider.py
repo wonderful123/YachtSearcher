@@ -58,7 +58,7 @@ class YotiSpider(scrapy.Spider):
 
             price = DefaultLoader(item=Price(), selector=l)
             # Price is in title "Farr 30 - Brannew - $65,000" - split right then add AUD unless other currency
-            price.add_xpath('original', ".//span[@class='title']/a/text()", MapCompose(lambda s: ("AUD "+s.rsplit(' ',1)[1]) if re.search('\$',s) else s))
+            price.add_xpath('original', ".//span[@class='title']/a/text()", MapCompose(parse_price))
             price.load_item()
 
             length = DefaultLoader(item=Length(), selector=l)
@@ -89,7 +89,7 @@ class YotiSpider(scrapy.Spider):
 
     # This is the parser for the deep scraped listing page
     def parse_listing_page(self, response, listing):
-        loader = ItemLoader(item=listing, response=response)
+        loader = DefaultLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//strong[text()="Hull Type"]/../span/text()', re='(?<=: ).*')
         loader.add_xpath('full_description', '//div[@class="desc"]/p/text()', Join())
         loader.add_xpath('images', '//div[@id="galleria"]//a/@href')
@@ -109,4 +109,10 @@ def parse_sale_status(s):
 
 def parse_title(s):
     # Remove price from title
-    return re.sub(' - .\d*,\d*$', '', s)
+    return re.sub(' - .\d*,\d*\s*$', '', s)
+
+def parse_price(s):
+    price = s.strip().rsplit(' ',1)[1]
+    # append default currency if $ included
+    price = "AUD " + price if re.search('\$',price) else price
+    return price
