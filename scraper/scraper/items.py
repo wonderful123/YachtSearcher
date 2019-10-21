@@ -47,7 +47,7 @@ class Listing(scrapy.Item):
     sale_status = scrapy.Field(input_processor=MapCompose(str.title))
     length = scrapy.Field()
     thumbnail = scrapy.Field()
-    images = scrapy.Field()
+    images = scrapy.Field(output_processor=Identity())
     hull_material = scrapy.Field(output_processor=TakeFirst())
     uniq_id = scrapy.Field()
     make = scrapy.Field()
