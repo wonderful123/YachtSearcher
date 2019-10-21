@@ -1,6 +1,6 @@
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
-from scrapy.loader.processors import MapCompose, Join
+from scrapy.loader.processors import MapCompose, Join, TakeFirst
 import scrapy, re, json
 from furl import furl
 from scraper.database import Database
@@ -59,6 +59,7 @@ class YotiSpider(scrapy.Spider):
 
             price = DefaultLoader(item=Price(), selector=l)
             # Price is in title "Farr 30 - Brannew - $65,000" - split right then add AUD unless other currency
+            price.add_xpath('original', './/span[@class="price"]/text()', MapCompose(parse_price))
             price.add_xpath('original', ".//span[@class='title']/a/text()", MapCompose(parse_price))
             price.load_item()
 
@@ -73,7 +74,7 @@ class YotiSpider(scrapy.Spider):
             listing.add_xpath('title', './/span[@class="title"]/a/text()', MapCompose(parse_title))
             url = response.urljoin(l.xpath(".//span[@class='title']/a/@href").get())
             listing.add_value('url', url)
-            listing.add_value('uniq_id', 'yoti-' + re.findall('(?<=listing\/).*', url)[0])
+            listing.add_xpath('uniq_id', './/span[@class="title"]/a/text()', MapCompose(parse_uniq_id))
             listing.add_xpath('thumbnail', './/div[contains(@class,"thumb")]//img/@src')
             listing.add_value('location', location)
             listing.add_value('length', length)
@@ -109,16 +110,30 @@ def parse_sale_status(s):
     s = " ".join(s.split()) # normalize spaces
     return s
 
-def parse_title(s):
+def parse_title(title):
     # Remove price from title
-    return re.sub(' -?\s*.\d*,\d*\s*$', '', s)
+    title = re.sub(r'(\$|€).*', '', title)
+    title = title.strip()
+    items = re.split("\s*-\s*", title)
+    title = f"{items[0]} - {items[1]}"
+    return title
 
 def parse_price(s):
-    # Price comes in as title string - need to extract
-    price = s.strip().rsplit(' ',1)[1]
-    # If price is not available
-    if re.search(r'($i)sold', s):
-        return 'Sold'
-    # append default currency if $ included
-    price = "AUD " + price if re.search('\$',price) else price
-    return price
+    # Grab the price and add AUD to it if it contains a $ sign
+    currency_symbols = u'[$¢£¤¥֏؋৲৳৻૱௹฿៛\u20a0-\u20bd\ua838\ufdfc\ufe69\uff04\uffe0\uffe1\uffe5\uffe6]'
+    s = re.findall(currency_symbols+r'.*', s)
+    if s:
+        s = s[0]
+        if re.search('\$', s):
+            return "AUD " + s
+        return s
+    return ''
+
+def parse_uniq_id(title):
+    # Take title such as "GP42 - Elena Nova - SOLD"
+    # Return yoti-gp42-elena-nova
+    title = re.sub('(\$|€).*', '', title)
+    title = title.strip()
+    items = re.split("\s*-\s*", title)
+    uniq_id = f"yoti-{items[0]}-{items[1]}".lower().replace(' ', '-')
+    return uniq_id

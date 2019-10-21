@@ -75,7 +75,7 @@ def parse_length(length):
 
     return obj
 
-def parse_price(price):
+def parse_price(s):
     """Parses price string into currency object
 
     Parameters
@@ -90,31 +90,47 @@ def parse_price(price):
         Returns dict containing - original, currency code, name, symbol, value
         otherwise None if not a valid price
     """
-    # return None if no digits in price
-    if re.search('\d+', price): return None
-    
-    original = price
-    # Check for "million" or "M", etc
-    for token in price.split(' '):
-      token = token.lower()
-      if token in ['million','m','mm']:
-        multiplier = 1e6
-        amount = float(re.findall(r"\d+\.\d+", price)[0])
-        price = re.sub(r"\d+\.\d+", str(amount * multiplier), price) # replace price with multiplied amount
-        price = re.sub(token, "", price, flags=re.IGNORECASE) # remove token
-        price = price.strip()
+    # Default to USD if currency in dollars but nothing specified
+    DEFAULT_DOLLARS = 'USD'
 
-    # Parses doesn't seem to handle just 'AU'
-    price = price.replace('AU','AUD').replace('NZ','NZD').replace('US','USD')
-    price = price.replace(' ', '')
+    price = re.search(r'(\d{1,3}(\,\d{3})*|(\d+))(\.\d+)?', s)
+    if price:
+        price = price.group(0)
+    else:
+        return None
+
+    # Check for 'Million' text
+    million = re.search('(?i)million', s)
+    if million:
+        price = '{:0,d}'.format(int(float(price) * 1e6))
+
+    # Extract currency symbol if available
+    currency_symbols = u'[$¢£¤¥֏؋৲৳৻૱௹฿៛\u20a0-\u20bd\ua838\ufdfc\ufe69\uff04\uffe0\uffe1\uffe5\uffe6]'
+    symbol = re.findall(currency_symbols, s)
+    if symbol:
+        symbol = symbol[0]
+        price = symbol + price
+
+    formatted = price
+
+    # If $, check what kind
+    if symbol == '$':
+        code_list = ['AU', 'NZ']
+        c = DEFAULT_DOLLARS
+        for code in code_list:
+            currency_type = re.search('(?i)' + code, s)
+            if currency_type:
+                c = code + "D"  # eg. AUD
+                break
+        price = f"{c} {price}"
 
     currency = iso4217parse.parse(price)[0]
     return {
-      'original': original,
-      'code': currency.alpha3,
-      'name': currency.name,
-      'symbol': currency.symbols[0],
-      'value': float(re.sub(r"\D", "", price))
+        'formatted': formatted,
+        'code': currency.alpha3,
+        'name': currency.name,
+        'symbol': currency.symbols[0],
+        'value': float(re.sub(r"\D", "", price))
     }
 
 class ScraperPipeline(object):
@@ -125,7 +141,6 @@ class ScraperPipeline(object):
             item['length'] = lengths
 
         if item.get('price'):
-            print('ITEMPRICE',item['price'].get_collected_values('original'))
             item['price'] = item['price'].get_collected_values('original')[0]
             item['price'] = parse_price(item['price'])
 
