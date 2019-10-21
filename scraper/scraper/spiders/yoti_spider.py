@@ -4,6 +4,7 @@ from scrapy.loader.processors import MapCompose, Join
 import scrapy, re, json
 from furl import furl
 from scraper.database import Database
+from scrapy.exceptions import IgnoreRequest
 
 class YotiSpider(scrapy.Spider):
     name = "yoti"
@@ -101,18 +102,23 @@ class YotiSpider(scrapy.Spider):
 
 def parse_sale_status(s):
     s = s.replace("Price : " , "") # remove leading tag
-    s = re.sub("(\$|€)\d+,\d+", "", s) # remove price
+    s = re.sub("(\$|€)\d+(,|.)\d+", "", s) # remove price
     s = re.sub("- Now", "", s) # remove "- Now"
+    s = re.sub("($i)\s*million", '', s) # remove "Million"
     s = s.strip().title() # remove extra spaces and title case
     s = " ".join(s.split()) # normalize spaces
     return s
 
 def parse_title(s):
     # Remove price from title
-    return re.sub(' - .\d*,\d*\s*$', '', s)
+    return re.sub(' -?\s*.\d*,\d*\s*$', '', s)
 
 def parse_price(s):
+    # Price comes in as title string - need to extract
     price = s.strip().rsplit(' ',1)[1]
+    # If price is not available
+    if re.search(r'($i)sold', s):
+        return 'Sold'
     # append default currency if $ included
     price = "AUD " + price if re.search('\$',price) else price
     return price

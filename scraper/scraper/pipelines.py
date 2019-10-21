@@ -88,8 +88,11 @@ def parse_price(price):
     -------
     dict
         Returns dict containing - original, currency code, name, symbol, value
-
+        otherwise None if not a valid price
     """
+    # return None if no digits in price
+    if re.search('\d+', price): return None
+    
     original = price
     # Check for "million" or "M", etc
     for token in price.split(' '):
@@ -103,6 +106,8 @@ def parse_price(price):
 
     # Parses doesn't seem to handle just 'AU'
     price = price.replace('AU','AUD').replace('NZ','NZD').replace('US','USD')
+    price = price.replace(' ', '')
+
     currency = iso4217parse.parse(price)[0]
     return {
       'original': original,
@@ -120,9 +125,9 @@ class ScraperPipeline(object):
             item['length'] = lengths
 
         if item.get('price'):
+            print('ITEMPRICE',item['price'].get_collected_values('original'))
             item['price'] = item['price'].get_collected_values('original')[0]
-            data = parse_price(item['price'])
-            item['price'] = data
+            item['price'] = parse_price(item['price'])
 
         if item.get('location'):
             item['location'] = item['location'].get_collected_values('location')[0]
