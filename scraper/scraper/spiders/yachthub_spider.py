@@ -89,7 +89,7 @@ class YachthubSpider(scrapy.Spider):
 
     # This is the parser for the deep scraped listing page
     def parse_listing_page(self, response, listing):
-        loader = ItemLoader(item=listing, response=response)
+        loader = DefaultLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//div[contains(@class, "Yacht_HullMaterial")]/div[contains(@class,"Field")]/text()')
         loader.add_xpath('full_description', '//div[contains(@class, "Yacht_Desc")]/div[contains(@class,"Field")]/text()')
         loader.add_xpath('images', '//div[@id="galleria"]/a/img/@src')
