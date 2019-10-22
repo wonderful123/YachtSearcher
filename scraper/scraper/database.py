@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+import os
 
 class Database:
     """Handles simple sqlite database to keep track of urls already visited.
@@ -28,9 +29,10 @@ class Database:
         :param db_name: database file (use spider name)
         :return: Connection object or None
         """
+        os.makedirs("data/db", exist_ok=True)
         conn = None
         try:
-            conn = sqlite3.connect("./data/" + db_name + ".db")
+            conn = sqlite3.connect("./data/db/" + db_name + ".db")
         except Error as e:
             print(e)
 
