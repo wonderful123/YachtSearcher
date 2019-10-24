@@ -75,7 +75,7 @@ class YotiSpider(scrapy.Spider):
             url = response.urljoin(l.xpath(".//span[@class='title']/a/@href").get())
             listing.add_value('url', url)
             listing.add_xpath('uniq_id', './/span[@class="title"]/a/text()', MapCompose(parse_uniq_id))
-            listing.add_xpath('thumbnail', './/div[contains(@class,"thumb")]//img/@src')
+            listing.add_xpath('thumbnail_url', './/div[contains(@class,"thumb")]//img/@src')
             listing.add_value('location', location)
             listing.add_value('length', length)
             listing.add_value('price', price)
@@ -94,7 +94,7 @@ class YotiSpider(scrapy.Spider):
         loader = DefaultLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//strong[text()="Hull Type"]/../span/text()', re='(?<=: ).*')
         loader.add_xpath('full_description', '//div[@class="desc"]/p/text()', Join())
-        loader.add_xpath('images', '//div[@id="galleria"]//a/@href')
+        loader.add_xpath('image_urls', '//div[@id="galleria"]//a/@href')
         loader.add_xpath('make', '//strong[text()="Brand"]/../span/text()', re='(?<=: ).*')
         loader.add_xpath('model', '//strong[text()="Model"]/../span/text()', re='(?<=: ).*')
         loader.add_value('is_deep_scraped', 'true') # flag item for database

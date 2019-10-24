@@ -62,12 +62,15 @@ ROBOTSTXT_OBEY = True
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
+IMAGES_STORE = './data/images'
+
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'scraper.pipelines.ScraperPipeline': 300,
-   'scraper.pipelines.DatabasePipeline': 799,
-   'scraper.pipelines.JsonItemWriterPipeline': 801,
+    'scraper.pipelines.BoatImagesPipeline': 2,
+    'scraper.pipelines.ScraperPipeline': 300,
+    'scraper.pipelines.DatabasePipeline': 799,
+    'scraper.pipelines.JsonItemWriterPipeline': 801,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

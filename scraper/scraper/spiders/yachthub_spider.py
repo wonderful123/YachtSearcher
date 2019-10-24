@@ -73,7 +73,7 @@ class YachthubSpider(scrapy.Spider):
             url = response.urljoin(l.xpath('.//div[contains(@class, "List_MakeModel")]/a/@href').get())
             listing.add_value('url', url)
             listing.add_value('uniq_id', 'yachthub-' + re.search('\d*$', url).group(0))
-            listing.add_xpath('thumbnail', './/span[contains(@class, "thumb-info")]/img/@src')
+            listing.add_xpath('thumbnail_url', './/span[contains(@class, "thumb-info")]/img/@src')
             listing.add_value('location', location)
             listing.add_value('length', length)
             listing.add_value('price', price)
@@ -92,7 +92,7 @@ class YachthubSpider(scrapy.Spider):
         loader = DefaultLoader(item=listing, response=response)
         loader.add_xpath('hull_material', '//div[contains(@class, "Yacht_HullMaterial")]/div[contains(@class,"Field")]/text()')
         loader.add_xpath('full_description', '//div[contains(@class, "Yacht_Desc")]/div[contains(@class,"Field")]/text()')
-        loader.add_xpath('images', '//div[@id="galleria"]/a/img/@src')
+        loader.add_xpath('image_urls', '//div[@id="galleria"]/a/img/@src')
         # get make and model hidden in script meta data
         script_meta_data = response.xpath('normalize-space(//script[@id="loopa_info"])').get()
         meta_data = json.loads('{' + script_meta_data + '}')

@@ -186,3 +186,23 @@ class JsonItemWriterPipeline(object):
         line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
         self.file.write(line)
         return item
+
+
+from scrapy.pipelines.images import ImagesPipeline
+import scrapy
+class BoatImagesPipeline(ImagesPipeline):
+    def get_media_requests(self, item, info):
+        if item.get('image_urls'):
+            for image_url in item['image_urls']:
+                yield scrapy.Request(image_url)
+        if item.get('thumbnail_url'):
+            yield scrapy.Request(item['thumbnail_url'])
+
+    def item_completed(self, results, item, info):
+        for download_status, result in results:
+            if result['url'] == item.get('thumbnail_url'):
+                item['thumbnail'] = result['path']
+            else:
+                image_paths = [x['path'] for ok, x in results if ok]
+                item['images'] = image_paths
+        return item

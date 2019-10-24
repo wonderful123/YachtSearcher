@@ -29,7 +29,7 @@ class Database:
         :param db_name: database file (use spider name)
         :return: Connection object or None
         """
-        os.makedirs("data/db", exist_ok=True)
+        os.makedirs("./data/db", exist_ok=True)
         conn = None
         try:
             conn = sqlite3.connect("./data/db/" + db_name + ".db")
