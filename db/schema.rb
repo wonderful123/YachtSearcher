@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_04_063401) do
+ActiveRecord::Schema.define(version: 2019_10_25_060717) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_10_04_063401) do
   end
 
   create_table "boats", force: :cascade do |t|
-    t.float "length"
+    t.float "length_inches"
     t.decimal "year"
     t.string "title"
     t.text "description"
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 2019_10_04_063401) do
     t.float "latitude"
     t.float "longitude"
     t.string "continent"
+    t.string "length_imperial"
+    t.float "length_meters"
+    t.string "price_code"
+    t.string "price_symbol"
+    t.string "price_formatted"
+    t.string "price_name"
+    t.text "full_description"
   end
 
   create_table "boats_regions", id: false, force: :cascade do |t|
@@ -88,6 +95,11 @@ ActiveRecord::Schema.define(version: 2019_10_04_063401) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uniq_id"
+    t.text "full_description"
+    t.string "price_code"
+    t.string "price_symbol"
+    t.string "price_formatted"
+    t.string "price_name"
     t.index ["boat_id"], name: "index_listings_on_boat_id"
     t.index ["site_id"], name: "index_listings_on_site_id"
   end

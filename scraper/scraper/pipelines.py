@@ -176,14 +176,14 @@ class DatabasePipeline(object):
 class JsonItemWriterPipeline(object):
     def open_spider(self, spider):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-        filename = f"data/[{spider.name}]-{timestamp}.jl"
+        filename = f"data/processing/[{spider.name}]-{timestamp}.jl"
         self.file = open(filename, 'w')
 
     def close_spider(self, spider):
         self.file.close()
 
     def process_item(self, item, spider):
-        line = json.dumps(dict(item), ensure_ascii=False, indent=4) + "\n"
+        line = json.dumps(dict(item)) + "\n"
         self.file.write(line)
         return item
 

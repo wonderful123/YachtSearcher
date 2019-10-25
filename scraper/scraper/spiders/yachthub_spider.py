@@ -29,7 +29,7 @@ class YachthubSpider(scrapy.Spider):
         start = int(self.start_index) or 1  # from command line arguments or default
         # Get total pages
         last_page_link = response.css("ul.pagination li a")[-1].attrib['href']
-        total_pages = furl(last_page_link).args["page"]
+        total_pages = int(furl(last_page_link).args["page"])
 
         # convert to int in case it was passed as string from command line
         self.page_depth = int(self.page_depth)
