@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import re, json, iso4217parse, datetime
+import re, json, iso4217parse, datetime, os
 from opencage.geocoder import OpenCageGeocode
 from opencage.geocoder import InvalidInputError, RateLimitExceededError, UnknownError
 from scraper.database import Database
@@ -175,12 +175,16 @@ class DatabasePipeline(object):
 
 class JsonItemWriterPipeline(object):
     def open_spider(self, spider):
+        os.makedirs("./data/processing", exist_ok=True)
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
-        filename = f"data/processing/[{spider.name}]-{timestamp}.jl"
-        self.file = open(filename, 'w')
+        self.filename = f"data/processing/[{spider.name}]-{timestamp}.jl"
+        self.file = open(self.filename, 'w')
 
     def close_spider(self, spider):
         self.file.close()
+        # move the file after it has processed so there's no conflict if rails
+        # loads it at the same time
+        os.rename(self.filename, self.filename.replace('processing/', ''))
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item)) + "\n"

@@ -10,7 +10,7 @@ class YachthubSpider(scrapy.Spider):
     start_index = 1
     # this can be overridden from the command line:
     # scrapy crawl spidername -a page_depth=100
-    page_depth = 1
+    page_depth = 0
     scrape_location = "false"
 
     def __init__(self, category=None, *args, **kwargs):
@@ -34,7 +34,7 @@ class YachthubSpider(scrapy.Spider):
         # convert to int in case it was passed as string from command line
         self.page_depth = int(self.page_depth)
         # leave at all for 0 or set less.
-        if self.page_depth != 0 or self.page_depth < total_pages:
+        if self.page_depth != 0 and self.page_depth < total_pages:
             total_pages = self.page_depth
 
         # don't forget to also parse listings on first page!

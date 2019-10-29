@@ -5,4 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-site = Site.create({name: 'YachtHub', url: 'https://www.yachthub.com'})
+site = Site.create({name: 'yachthub', url: 'https://www.yachthub.com'})
+Site.create({name: 'yoti', url: 'https://www.yoti.com.au'})

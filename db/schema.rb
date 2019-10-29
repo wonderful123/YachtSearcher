@@ -34,10 +34,10 @@ ActiveRecord::Schema.define(version: 2019_10_25_060717) do
   end
 
   create_table "boats", force: :cascade do |t|
+    t.float "length_inches"
     t.decimal "year"
     t.string "title"
     t.text "description"
-    t.text "full_description"
     t.string "make"
     t.string "model"
     t.decimal "cabins"
@@ -48,23 +48,23 @@ ActiveRecord::Schema.define(version: 2019_10_25_060717) do
     t.string "state"
     t.string "state_code"
     t.string "hull_material"
+    t.float "price"
     t.string "sale_status"
     t.string "boat_name"
     t.date "first_found"
     t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.float "latitude"
     t.float "longitude"
     t.string "continent"
-    t.float "length_inches"
     t.string "length_imperial"
     t.float "length_meters"
-    t.float "price"
     t.string "price_code"
     t.string "price_symbol"
     t.string "price_formatted"
     t.string "price_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.text "full_description"
   end
 
   create_table "boats_regions", id: false, force: :cascade do |t|

@@ -5,9 +5,10 @@ import scrapy, re, json
 from furl import furl
 from scraper.database import Database
 from scrapy.exceptions import IgnoreRequest
+from scraper.spiders.basespider import BaseSpider
 
-class YotiSpider(scrapy.Spider):
-    name = "yoti"
+class MyChild(BaseSpider):
+    name = "mychild"
     start_url = 'https://www.yoti.com.au/search-result/1/'
     start_index = 1
     # this can be overridden from the command line:
@@ -16,7 +17,7 @@ class YotiSpider(scrapy.Spider):
     scrape_location = "false"
 
     def __init__(self, category=None, *args, **kwargs):
-        super(YotiSpider, self).__init__(*args, **kwargs)
+        super(MyChild, self).__init__(*args, **kwargs)
         # init function to load previously visited listings then we can check if we need to deep scrape the page later
         self.prev_visited_listings = Database(self.name).load_prev_visited()
 
