@@ -1,25 +1,16 @@
+from scraper.spiders.basespider import BaseSpider
+import scrapy, re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
-from scrapy.loader.processors import MapCompose, Join, TakeFirst
-import scrapy, re, json
+from scrapy.loader.processors import MapCompose, Join
 from furl import furl
-from scraper.database import Database
-from scrapy.exceptions import IgnoreRequest
-from scraper.spiders.basespider import BaseSpider
 
 class MyChild(BaseSpider):
     name = "mychild"
     start_url = 'https://www.yoti.com.au/search-result/1/'
-    start_index = 1
-    # this can be overridden from the command line:
-    # scrapy crawl spidername -a page_depth=100
-    page_depth = 0
-    scrape_location = "false"
 
     def __init__(self, category=None, *args, **kwargs):
         super(MyChild, self).__init__(*args, **kwargs)
-        # init function to load previously visited listings then we can check if we need to deep scrape the page later
-        self.prev_visited_listings = Database(self.name).load_prev_visited()
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
@@ -29,22 +20,19 @@ class MyChild(BaseSpider):
         # e.g. 'http://shop.com/products?page=1'
         url = response.url
 
-        start = int(self.start_index) or 1  # from command line arguments or default
         # Get total pages
         last_page_link = response.css('a[aria-label=Last]').attrib['href']
         total_pages = int(furl(last_page_link).args["page"])
 
-        # convert to int in case it was passed as string from command line
-        self.page_depth = int(self.page_depth)
-        # leave at all for 0 or set less.
-        if self.page_depth != 0 and self.page_depth < total_pages:
-            total_pages = self.page_depth
+        # Call parent method to set the start_index and total_pages. This also
+        # checks command line arguments
+        self.set_page_range(total_pages)
 
         # don't forget to also parse listings on first page!
         yield from self.parse_listings(response)
 
         # schedule every page at once!
-        for page in range(start + 1, total_pages + 1):
+        for page in range(self.start_index + 1, self.total_pages + 1):
             page_url = furl(url)
             page_url.args["page"] = page
             page_url = page_url.url
