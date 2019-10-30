@@ -8,6 +8,7 @@ namespace :scraper do
 
     # Iterate over over loader file and process the listings
     loader.each do |meta, listings|
+      puts "Processing listing data: #{meta[:site_name]} - #{meta[:timestamp]}"
       process_listings(meta, listings)
     end
   end
@@ -25,7 +26,6 @@ namespace :scraper do
     existing_listing = Listing.find_by uniq_id: listing_data[:uniq_id]
 
     if existing_listing
-      puts "Boat already in database [#{listing_data[:uniq_id]}] - updating..."
       Boat.update(existing_listing[:boat_id], boat_data)
 
       check_listing_change(existing_listing, listing_data)
@@ -44,21 +44,21 @@ namespace :scraper do
 
   # Checks for changes in listing and records in listing history
   def check_listing_change(existing_listing, listing_data)
-    if listing_data[:price].nil?
+    if listing_data[:price].nil? || existing_listing[:price].nil?
       return false
     end
 
     # price change
     if existing_listing[:price] > listing_data[:price].to_f
-      update_listing(existing_listing, listing_data, "price_down")
+      did_update = update_listing(existing_listing, listing_data, "price_down")
     elsif existing_listing[:price] < listing_data[:price].to_f
       did_update = update_listing(existing_listing, listing_data, "price_up")
     end
 
     # sale status change
     if existing_listing[:sale_status] != listing_data[:sale_status]
-      puts "Sale Status Change #{existing_listing[:sale_status]} != #{listing_data[:sale_status]}"
-      update_listing(existing_listing, listing_data, "sale_status")
+      puts "Sale Status Change #{existing_listing[:sale_status]} != '#{listing_data[:sale_status]}'"
+      did_update = update_listing(existing_listing, listing_data, "sale_status")
     end
 
     return did_update
@@ -107,7 +107,7 @@ namespace :scraper do
       description: d.description,
       full_description: d.full_description,
       sale_status: d.sale_status,
-      # thumbnail: d.thumbnail,
+      thumbnail: d.thumbnail,
       make: d.make,
       model: d.model,
       hull_material: d.hull_material,
@@ -125,7 +125,7 @@ namespace :scraper do
       description: d.description,
       full_description: d.full_description,
       sale_status: d.sale_status,
-      # thumbnail: d.thumbnail,
+      thumbnail: d.thumbnail,
       images: d.images
     }
 
@@ -137,10 +137,21 @@ namespace :scraper do
       v.nil? || v.respond_to?(:"empty?") && v.empty?
     end
 
-    boat.delete_if(&p)
-    listing.delete_if(&p)
-    regions.delete_if(&p)
+    boat = remove_blank_values(boat)
+    listing = remove_blank_values(listing)
+    regions = remove_blank_values(regions)
 
     return boat, listing, regions
+  end
+
+  # Recursively filters out nil (or blank - e.g. "" if exclude_blank: true is passed as an option) records from a Hash
+  def remove_blank_values(hash)
+    hash.each do |k, v|
+      if v.blank? && v != false
+        hash.delete(k)
+      elsif v.is_a?(Hash)
+        hash[k] = remove_blank_values!(v)
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_25_060717) do
+ActiveRecord::Schema.define(version: 2019_10_29_235006) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2019_10_25_060717) do
     t.string "price_formatted"
     t.string "price_name"
     t.text "full_description"
+    t.string "thumbnail"
   end
 
   create_table "boats_regions", id: false, force: :cascade do |t|
@@ -100,6 +101,8 @@ ActiveRecord::Schema.define(version: 2019_10_25_060717) do
     t.string "price_symbol"
     t.string "price_formatted"
     t.string "price_name"
+    t.string "thumbnail"
+    t.text "images", default: "--- []\n"
     t.index ["boat_id"], name: "index_listings_on_boat_id"
     t.index ["site_id"], name: "index_listings_on_site_id"
   end

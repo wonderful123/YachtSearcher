@@ -1,7 +1,5 @@
-- Set spider file to processing directory then move
-* Rails listing match
+- Rails listing match
 - Decide what to do when there's no price
 - Images array
 - Which thumbnail to use?
-- Thumbnail as model field
 - Yoti page depth not working at 200
