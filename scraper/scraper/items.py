@@ -57,5 +57,7 @@ class Listing(scrapy.Item):
     year = scrapy.Field(input_processor=MapCompose(str.strip))
     location = scrapy.Field()
     price = scrapy.Field()
+    type = scrapy.Field()
+    first_found = scrapy.Field()
     is_deep_scraped = scrapy.Field(output_process=TakeFirst())
     is_location_scraped = scrapy.Field(output_process=TakeFirst())

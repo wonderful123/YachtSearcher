@@ -15,3 +15,5 @@ start_index (number)
 scrape_location (false)
 - Default true
 Only scrapes location if not in deep scraped list.
+
+# Images are used in Ember through a symlink. Perhaps this changes to just use apache or whatever image server

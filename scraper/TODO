@@ -1,5 +1,7 @@
 - Rails listing match
 - Decide what to do when there's no price
-- Images array
-- Which thumbnail to use?
+- Which thumbnail to use? (rails import)
 - Yoti page depth not working at 200
+- Use first_found if set in scrapy item
+- Sailboatdata - get make and model from description.
+- Command line arguments not working

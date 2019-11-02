@@ -46,17 +46,20 @@ def parse_length(length):
     obj = {}
     # Replace "Feet" with '
     length = re.sub(r'(?i)\s*feet', "'", length)
+    # Replace "ft" with ''
+    length = re.sub(r'(?i)\s*ft', "'", length)
 
     # Check if string contains imperial symbol ' or "
     is_imperial = re.search(r"'|\"", length)
     is_metric = re.search(r'\d+.?\d*\s*(?=m)', length)
 
     if is_imperial:
-      imperial = re.search(r'(\d*(.\d*)?\')(\s*\d+")?', length).group(0)
+      imperial = re.search(r'(\d*(.\d*)?\')(\s*\d+)?', length).group(0)
       feet = re.search(r"\d+.?\d*(?=')", imperial)
-      feet = feet.group(0) if feet else 0
-      inches = re.search(r'(\d+)(?=")', imperial)
-      inches = inches.group(0) if inches else 0
+      feet = re.sub("\D", "", feet.group(0)) if feet else '0'
+      inches = imperial.replace(feet, '').replace("'", '')
+      inches = re.search(r'(\d+)', inches)
+      inches = inches.group(0) if inches else '0'
       total_inches = int(float(feet) * 12 + int(inches))
       obj["total_inches"] = total_inches
       obj["imperial"] = f"{int(total_inches/12)}' {total_inches%12}\""
@@ -146,7 +149,7 @@ class ScraperPipeline(object):
 
         if item.get('location'):
             item['location'] = item['location'].get_collected_values('location')[0]
-            # parse location with API - this can be set to false fo`r testing
+            # parse location with API - this can be set to false for testing
             if spider.scrape_location == "true":
                 location_data = parse_location(item['location'])
                 item['location'] = location_data

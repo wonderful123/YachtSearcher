@@ -33,13 +33,13 @@ class BoatsController < ApplicationController
       @boats = Boat.all
     end
 
-    render json: @boats
+    render json: BoatSerializer.new(@boats).serialized_json
   end
 
 
   # GET /boats/1
   def show
-    render json: @boat
+    render json: BoatSerializer.new(@boat).serialized_json
   end
 
   # POST /boats
