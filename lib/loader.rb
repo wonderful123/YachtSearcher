@@ -7,10 +7,13 @@ require 'date'
 
 module ScraperData
   class Loader
+    attr_reader :file_count
+
     # Give the location of scraper data.
     def initialize(data_location = 'scraper/data')
       @data_location = data_location
       @files = get_files
+      @file_count = @files.length
       @archive_location = data_location + '/archived/'
       FileUtils.mkdir_p @archive_location
     end

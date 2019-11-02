@@ -1,23 +1,31 @@
 namespace :scraper do
   require 'loader'
+  require 'tty-progressbar'
+  require 'pastel'
 
   desc "Import data from python scraper"
 
   task :import => :environment do
     loader = ScraperData::Loader.new
 
+    progress_bars = setup_progress_bars(loader.file_count)
+
     # Iterate over over loader file and process the listings
+    i = 0
     loader.each do |meta, listings|
-      puts "Processing listing data: #{meta[:site_name]} - #{meta[:timestamp]}"
-      process_listings(meta, listings)
+      progress_bars[i].update(total: listings.length)
+      process_listings(meta, listings, progress_bars[i])
+      i += 1
     end
   end
 
   # Process each listing individually
-  def process_listings(meta, listings)
+  def process_listings(meta, listings, progress_bar)
     listings.each do |listing_data|
-      boat, listing, regions = map_data(listing_data)
+      boat, listing, regions = map_data(listing_data, meta)
       update_database(meta, boat, listing, regions)
+
+      progress_bar.advance(meta: "%-45s" % "#{meta[:site_name]} - #{meta[:timestamp]}")
     end
   end
 
@@ -32,32 +40,34 @@ namespace :scraper do
     else # otherwise create a new listing
       site = Site.find_or_create_by(name: meta[:site_name])
 
-      boat_data[:first_found] = meta[:timestamp]
       boat = Boat.create(boat_data)
 
       listing_data[:boat_id] = boat.id
       listing_data[:site_id] = site.id
-      listing_data[:first_found] = meta[:timestamp]
       listing = Listing.create(listing_data)
     end
   end
 
   # Checks for changes in listing and records in listing history
   def check_listing_change(existing_listing, listing_data)
+    # Skip nil price checks
     if listing_data[:price].nil? || existing_listing[:price].nil?
       return false
     end
 
     # price change
     if existing_listing[:price] > listing_data[:price].to_f
+      puts "CHANGED"*10
       did_update = update_listing(existing_listing, listing_data, "price_down")
+      print Pastel.new.blue " Price change: #{existing_listing[:price]} to '#{listing_data[:price]}'#{' '*20}\r"
     elsif existing_listing[:price] < listing_data[:price].to_f
+      print Pastel.new.blue " Price change: #{existing_listing[:price]} to '#{listing_data[:price]}'#{' '*20}\r"
       did_update = update_listing(existing_listing, listing_data, "price_up")
     end
 
     # sale status change
     if existing_listing[:sale_status] != listing_data[:sale_status]
-      puts "Sale Status Change #{existing_listing[:sale_status]} != '#{listing_data[:sale_status]}'"
+      # print Pastel.new.cyan " Sale status change: #{existing_listing[:sale_status]} to '#{listing_data[:sale_status]}'#{' '*20}\r"
       did_update = update_listing(existing_listing, listing_data, "sale_status")
     end
 
@@ -77,13 +87,36 @@ namespace :scraper do
      existing_listing.update(listing_data)
   end
 
+  def setup_progress_bars(total_files)
+    # For colours
+    pastel = Pastel.new
+    green = pastel.green("=")
+    yellow = pastel.yellow("=")
+
+    # Main bar
+    progress_bar = TTY::ProgressBar::Multi.new("Progress: [:bar] Total files: #{total_files} Total time::elapsed", total: total_files, width: 60, complete: yellow)
+    progress_bar.on(:stopped) { progress_bar.update(hide_cursor: false) }
+
+    # Build array of child progress bars
+    listing_bars = []
+    (1..total_files + 1).each do |n|
+      bar = progress_bar.register("(%02d/#{total_files}) [:bar] :meta :percent   \t Listings: :current/:total ETA::eta Time::elapsed" % n, total: 100, width: 30, complete: green, hide_cursor: true)
+      listing_bars << bar
+    end
+
+    return listing_bars
+  end
+
   # Map the data to hashes for the database
-  def map_data(data)
+  def map_data(data, meta)
     # Convert to open struct for easier dot notation
     d = JSON.parse data.to_json, object_class: OpenStruct
 
     # Check if location given as string or extended data
     location = d.location.instance_of?(String) ? d.location : (d.location.location rescue nil)
+
+    # First found data available? otherwise set to timestamp provided by file
+    first_found = d.first_found || meta[:timestamp]
 
     # Use rescue on nested values to stop errors
     boat = {
@@ -111,6 +144,7 @@ namespace :scraper do
       make: d.make,
       model: d.model,
       hull_material: d.hull_material,
+      first_found: first_found,
     }
 
     listing = {
@@ -126,7 +160,8 @@ namespace :scraper do
       full_description: d.full_description,
       sale_status: d.sale_status,
       thumbnail: d.thumbnail,
-      images: d.images
+      images: d.images,
+      first_found: first_found,
     }
 
     regions = (d.location.regions rescue [])
