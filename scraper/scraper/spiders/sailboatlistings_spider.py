@@ -103,4 +103,5 @@ class SailBoatListingsSpider(BaseSpider):
         loader.add_value('model', make_model[2])
         loader.add_value('is_deep_scraped', 'true') # flag item for database
         listing = loader.load_item()
+        
         return listing

@@ -32,6 +32,10 @@ namespace :scraper do
     else # otherwise create a new listing
       site = Site.where(name: meta[:site_name]).first
 
+      if site.nil?
+        abort "#{'*'*50} \n#{meta[:site_name]}' is not in the database. \nAdd it to the Site table through rails console. \nEg. Site.create({name:'yachthub', url:'https://www.yachthub.com'}) \n#{'*'*50}"
+      end
+
       boat_data[:first_found] = meta[:timestamp]
       boat = Boat.create(boat_data)
 
