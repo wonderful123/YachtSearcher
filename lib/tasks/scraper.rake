@@ -57,7 +57,6 @@ namespace :scraper do
 
     # price change
     if existing_listing[:price] > listing_data[:price].to_f
-      puts "CHANGED"*10
       did_update = update_listing(existing_listing, listing_data, "price_down")
       print Pastel.new.blue " Price change: #{existing_listing[:price]} to '#{listing_data[:price]}'#{' '*20}\r"
     elsif existing_listing[:price] < listing_data[:price].to_f

@@ -19,3 +19,6 @@
 # Resetting database
 - Call task "rails data:delete_all"
 - Move scraper archived files back to main data directory and they will be reprocessed
+
+# Tests
+- Go to tests directory and run "pytest"

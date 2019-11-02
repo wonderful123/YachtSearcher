@@ -21,4 +21,18 @@ namespace :database do
     Boat.delete_all
     puts "#{Pastel.new.yellow 'Confirmation'} - Boats:#{Boat.count} Listings:#{Listing.count} Regions:#{Region.count} History:#{History.count}"
   end
+
+  task :stats => :environment do
+    puts "#{Pastel.new.green 'Sites: '} \t #{Site.count}"
+    puts "#{Pastel.new.yellow 'Boats: '} \t #{Boat.count}"
+    puts "#{Pastel.new.yellow 'Listings: '} \t #{Listing.count}"
+    puts "#{Pastel.new.yellow 'Histories: '} \t #{History.count}"
+    puts "#{Pastel.new.yellow 'Regions: '} \t #{Region.count}"
+    total_images = 0
+    Listing.all.each { |l|
+      total_images += l.images.length
+      total_images +=1 if !l.thumbnail.nil?
+    }
+    puts "#{Pastel.new.yellow 'Images: '} \t #{total_images}"
+  end
 end

@@ -2,6 +2,5 @@
 - Decide what to do when there's no price
 - Which thumbnail to use? (rails import)
 - Yoti page depth not working at 200
-- Use first_found if set in scrapy item
 - Sailboatdata - get make and model from description.
 - Command line arguments not working
