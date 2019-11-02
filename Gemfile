@@ -30,7 +30,7 @@ gem 'active_model_serializers'
 gem 'jsonl' # Loading json lines in import rake task
 gem 'tty-progressbar' # For rake task console progress bar
 gem 'pastel' # Colours the progress bar
-
+gem 'pagy', '~> 3.5'
 
 
 group :development, :test do

@@ -1,7 +1,6 @@
-require 'geocode'
-
 class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
+  after_action { pagy_headers_merge(@pagy) if @pagy }
 
   def stats
     render json: {
@@ -20,11 +19,23 @@ class BoatsController < ApplicationController
     if params[:region_id]
       # GET /regions/1/boats
       @boats = Boat.where(region_id: params[:region_id])
+    elsif params[:page]
+      @pagy, @boats = pagy(
+        Boat.all.order(price: :desc),
+        page: params[:page],
+        items: 10000)
     else
       @boats = Boat.all
     end
 
-    render json: BoatSerializer.new(@boats).serialized_json
+    render json: BoatSerializer.new(
+      @boats,
+      {
+        fields: {
+          boat: [:price, :thumbnail, :length_inches, :year, :title]
+        }
+      }
+    ).serialized_json
   end
 
 
