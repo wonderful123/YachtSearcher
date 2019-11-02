@@ -3,15 +3,6 @@ require 'geocode'
 class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
 
-  # GET /boats/1/update_location_data
-  def update_location_data
-    boat = Boat.find(params[:boat_id])
-    listing = Listing.where(boat_id: params[:boat_id])
-    # loc = Scraper::Geocode.location listing[:location]
-
-    render json: listing
-  end
-
   def stats
     render json: {
       Boats: Boat.all.count,

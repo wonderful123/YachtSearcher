@@ -10,7 +10,7 @@
 ---------------------------------------------------------------------------
 
 # Scraped images
-- Currently ember uses a symbolic link to serve the files. This should probably change to apache or other server later.
+- Currently ember uses a symbolic link in assets to serve the files. This should change to apache or another server later.
 
 # Scraping and importing
 - In the scraper directory type: "scrapy crawl sitename" (Each site has a spider in the spiders directory)
