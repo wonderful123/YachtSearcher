@@ -23,16 +23,30 @@ namespace :database do
   end
 
   task :stats => :environment do
+    puts "\n", "-" * 70, "\n"
     puts "#{Pastel.new.green 'Sites: '} \t #{Site.count}"
     puts "#{Pastel.new.yellow 'Boats: '} \t #{Boat.count}"
     puts "#{Pastel.new.yellow 'Listings: '} \t #{Listing.count}"
     puts "#{Pastel.new.yellow 'Histories: '} \t #{History.count}"
     puts "#{Pastel.new.yellow 'Regions: '} \t #{Region.count}"
+    puts "#{Pastel.new.yellow 'Images: '} \t #{total_images(Listing.all)}"
+    puts "\n", "-" * 70, "\n"
+
+    Site.all.each { |s|
+      site_name = Pastel.new.cyan s.name
+      images = total_images(Listing.where(site_id: s.id))
+      puts "%-30s Listings: #{Listing.where(site_id: s.id).count} \t Images: #{images}" % site_name
+    }
+    puts "\n", "-" * 70, "\n"
+  end
+
+  def total_images(listings)
     total_images = 0
-    Listing.all.each { |l|
+    listings.each { |l|
       total_images += l.images.length
       total_images +=1 if !l.thumbnail.nil?
     }
-    puts "#{Pastel.new.yellow 'Images: '} \t #{total_images}"
+
+    return total_images
   end
 end

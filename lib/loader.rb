@@ -25,7 +25,7 @@ module ScraperData
       @files.each do |file|
         meta = get_meta_from_filename(file)
         yield meta, load(file)
-        # archive(file)
+        archive(file)
       end
     end
 
@@ -52,7 +52,6 @@ module ScraperData
     end
 
     def archive(file)
-      puts file, @archive_location + File.basename(file)
       FileUtils.mv(file, @archive_location)
     end
 

@@ -66,7 +66,7 @@ namespace :scraper do
 
     # sale status change
     if existing_listing[:sale_status] != listing_data[:sale_status]
-      # print Pastel.new.cyan " Sale status change: #{existing_listing[:sale_status]} to '#{listing_data[:sale_status]}'#{' '*20}\r"
+      print Pastel.new.cyan " Sale status change: #{existing_listing[:sale_status]} to '#{listing_data[:sale_status]}'#{' '*20}\r"
       did_update = update_listing(existing_listing, listing_data, "sale_status")
     end
 
