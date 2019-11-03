@@ -1,4 +1,3 @@
-- add deep scrape
 - add regions
 - rake task for cron job
 - find 2 identical listings on yachtworld
@@ -9,3 +8,4 @@
 - Deal with different currencies
 - Monitor website structure changes
 - Create scraper in node
+- Some lengths are incorrect. Way too big

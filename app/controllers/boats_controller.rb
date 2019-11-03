@@ -26,12 +26,15 @@ class BoatsController < ApplicationController
         page: params[:page],
         items: 1000)
 
+        options = { include: [:listings, :'listings.url', :'listings.images'] }
+        render json: SimpleBoatSerializer.new(@boats, options).serialized_json
     else
       @boats = Boat.all
+      render json: BoatSerializer.new(@boats).serialized_json
     end
 
-    options = { include: [:listings, :'listings.url', :'listings.images'] }
-    render json: SimpleBoatSerializer.new(@boats, options).serialized_json
+
+
     #
     # render json: BoatSerializer.new(
     #   @boats,
