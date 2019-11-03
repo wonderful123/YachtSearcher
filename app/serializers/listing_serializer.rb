@@ -1,4 +1,4 @@
 class ListingSerializer
   include FastJsonapi::ObjectSerializer
-  attributes 
+  attributes :images, :url
 end

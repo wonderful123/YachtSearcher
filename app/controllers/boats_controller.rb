@@ -17,25 +17,30 @@ class BoatsController < ApplicationController
   # GET /boats
   def index
     if params[:region_id]
-      # GET /regions/1/boats
+
       @boats = Boat.where(region_id: params[:region_id])
     elsif params[:page]
+
       @pagy, @boats = pagy(
-        Boat.all.order(price: :desc),
+        Boat.includes(:listings).all,
         page: params[:page],
-        items: 10000)
+        items: 1000)
+
     else
       @boats = Boat.all
     end
 
-    render json: BoatSerializer.new(
-      @boats,
-      {
-        fields: {
-          boat: [:price, :thumbnail, :length_inches, :year, :title]
-        }
-      }
-    ).serialized_json
+    options = { include: [:listings, :'listings.url', :'listings.images'] }
+    render json: SimpleBoatSerializer.new(@boats, options).serialized_json
+    #
+    # render json: BoatSerializer.new(
+    #   @boats,
+    #   {
+    #     fields: {
+    #       boat: [:price, :thumbnail, :length_inches, :year, :title]
+    #     }
+    #   }
+    # ).serialized_json
   end
 
 
