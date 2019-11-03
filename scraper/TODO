@@ -4,3 +4,5 @@
 - Yoti page depth not working at 200
 - Sailboatdata - get make and model from description.
 - Command line arguments not working
+- Project startup file
+- Set image folder for ember
