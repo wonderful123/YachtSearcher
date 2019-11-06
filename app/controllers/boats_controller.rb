@@ -1,3 +1,5 @@
+require 'pagy/extras/metadata'
+
 class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
   after_action { pagy_headers_merge(@pagy) if @pagy }
@@ -19,15 +21,20 @@ class BoatsController < ApplicationController
     if params[:region_id]
 
       @boats = Boat.where(region_id: params[:region_id])
-    elsif params[:page]
 
+    elsif params[:page] || params[:per_page]
       @pagy, @boats = pagy(
-        Boat.includes(:listings).all,
+        Boat.all,
         page: params[:page],
-        items: 1000)
+        items: params[:per_page])
 
-        options = { include: [:listings, :'listings.url', :'listings.images'] }
+        options = {
+          meta: pagy_metadata(@pagy)
+        }
+
         render json: SimpleBoatSerializer.new(@boats, options).serialized_json
+        # options = { include: [:listings, :'listings.url', :'listings.images'] }
+        # render json: SimpleBoatSerializer.new(@boats, options).serialized_json
     else
       @boats = Boat.all
       render json: BoatSerializer.new(@boats).serialized_json
