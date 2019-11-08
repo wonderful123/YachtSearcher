@@ -1,0 +1,9 @@
+<div class="listing-sort-wrapper">
+  <ul class="sort-list">
+    {{#each categories as |category|}}
+      <li class={{if category.isSelected "selected"}} {{action "handleSelection" category}}>
+        {{category.title}} {{#if category.isSelected}}<FaIcon @icon={{category.sortIcon}} />{{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
