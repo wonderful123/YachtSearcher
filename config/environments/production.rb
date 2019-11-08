@@ -10,6 +10,7 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
   config.eager_load_paths << Rails.root.join('lib')
+  config.autoload_paths << Rails.root.join('lib')
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
