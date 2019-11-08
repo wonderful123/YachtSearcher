@@ -1,5 +1,5 @@
 # require "FileUtils"
-require 'JSONL'
+require 'jsonl'
 require 'date'
 
 # Module loads the files in the scraper directory them to the archive directory.
