@@ -25,7 +25,7 @@ class SailBoatListingsSpider(BaseSpider):
         total_listings = response.xpath('//p/font/b/text()').get()
         total_listings = int(total_listings)
         total_pages = int(total_listings / 100) + (total_listings % 100 > 0) # Rounded up
-        total_pages =7
+
         # Call parent method to set the start_index and total_pages. This also
         # checks command line arguments
         self.set_page_range(total_pages)

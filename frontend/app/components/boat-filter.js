@@ -1,13 +1,13 @@
 import Component from '@ember/component';
-import { computed, observer } from '@ember/object';
+import { observer } from '@ember/object';
 
 export default Component.extend({
   classNames: 'boat-filter',
-  inputValues: {},
 
   init() {
     this._super(...arguments);
     this.filter({});
+    this.inputValues = {};
   },
 
   maskMinPrice: observer('minPrice', function() {

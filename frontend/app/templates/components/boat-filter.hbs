@@ -46,17 +46,9 @@
 
   <label>Price range</label>
   <div class="twin-inputs">
-    <Input
-      @value={{this.minPrice}}
-      @key-up={{action "handleFilter"}}
-      @placeholder="Min"
-      @class="form-control" />
+    <Input @value={{this.minPrice}} @key-up={{action "handleFilter"}} @placeholder="Min" @class="form-control" />
 
-      <Input
-        @value={{this.maxPrice}}
-        @key-up={{action "handleFilter"}}
-        @placeholder="Max"
-        @class="form-control" />
+    <Input @value={{this.maxPrice}} @key-up={{action "handleFilter"}} @placeholder="Max" @class="form-control" />
   </div>
 
 </div>
