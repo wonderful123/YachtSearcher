@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1.rc1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.7'
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 4.2.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -32,7 +32,6 @@ gem 'tty-progressbar' # For rake task console progress bar
 gem 'pastel' # Colours the progress bar
 gem 'pagy', '~> 3.5' # pagination
 gem 'has_scope' # filtering results
-gem 'jsonl' # JSON lines for loading scraped content
 
 group :development do
   gem "better_errors"
