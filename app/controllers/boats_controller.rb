@@ -22,6 +22,7 @@ class BoatsController < ApplicationController
   def index
     if params[:region_id]
       @boats = Boat.where(region_id: params[:region_id])
+
     elsif params[:page] || params[:per_page]
       @filtered = apply_scopes(Boat).all
 

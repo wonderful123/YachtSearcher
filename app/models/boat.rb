@@ -25,14 +25,14 @@ class Boat < ApplicationRecord
     )
   }
 
-  scope :sorted_by, ->(sort_option) {
+  scope :sorted_by, ->(sort_option, sort_dir) {
     # extract the sort direction from the param value.
     direction = /desc$/.match?(sort_option) ? "desc" : "asc"
     case sort_option.to_s
     when /^created_at_/
       order("boats.created_at #{direction}")
     when /^price_/
-      order("boats.price #{direction}")
+      where("price is not null").order("boats.price #{direction}")
     when /^year_/
       order("boats.year #{direction}")
     when /^title_/

@@ -8,3 +8,7 @@
 - Some lengths are incorrect. Way too big
 
 - GURU fix server
+
+- Add sorting to ember columns
+- Look at ember ModelsTableServerPaginated
+- Added range scope for year, price, length
