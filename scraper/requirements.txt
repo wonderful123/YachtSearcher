@@ -1,5 +1,5 @@
-Scrapy
 pytest
+Scrapy
 furl
 opencage
 iso4217parse
