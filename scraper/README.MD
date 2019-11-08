@@ -1,12 +1,12 @@
-How to use the scraper:
+# How to use the scraper:
 "scrapy crawl yachthub"
 
 Stores files in data directory. There is a file that stores which urls have been deep scraped (this can be deleted to revisit the pages again). This means that extra data is gathered from the listing page. There's no need to visit the pages again.
 
-Install with:
-pip install -r requirements.txt
+## Install with:
+`<addr>` pip install -r requirements.txt
 
-Arguments:
+## Arguments:
 scrapy crawl yachthub -a page_depth=x start_index=x scrape_location=true
 
 page_depth (number)
@@ -18,5 +18,3 @@ start_index (number)
 scrape_location (false)
 - Default true
 Only scrapes location if not in deep scraped list.
-
-# Images are used in Ember through a symlink. Perhaps this changes to just use apache or whatever image server
