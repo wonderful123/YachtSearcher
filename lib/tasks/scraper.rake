@@ -99,7 +99,7 @@ namespace :scraper do
     # Build array of child progress bars
     listing_bars = []
     (1..total_files + 1).each do |n|
-      bar = progress_bar.register("(%02d/#{total_files}) [:bar] :meta :percent   \t Listings: :current/:total ETA::eta Time::elapsed" % n, total: 100, width: 30, complete: green, hide_cursor: true)
+      bar = progress_bar.register("(%02d/%02d) [:bar] :meta :percent   \t Listings: :current/:total ETA::eta Time::elapsed" % n, total_files, total: 100, width: 30, complete: green, hide_cursor: true)
       listing_bars << bar
     end
 
