@@ -1,5 +1,9 @@
 import DS from 'ember-data';
-const { Model, attr, hasMany } = DS;
+const {
+  Model,
+  attr,
+  hasMany
+} = DS;
 
 export default Model.extend({
   title: attr('string'),
@@ -19,7 +23,6 @@ export default Model.extend({
   latitude: attr('number'),
   longitude: attr('number'),
   location: attr('string'),
-  title: attr('string'),
-  // histories: hasMany('history'),
-  // listings: hasMany('listings')
+  histories: hasMany('history'),
+  listings: hasMany('listing')
 });
