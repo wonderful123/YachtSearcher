@@ -5,6 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Site.create({name: 'yachthub', url: 'https://www.yachthub.com'})
-Site.create({name: 'yoti', url: 'https://www.yoti.com.au'})
-Site.create({name: 'sailboatlistings', url: 'https://www.sailboatlistings.com'})
+Site.find_or_create_by({name: 'yachthub', url: 'https://www.yachthub.com'})
+Site.find_or_create_by({name: 'yoti', url: 'https://www.yoti.com.au'})
+Site.find_or_create_by({name: 'sailboatlistings', url: 'https://www.sailboatlistings.com'})
