@@ -1,0 +1,6 @@
+Scrapy
+pytest
+furl
+opencage
+iso4217parse
+Pillow
