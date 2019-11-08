@@ -4,7 +4,7 @@
 - Error handling (404, database locked(busy), SocketError Failed to open TCP connection to yachthub.com:443 (getaddrinfo: No such host is known.
 - Geocode error handling
 - Deal with different currencies
-- Monitor website structure changes
+- Reporting for website structure changes in spider
 - Some lengths are incorrect. Way too big
-- Why aren't options setting on table?
-- Add filtering
+
+- GURU fix server

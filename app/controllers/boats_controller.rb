@@ -4,6 +4,8 @@ class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
+  has_scope :search_query, :sorted_by
+
   def stats
     render json: {
       Boats: Boat.all.count,
@@ -19,28 +21,26 @@ class BoatsController < ApplicationController
   # GET /boats
   def index
     if params[:region_id]
-
       @boats = Boat.where(region_id: params[:region_id])
-
     elsif params[:page] || params[:per_page]
+      @filtered = apply_scopes(Boat).all
+
       @pagy, @boats = pagy(
-        Boat.all,
+        @filtered,
         page: params[:page],
         items: params[:per_page])
 
-        options = {
-          meta: pagy_metadata(@pagy)
-        }
+      options = {
+        meta: pagy_metadata(@pagy)
+      }
 
-        render json: SimpleBoatSerializer.new(@boats, options).serialized_json
-        # options = { include: [:listings, :'listings.url', :'listings.images'] }
-        # render json: SimpleBoatSerializer.new(@boats, options).serialized_json
+      render json: SimpleBoatSerializer.new(@boats, options).serialized_json
+      # options = { include: [:listings, :'listings.url', :'listings.images'] }
+      # render json: SimpleBoatSerializer.new(@boats, options).serialized_json
     else
       @boats = Boat.all
       render json: BoatSerializer.new(@boats).serialized_json
     end
-
-
 
     #
     # render json: BoatSerializer.new(
