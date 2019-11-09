@@ -43,7 +43,7 @@ module.exports = function(environment) {
       apiKey: 'pk.eyJ1Ijoid29uZGVyMzIxIiwiYSI6ImNrMDV2ZWpmZjJ4djQzYmtpZXRsZDh4NnEifQ.EfODAyKAtLZS1eKwsQVeqA',
     }
 
-    ENV['image_server'] = "http://localhost:80/"
+    ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/"
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
