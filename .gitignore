@@ -30,6 +30,9 @@
 **/*pycache*
 **/.pytest_cache
 
+# Ignore swap file
+*.swp
+
 ######## From ember ###########
 
 # compiled output
