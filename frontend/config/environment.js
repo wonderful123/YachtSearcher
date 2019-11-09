@@ -4,7 +4,7 @@ module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'frontend',
     environment,
-    rootURL: '/',
+    rootURL: '/YachtSearcher/frontend/dist/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
