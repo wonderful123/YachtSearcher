@@ -1,6 +1,0 @@
-{
-  "name": "frontend",
-  "dependencies": {
-    "seiyria-bootstrap-slider": "~6.0.6"
-  }
-}
