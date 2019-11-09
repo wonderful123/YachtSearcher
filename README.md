@@ -1,29 +1,36 @@
 # Why it's cool
-- Can find boats from multiple sites all in one place
-- Can see how long boats have been listed for
-- Can see a history of price changes
-- Can search more powerfully doing thing like excluding models you're not interested in
+
+-   Can find boats from multiple sites all in one place
+-   Can see how long boats have been listed for
+-   Can see a history of price changes
+-   Can search more powerfully doing thing like excluding models you're not interested in
 
 # Ideas
-- Price drop on boats listed for more than a month
 
----------------------------------------------------------------------------
+-   Price drop on boats listed for more than a month
+
+* * *
 
 # Scraped images
-- Simple python httpd server used locally
+
+-   Simple python httpd server used locally
 
 # Scraping and importing
-- In the scraper directory type: "scrapy crawl sitename" (Each site has a spider in the spiders directory)
-- Then in root call task "rails scraper:import" which will import all the scraped data from the scraper and archive once consumed.
+
+-   In the scraper directory type: "scrapy crawl sitename" (Each site has a spider in the spiders directory)
+-   Then in root call task "rails scraper:import" which will import all the scraped data from the scraper and archive once consumed.
 
 # Resetting database
-- Call task "rails data:delete_all"
-- Move scraper archived files back to main data directory and they will be reprocessed
+
+-   Call task "rails data:delete_all"
+-   Move scraper archived files back to main data directory and they will be reprocessed
 
 # Tests
-- Go to tests directory and run "pytest"
 
-------------
+-   Go to tests directory and run "pytest"
+
+* * *
 
 # Deployment
-- Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
+
+-   Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
