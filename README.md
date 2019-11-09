@@ -22,3 +22,8 @@
 
 # Tests
 - Go to tests directory and run "pytest"
+
+------------
+
+# Deployment
+- Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
