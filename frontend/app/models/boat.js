@@ -8,6 +8,8 @@ const {
 export default Model.extend({
   title: attr('string'),
   price: attr('number'),
+  priceSymbol: attr('string'),
+  priceFormatted: attr('string'),
   currency: attr('string'),
   firstFound: attr('date'),
   listingId: attr('string'),
