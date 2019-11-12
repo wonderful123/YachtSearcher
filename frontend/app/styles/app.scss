@@ -1,5 +1,12 @@
 @import "ember-bootstrap/bootstrap";
 
+body {
+  color: rgb(44, 44, 44);
+  font-size: 14px;
+  font-family: Montserrat, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
 header {
   padding: 7px 15px;
   width: 100%;
@@ -263,4 +270,32 @@ footer {
 .marker-cluster-small .number-of-boats {
   font-weight: bold;
   font-size: 14px;
+}
+
+.navbar {
+  padding: 0 0;
+
+  .navbar-nav {
+    flex-direction: row;
+  }
+
+  .nav-link {
+    color: white;
+  }
+
+  .nav-item {
+    margin-right: 10px;
+  }
+}
+
+.globalSearch {
+  margin: 0 0 10px 10px;
+
+  label {
+    margin-right: 5px;
+  }
+
+  input {
+    height: 30px
+  }
 }

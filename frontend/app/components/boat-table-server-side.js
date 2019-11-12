@@ -27,12 +27,12 @@ class BoatTableServerSide extends ModelsTableServerPaginated {
   showColumnsDropdown = false;
   useFilteringByColumns = false;
   showGlobalFilter = true;
-  useNumericPagination = false;
+  useNumericPagination = true;
   doFilteringByHiddenColumns = false;
   multipleColumnsSorting = false;
   showPageSize = true;
-  collapseNumPaginationForPagesCount = 1;
-  showCurrentPageNumberSelect = true;
+  collapseNumPaginationForPagesCount = 10;
+  showCurrentPageNumberSelect = false;
   filteringIgnoreCase = true;
   metaItemsCountProperty = 'count';
   metaPagesCountProperty = 'pages';
