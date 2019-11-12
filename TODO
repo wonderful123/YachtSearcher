@@ -1,16 +1,13 @@
 # TODO #
 - [ ] Add regions
-- [ ] find 2 identical listings on yachtworld
 - [ ] add yachtworld scraper
-- [ ] Error handling (404, database locked(busy), SocketError Failed to open TCP connection to yachthub.com:443 (getaddrinfo: No such host is known.
 - [ ] Geocode error handling
 - [ ] Deal with different currencies
 - [ ] Reporting for website structure changes in spider
 - [ ] Some lengths are incorrect. Way too big
-
-- [ ] GURU fix server
-
 - [ ] Add sorting to ember columns
 - [ ] Look at ember ModelsTableServerPaginated
 - [ ] Added range scope for year, price, length
-k: 600b57e5d79c51a639e153c391fdb6c1
+
+- Fix favicon in ember
+- Fix table button alignment at bottom
