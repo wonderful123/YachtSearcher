@@ -93,6 +93,6 @@ class BoatsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def boat_params
-      params.require(:boat).permit(:length, :year, :title, :description, :make, :model, :cabins, :heads, :location, :country, :city, :state, :state_code, :hull_material, :price, :sale_status, :boat_name, :first_found, :type)
+      params.require(:boat).permit(:length, :year, :title, :description, :make, :model, :cabins, :heads, :location, :country, :city, :state, :state_code, :hull_material, :price, :sale_status, :boat_name, :first_found, :type, :price_symbol, :price_formatted)
     end
 end
