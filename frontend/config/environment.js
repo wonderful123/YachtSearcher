@@ -39,9 +39,11 @@ module.exports = function(environment) {
   if (environment === 'development') {
     ENV['ember-simple-leaflet-maps'] = {
       apiKey: process.env.MAPBOX_API_KEY,
-    }
+    };
 
-    ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/"
+    ENV['image_server'] = "http://localhost:80/";
+    ENV['rails_host'] = 'http://localhost:3000';
+
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -62,7 +64,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/";
+    ENV['rails_host'] = "http://108.161.143.35:3000";
   }
 
   return ENV;
