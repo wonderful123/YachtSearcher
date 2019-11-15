@@ -3,7 +3,8 @@ class SimpleBoatSerializer
   set_type :boat
   set_key_transform :dash
   # has_many :listings
-  attributes :length_inches, :year, :title, :make, :model, :price, :thumbnail, :description, :price_symbol
+  attributes :length_inches, :year, :title, :make, :model, :price, :thumbnail,
+             :description, :price_symbol
 
   attribute :description do |object|
     object.description.to_s.truncate(80)

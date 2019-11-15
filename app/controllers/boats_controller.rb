@@ -1,59 +1,53 @@
 require 'pagy/extras/metadata'
 
+# Boat controller
 class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
-  has_scope :search_query, :sorted_by
+  has_scope :search, :sortby
 
-  def stats
-    render json: {
-      Boats: Boat.all.count,
-      Listings: Listing.all.count,
-      Histories: History.all.count,
-      "Sold Boats": Boat.where(sale_status: "Sold").count,
-      "Under Offer": Boat.where(sale_status: "Under Offer").count,
-      "Under Contract": Boat.where(sale_status: "Under Contract").count,
-      "Just Listed": Boat.where(sale_status: "JUST LISTED").count,
-    }
+  def apply_filters(params)
+    filtered = Boat.all
+    filtered = filtered.filter_range('length_inches', params[:length]) unless params[:length].blank?
+    filtered = filtered.filter_range('price', params[:price]) unless params[:price].blank?
+    filtered = filtered.filter_range('year', params[:year]) unless params[:year].blank?
+    # Combine sort column and direction into one for easier scoping
+    if params[:sortby] && params[:sort_dir]
+      params[:sortby] += "_#{params[:sort_dir].downcase}"
+    end
+    apply_scopes(filtered)
   end
 
   # GET /boats
   def index
-    if params[:region_id]
-      @boats = Boat.where(region_id: params[:region_id])
+    # Apply filtering from params
+    @filtered = apply_filters(params)
 
-    elsif params[:page] || params[:per_page]
-      @filtered = apply_scopes(Boat).all
+    @pagy, @boats = pagy(
+      @filtered,
+      page: params[:page],
+      items: params[:per_page]
+    )
 
-      @pagy, @boats = pagy(
-        @filtered,
-        page: params[:page],
-        items: params[:per_page])
+    options = {
+      meta: pagy_metadata(@pagy)
+    }
 
-      options = {
-        meta: pagy_metadata(@pagy)
-      }
-
-      render json: SimpleBoatSerializer.new(@boats, options).serialized_json
-      # options = { include: [:listings, :'listings.url', :'listings.images'] }
-      # render json: SimpleBoatSerializer.new(@boats, options).serialized_json
-    else
-      @boats = Boat.all
-      render json: BoatSerializer.new(@boats).serialized_json
-    end
-
-    #
-    # render json: BoatSerializer.new(
-    #   @boats,
-    #   {
-    #     fields: {
-    #       boat: [:price, :thumbnail, :length_inches, :year, :title]
-    #     }
-    #   }
-    # ).serialized_json
+    render json: SimpleBoatSerializer.new(@boats, options).serialized_json
   end
+  # options = { include: [:listings, :'listings.url', :'listings.images'] }
+  # render json: SimpleBoatSerializer.new(@boats, options).serialized_json
 
+  #
+  # render json: BoatSerializer.new(
+  #   @boats,
+  #   {
+  #     fields: {
+  #       boat: [:price, :thumbnail, :length_inches, :year, :title]
+  #     }
+  #   }
+  # ).serialized_json
 
   # GET /boats/1
   def show
@@ -86,13 +80,19 @@ class BoatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_boat
-      @boat = Boat.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def boat_params
-      params.require(:boat).permit(:length, :year, :title, :description, :make, :model, :cabins, :heads, :location, :country, :city, :state, :state_code, :hull_material, :price, :sale_status, :boat_name, :first_found, :type, :price_symbol, :price_formatted)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_boat
+    @boat = Boat.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def boat_params
+    params.require(:boat).permit(
+      :length, :year, :title, :description, :make, :model, :cabins, :heads,
+      :location, :country, :city, :state, :state_code, :hull_material, :price,
+      :sale_status, :boat_name, :first_found, :type, :price_symbol,
+      :price_formatted
+    )
+  end
 end
