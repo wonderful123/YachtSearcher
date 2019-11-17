@@ -10,7 +10,7 @@ export default Model.extend({
   price: attr('number'),
   priceSymbol: attr('string'),
   priceFormatted: attr('string'),
-  currency: attr('string'),
+  description: attr('string'),
   firstFound: attr('date'),
   listingId: attr('string'),
   lengthInches: attr('number'),
@@ -26,5 +26,5 @@ export default Model.extend({
   longitude: attr('number'),
   location: attr('string'),
   histories: hasMany('history'),
-  listings: hasMany('listing')
+  listings: hasMany('listing'),
 });
