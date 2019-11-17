@@ -7,21 +7,14 @@
 - [ ] Some lengths are incorrect. Way too big
 
 - Fix favicon in ember
-- Fix table button alignment at bottom
-- Add session data for favourites.
 - Add cookie session. Needs data storage.
-- Yield into global filter
-- Are there sorting icons available?
-
-- Passing multiple variables to scope.
-- Does scope have to be named variable name?
-- Should class methods be used instead of scope?
-- Advanced search should show collapsable sidebar
-- Add clear all button
 - Mask price in filters
 - Validation in filters (eg. commas in price, feet correct)
-- Look at how to toggle active/isactive for favourite.
-- How to set class.
 - Add outline to icon
 - Change icon for filter sidebar
-- Add to favourites list with quick modal
+- Small number above favourites
+- Fix css cursor on sorting
+- Ember selection (bootstrap? or ember?)
+- Input clear button ideas
+- link favourites selected with list
+- Add icon for text edit in favourites. Material?
