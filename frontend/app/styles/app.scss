@@ -24,19 +24,12 @@ footer {
   border-top: 1px solid slategrey;
 }
 
-.logo {
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-
-  span {
-    color: #febb02;
-  }
+.wrapper {
+  width: 100%;
 }
 
 .body-wrapper {
-  padding: 10px 10px;
+  padding: 10px;
   display: flex;
 }
 
@@ -82,8 +75,8 @@ footer {
     }
   }
 }
-
 /* Side Menu */
+
 .menu-toggle {
   position: fixed;
   right: 15px;
@@ -97,7 +90,8 @@ footer {
   z-index: 999;
 }
 
-.menu-toggle:focus, .menu-toggle:hover {
+.menu-toggle:focus,
+.menu-toggle:hover {
   color: #fff;
 }
 
@@ -105,24 +99,14 @@ footer {
   background: #343a40;
 }
 
-.filter-info-container {
-  .boats-found {
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-
-  .search-filter-summary {
-    color: slategrey;
-    font-size: 13px;
-    margin-top: -3px;
-    margin-bottom: 2px;
-  }
+.boats-found {
+  font-weight: bold;
+  font-size: 1.3rem;
 }
-
 
 #sidebar-wrapper {
   margin-right: 15px;
-  width: 0px;
+  width: 0;
   height: 100%;
   -webkit-transition: all 0.4s ease 0s;
   transition: all 0.4s ease 0s;
@@ -130,23 +114,25 @@ footer {
   font-size: 13px;
 
   button.close {
-    padding: 0 5px;
+    line-height: 1rem;
+    font-size: 1rem;
+    padding: 5px;
   }
 }
 
 #sidebar-wrapper.active {
-  width: 250px;
+  width: 200px;
   -webkit-transition: all 0.4s ease 0s;
   transition: all 0.4s ease 0s;
 }
 
 .sidebar-search {
-  padding: 15px 12px;
+  padding: 10px;
   border-radius: 3px;
   background: #febb02;
 
   .sidebar-search-heading {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   label {
@@ -198,8 +184,8 @@ footer {
     display: flex;
     list-style: none;
     justify-content: space-between;
-    margin-bottom: 0px;
-    padding: 0px;
+    margin-bottom: 0;
+    padding: 0;
   }
 
   li {
@@ -225,7 +211,7 @@ footer {
 
 .thumbnail-listing-container {
   margin-bottom: 15px;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 3px;
   border: 1px solid lightgrey;
   display: flex;
@@ -250,7 +236,7 @@ footer {
 }
 
 .marker-cluster-small {
-	background-clip: padding-box;
+  background-clip: padding-box;
   background-color: rgba(110, 204, 57, 0.8);
   width: 60px;
   height: 40px !important;
@@ -260,34 +246,45 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
 .marker-cluster-small > div {
   display: flex;
   flex-direction: column;
   align-items: center;
   background: none;
-	font: 10px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font: 10px "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
+
 .marker-cluster-small .number-of-boats {
   font-weight: bold;
   font-size: 14px;
 }
 
-.navbar {
-  padding: 0 0;
-
-  .navbar-nav {
-    flex-direction: row;
-  }
+.nav {
+  align-items: center;
 
   .nav-link {
     color: white;
   }
 
-  .nav-item {
-    margin-right: 10px;
+  .navbar-brand {
+    display: flex;
+
+    img {
+      margin-right: 5px;
+    }
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+
+    span {
+      color: #febb02;
+    }
   }
 }
 
+.boat-search,
 .globalSearch {
   margin: 0 0 10px 10px;
 
@@ -296,6 +293,50 @@ footer {
   }
 
   input {
-    height: 30px
+    height: 30px;
+    margin-right: 10px;
+  }
+}
+
+.boat-listing {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.7rem;
+  border-bottom: 1px solid lightgrey;
+  width: 100%;
+  padding: 0 7px 7px 0;
+  margin-bottom: 7px;
+
+  .listing-thumbnail {
+    img {
+      width: 160px;
+      margin: 2px 15px 0 0;
+    }
+
+    .thumbnail-button {
+      background: transparent;
+      border: none;
+      margin: none;
+      padding: 0 0;
+    }
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+  }
+
+  .favourite-toggle {
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+
+    .not-active {
+      color: lightgrey;
+    }
+    .active {
+      color: #febb02;
+    }
   }
 }
