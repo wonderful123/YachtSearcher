@@ -19,6 +19,11 @@ class BoatsController < ApplicationController
     apply_scopes(filtered)
   end
 
+  def images
+    images = Listing.where(boat_id: params[:boat_id]).first
+    render json: ImagesSerializer.new(images).serialized_json
+  end
+
   # GET /boats
   def index
     # Apply filtering from params
@@ -92,7 +97,7 @@ class BoatsController < ApplicationController
       :length, :year, :title, :description, :make, :model, :cabins, :heads,
       :location, :country, :city, :state, :state_code, :hull_material, :price,
       :sale_status, :boat_name, :first_found, :type, :price_symbol,
-      :price_formatted
+      :price_formatted, :first_found
     )
   end
 end

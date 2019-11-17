@@ -44,6 +44,8 @@ class Boat < ApplicationRecord
       order("boats.created_at #{direction}")
     when /^price_/
       where('price is not null').order("boats.price #{direction}")
+    when /^first-found_/
+      order("boats.first_found #{direction}")
     when /^year_/
       order("boats.year #{direction}")
     when /^title_/
