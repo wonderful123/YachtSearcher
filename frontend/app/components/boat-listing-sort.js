@@ -10,8 +10,11 @@ const CATEGORIES = [
     property: "year",
   }, {
     title: "Length",
-    property: "totalInches",
-  },
+    property: "length-inches",
+  }, {
+    title: "Date Listed",
+    property: "first-found"
+  }
 ];
 
 export default Component.extend({
@@ -26,10 +29,22 @@ export default Component.extend({
     };
 
     // Add sort properties to each category
-    let categoryList = CATEGORIES;
-    categoryList.forEach(c => {
-      Object.assign(c, sortProperties);
-    });
+    const categoryList = CATEGORIES;
+    categoryList.forEach(c => Object.assign(c, sortProperties));
+
+    // Set selected if in url param
+    if (this.urlSortParam) {
+      const urlProperty = this.urlSortParam.split('_')[0];
+      const urlDirection = this.urlSortParam.split('_')[1];
+      categoryList.forEach(c => {
+        if (c.property === urlProperty) {
+          c.isSelected = true;
+          c.sortDirection = urlDirection;
+          c.sortIcon = (urlDirection === 'desc') ? 'caret-down' : 'caret-up';
+        }
+      });
+    }
+
     this.set('categories', categoryList)
   },
 
@@ -52,9 +67,9 @@ export default Component.extend({
           set(c, 'isSelected', false);
         }
       });
-      
+
       // Call parent action
-      this.sort(selection.property, selection.sortDirection);
+      this.doSort(selection.property, selection.sortDirection);
     }
   }
 });
