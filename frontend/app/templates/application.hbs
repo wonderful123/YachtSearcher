@@ -15,21 +15,41 @@
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin="">
 
-<div class="wrapper container-fluid">
+<div class="wrapper">
   <header>
-    <nav class="navbar navbar-expand-lg">
-      <div class="logo navbar-brand">Boat<span>Searcher</span></div>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <LinkTo class="nav-link" @route="boats">List</LinkTo>
-        </li>
-        <li class="nav-item">
-          <LinkTo class="nav-link" @route="boat-images">Images</LinkTo>
-        </li>
-      </ul>
-    </nav>
+    <BsNav as |nav|>
+      <div class="navbar-brand">
+        <img src="assets/header-icon.png" width="35" height="35" alt="" />
+        Boat<span>Searcher</span>
+      </div>
+      <nav.item>
+        <nav.linkTo @route="boat-listings">
+          Listings
+        </nav.linkTo>
+      </nav.item>
+      <nav.item>
+        <nav.linkTo @route="map">
+          Map
+        </nav.linkTo>
+      </nav.item>
+      <nav.item>
+        <nav.linkTo @route="boats">
+          Boats
+        </nav.linkTo>
+      </nav.item>
+      <nav.item>
+        <nav.linkTo @route="boat-images">
+          Images
+        </nav.linkTo>
+      </nav.item><nav.dropdown as |dd|>
+        <dd.toggle>Favourites <span class="caret"></span></dd.toggle>
+        <dd.menu as |ddm|>
+          <FavouriteList />
+        </dd.menu>
+      </nav.dropdown>
+    </BsNav>
   </header>
-  <div class="body-wrapper">
+  <div class="body-wrapper container-fluid">
     {{outlet}}
   </div>
   <footer></footer>
