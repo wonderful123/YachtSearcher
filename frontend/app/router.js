@@ -8,6 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('boats');
+  this.route('boat-listings');
   this.route('boat-images');
   this.route('map');
 });
