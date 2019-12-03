@@ -1,4 +1,5 @@
 @import "ember-bootstrap/bootstrap";
+@import "ember-power-select";
 
 body {
   color: rgb(44, 44, 44);
@@ -76,7 +77,6 @@ footer {
   }
 }
 /* Side Menu */
-
 .menu-toggle {
   position: fixed;
   right: 15px;
@@ -307,18 +307,9 @@ footer {
   padding: 0 7px 7px 0;
   margin-bottom: 7px;
 
-  .listing-thumbnail {
-    img {
-      width: 160px;
-      margin: 2px 15px 0 0;
-    }
-
-    .thumbnail-button {
-      background: transparent;
-      border: none;
-      margin: none;
-      padding: 0 0;
-    }
+  .listing-thumbnail img {
+    width: 160px;
+    margin: 2px 15px 0 0;
   }
 
   .title {
@@ -335,8 +326,108 @@ footer {
     .not-active {
       color: lightgrey;
     }
+
     .active {
       color: #febb02;
+    }
+  }
+}
+
+.favourites-list {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+
+  img {
+    width: 100px;
+    margin: 2px 15px 0 0;
+  }
+}
+
+.transparent-button {
+  background: transparent;
+  border: none;
+  margin: none;
+  padding: 0;
+}
+
+.listing-images {
+  display: flex;
+  margin-right: 10px;
+
+  .main-image-container {
+    width: 200px;
+    height: 156px;
+  }
+
+  .main-image {
+    width: 200px;
+    height: 156px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .highlight {
+    -moz-box-shadow: 0 0 3px orange;
+    -webkit-box-shadow: 0 0 3px orange;
+    box-shadow: 0 0 3px orange;
+  }
+
+  .zoom-overlay {
+    // background-image: radial-gradient(orange 1px, transparent 1%);
+    // background-size: 4px 4px;
+    position: absolute;
+  	background-image: radial-gradient(green 33%, transparent 33%);
+  	background-size: 3px 3px;
+    background-repeat: repeat;
+    pointer-events: none;
+  }
+
+  .thumbnail-list {
+    display: grid;
+    grid-gap: 4px;
+    grid-template-columns: 50px 50px;
+    margin-left: 4px;
+
+    img {
+      width: 50px;
+      height: 36px;
+      object-fit: cover;
+    }
+  }
+
+  .more-images {
+    filter: brightness(30%);
+  }
+
+  .last-image-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .remaining-count {
+      position: absolute;
+      color: white;
+      text-shadow: 0 0 3px black;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .image-preview {
+    position: fixed;
+    overflow: hidden;
+    border: 3px solid orange;
+
+    // img {
+    //   transition: transform 0.1s ease;
+    // }
+
+    img {
+      visibility: hidden;
     }
   }
 }

@@ -1,11 +1,23 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject } from '@ember/service';
 
 export default
 class FavouriteList extends Component {
   @inject
   favourites
+
+  isModalOpen = false;
+
+  @computed('favourites.boats.[]')
+  get currentCount() {
+    return this.favourites.count;
+  }
+
+  @action
+  toggleModal() {
+    this.toggleProperty('isModalOpen');
+  }
 
   @action
   showFavourites() {
@@ -18,6 +30,6 @@ class FavouriteList extends Component {
   }
 
   get hasFavourites() {
-    return this.favourites.currentList.boats.length > 0 ? true : false;
+    return this.favourites.boats.length > 0 ? true : false;
   }
 }

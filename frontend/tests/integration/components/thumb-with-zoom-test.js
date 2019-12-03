@@ -3,22 +3,22 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | price', function(hooks) {
+module('Integration | Component | thumb-with-zoom', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`<Price />`);
+    await render(hbs`<ThumbWithZoom />`);
 
     assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      <Price>
+      <ThumbWithZoom>
         template block text
-      </Price>
+      </ThumbWithZoom>
     `);
 
     assert.equal(this.element.textContent.trim(), 'template block text');

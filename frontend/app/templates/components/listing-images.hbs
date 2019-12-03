@@ -1,0 +1,42 @@
+<div class="listing-images">
+
+  <div class="main-image-container">
+    <img class="main-image" src="{{this.baseImageUrl}}{{this.selectedThumbnail}}" alt="Thumbnail">
+  </div>
+
+  <div class="thumbnail-list">
+    {{#each this.thumbnails as |url|}}
+      <ThumbWithZoom
+        @url="{{this.baseImageUrl}}{{url}}"
+        @mouseEnter={{action this.mouseEnter}}
+        onMouseLeave={{action "hidePreview"}}
+        class={{if (eq this.selectedThumbnail url) "highlight"}}
+       />
+    {{/each}}
+
+    {{#if this.lastImage}}
+      <div class="last-image-container">
+        <img src="{{this.baseImageUrl}}{{this.lastImage}}" onMouseEnter={{action "mouseEnter" this.lastImage}} onMouseLeave={{action "hidePreview"}}
+          class="{{if this.hasMoreImages "more-images"}} {{if (eq this.selectedThumbnail this.lastImage) "highlight"}}" alt="Thumbnail">
+        {{#if this.hasMoreImages}}
+          <div class="remaining-count">
+            {{this.remaingImagesCount}}+
+            <FaIcon @icon="images" />
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+
+  {{#if this.showPreview}}
+    <ImagePreview
+      @url="{{this.baseImageUrl}}{{this.selectedThumbnail}}"
+      @offsetX={{this.offsetX}}
+      @offsetY={{this.offsetY}}
+      @thumbnailListPosition={{this.thumbnailListPosition}}
+    />
+
+    <div class="zoom-overlay"></div>
+  {{/if}}
+
+</div>

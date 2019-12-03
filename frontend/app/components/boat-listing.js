@@ -5,6 +5,7 @@ export default
 class BoatListing extends Component {
   @computed('boat.firstFound')
   get firstFound() {
-    return new Date(this.boat.firstFound).toDateString();
+    const m = new Date(this.boat.firstFound);
+    return m.getUTCDate() + "/" + + m.getUTCMonth()  + "/" + m.getUTCFullYear();
   }
 }

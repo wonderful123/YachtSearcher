@@ -1,18 +1,31 @@
-<form class="px-4 py-3">
-  <div class="form-group">
-    <label for="favourite-list-name">List: </label>
-    <Input @value={{this.favourites.currentList.name}} type="text" class="form-control" id="favourite-list-name" />
-  </div>
-  {{#if this.hasFavourites}}
-    <button type="submit" class="btn btn-sm btn-primary" {{action "deleteCurrent"}}>Clear list</button>
-  {{/if}}
-</form>
-{{#each this.favourites.current as |boat|}}
-  <div class="dropdown-divider"></div>
-  <div class="dropdown-item">
-    <ThumbnailImage @record={{boat}} />
-    {{boat.make}} {{boat.model}}
-    {{boat.year}}
-    <PriceText @record={{boat}} />
-  </div>
-{{/each}}
+<div class="favourites-list">
+  <button class="nav-link transparent-button" {{action "toggleModal"}}>
+    Favourites<sup><span class="badge badge-info">{{this.currentCount}}</span></sup>
+    <FaIcon @icon="caret-down" />
+  </button>
+
+  <BsModal @open={{this.isModalOpen}} @onHide={{action "toggleModal"}} as |Modal|>
+    <Modal.header>
+      <form class="px-4 py-3">
+        <div class="form-group">
+          <label for="favourite-list-name">List: </label>
+          <Input @value={{this.favourites.name}} type="text" class="form-control" id="favourite-list-name" />
+        </div>
+        {{#if this.hasFavourites}}
+          <button type="submit" class="btn btn-sm btn-primary" {{action "deleteCurrent"}}>Clear list</button>
+        {{/if}}
+      </form>
+    </Modal.header>
+    <Modal.body>
+      {{#each this.favourites.current as |boat|}}
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item">
+          <ThumbnailImage @record={{boat}} />
+          {{boat.make}} {{boat.model}}
+          {{boat.year}}
+          <PriceText @record={{boat}} />
+        </div>
+      {{/each}}
+    </Modal.body>
+  </BsModal>
+</div>

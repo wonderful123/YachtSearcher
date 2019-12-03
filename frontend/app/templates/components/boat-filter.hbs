@@ -5,6 +5,7 @@
   <Input
     @value={{this.search}}
     @key-up={{action "handleFilter"}}
+    type="search"
     placeholder="Search by name"
     class="form-control"
   />
@@ -14,12 +15,14 @@
     <Input
       @value={{this.minLength}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
       @value={{this.maxLength}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Max"
       class="form-control"
     />
@@ -30,12 +33,14 @@
     <Input
       @value={{this.minYear}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
       @value={{this.maxYear}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Max"
       class="form-control"
     />
@@ -46,17 +51,18 @@
     <Input
       @value={{this.minPrice}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Min"
       class="form-control"
     />
-    <Input
+   <Input
       @value={{this.maxPrice}}
       @key-up={{action "handleFilter"}}
+      type="number"
       placeholder="Max"
       class="form-control"
     />
   </div>
-
 </div>
 
 <div class="sidebar-filter">

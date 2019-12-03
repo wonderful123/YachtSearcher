@@ -1,0 +1,7 @@
+<div class="thumbnail-container">
+  <img src={{@url}}
+    alt="Thumbnail"
+    onMouseMove={{action "handleMouseMovement"}}
+    {{on "mouseEnter" (fn @mouseEnter @url)}}
+  />
+</div>

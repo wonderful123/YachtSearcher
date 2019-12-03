@@ -7,19 +7,17 @@
 <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
 <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="assets/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin="">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
 
 <div class="wrapper">
   <header>
     <BsNav as |nav|>
       <div class="navbar-brand">
-        <img src="assets/header-icon.png" width="35" height="35" alt="" />
+        <img src="assets/header-icon.png" width="35" height="35" alt="">
         Boat<span>Searcher</span>
       </div>
       <nav.item>
@@ -36,12 +34,10 @@
         <nav.linkTo @route="boat-images">
           Images
         </nav.linkTo>
-      </nav.item><nav.dropdown as |dd|>
-        <dd.toggle>Favourites <span class="caret"></span></dd.toggle>
-        <dd.menu as |ddm|>
-          <FavouriteList />
-        </dd.menu>
-      </nav.dropdown>
+      </nav.item>
+      <nav.item>
+        <FavouriteList class="nav-link" />
+      </nav.item>
     </BsNav>
   </header>
   <div class="body-wrapper container-fluid">
