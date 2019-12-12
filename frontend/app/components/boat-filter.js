@@ -13,8 +13,6 @@ class extends Component {
   maxLength = '';
 
   didInsertElement() {
-    this._super(...arguments);
-
     const setMinMax = (param) => {
       const p = param.toLowerCase();
       if (this.urlQueryParams[p]) {
