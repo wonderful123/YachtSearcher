@@ -4,8 +4,10 @@ import {
   computed
 } from '@ember/object';
 
-export default Component.extend({
-  thumbnail: computed('boat.thumbnail', function() {
+export default
+class BoatImageWithDetails extends Component {
+  @computed('boat.thumbnail')
+  get thumbnail() {
     return config.image_server + this.boat.thumbnail;
-  })
-});
+  }
+}
