@@ -5,5 +5,7 @@
 - Sailboatdata - get make and model from description.
 - Command line arguments not working
 - Project startup file
-- Set image folder for ember
-- Fix ember errors
+-  Set image folder for ember
+-  Fix ember errors
+
+  - Change image-preview.js width calculation to include scrollbar
