@@ -1,6 +1,7 @@
 <div class="image-preview">
   <img src={{@url}}
-    {{did-insert this.setImagePosition @offsetX @offsetY}}
-    {{did-update this.setImagePosition @offsetX @offsetY}}
+    {{did-insert this.setContainer}}
+    {{did-update this.moveImage @offset}}
+    alt="preview"
   >
 </div>
