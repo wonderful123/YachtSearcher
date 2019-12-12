@@ -4,14 +4,18 @@ import {
   action
 } from '@ember/object';
 import config from '../config/environment';
-import ajax from 'ember-ajax';
+import { inject as service } from '@ember/service';
+import jQuery from 'jquery'
 
 export default
 class ListingImages extends Component {
+  @service ajax;
+
   imagesLoading = true;
   images = [];
-  MAX_THUMBNAILS = 8;
   showPreview = false;
+  MAX_THUMBNAILS = 8;
+  ZOOM_LEVEL = 1.5;
 
   @computed
   get baseImageUrl() {
@@ -38,11 +42,15 @@ class ListingImages extends Component {
     return this.remaingImagesCount > 0;
   }
 
+  @computed('selectedThumbnail')
+  get selectedImageAttributes() {
+    return null;
+  }
+
   didReceiveAttrs() {
-    this._super(...arguments);
     const boatId = this.boat.id;
     const url = `${config.rails_host}/boats/${boatId}/images`;
-    ajax(url, 'GET').then(response => {
+    jQuery.ajax(url, 'GET').then(response => {
       const images = response.data.attributes.images;
       this.set('selectedThumbnail', images[0]);
       this.set('images', images);
@@ -51,21 +59,43 @@ class ListingImages extends Component {
   }
 
   @action
-  mouseEnter(imageUrl) {
-    console.log('IMAGEURL', imageUrl)
+  handleMouseMove(offset, position) {
+    this.set('offset', offset);
+
+    // Move the main image in viewport
+    this.positionMainImage(position);
+
+    // this.moveZoomOverlay();
+  }
+
+  @action
+  moveZoomOverlay(element, left, top) {
+    element.style.top = top;
+    element.style.left = left;
+    console.log('movecursor')
+
+    //  $('.zoom-overlay').css({
+    //   top: top,
+    //   left: left
+    // });
+  }
+
+  @action
+  handleMouseEnter(imageUrl) {
     this.set('selectedThumbnail', imageUrl);
 
-    // Calculate position of right side of listing images so preview can be shown on the right side of listing. And middle to justify.
-    const element = this.$('.listing-images');
-    this.set('thumbnailListPosition', {
-      right: element.offset().left + element.width(),
-      middle: element[0].getBoundingClientRect().top + element.height() / 2
+    // Calculate position of right side of listing images so preview can be shown on the right.
+    const elementRect = this.element.querySelector('.listing-images').getBoundingClientRect();
+    this.set('thumbnailListContainer', {
+      right: elementRect.right,
+      middle: elementRect.top + elementRect.height / 2
     });
+
     this.set('showPreview', true);
   }
 
   @action
-  hidePreview() {
+  handleMouseLeave() {
     this.set('showPreview', false);
   }
 
@@ -78,5 +108,10 @@ class ListingImages extends Component {
 
     // this.$('.zoom-overlay').css({top: event.clientY - Math.ceil(this.thumbnailHeight / 4), left: event.clientX - Math.ceil(this.thumbnailWidth / 4)});
     // console.log('EVENT.CLIENTX - MATH.CEIL(THIS.THUMBNAILWIDTH / 4)', event.clientX - Math.ceil(this.thumbnailWidth / 4))
+  }
+
+  positionMainImage(position) {
+    const mainImageElement = this.element.getElementsByClassName('main-image')[0];
+    mainImageElement.style.objectPosition = `${position.x}% ${position.y}%`;
   }
 }
