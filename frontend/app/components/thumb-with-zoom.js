@@ -1,32 +1,75 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import $ from 'jquery';
 
-const ZOOM_LEVEL = 1.5;
+const RANGE_SHRINK = 2.5;
 
-export default Component.extend({
-  @action
-  handleMouseMovement(event) {
-    const p = calculateZoomOverlay({x: event.pageX, y: event.pageY}, $(event.target));
-    moveCursorOverlay(p.left, p.top);
-    movePreviewBackground(p.offsetX, p.offsetY);
+export default
+class ThumbWithZoom extends Component {
+  @computed
+  get imgElement() {
+    return this.element.getElementsByTagName('img')[0];
   }
-});
 
-function moveCursorOverlay(left, top) {
-   $('.zoom-overlay').css({
-    top: top,
-    left: left
-  });
+  @computed
+  get imageDimensions() {
+    const img = this.imgElement;
+    return {
+      width: img.width,
+      height: img.height,
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight,
+      aspect: img.naturalWidth / img.naturalHeight
+    };
+  }
+
+  @action
+  handleMouseMove(event) {
+    // Percentage offset position of mouse over the image element
+    const offset = {
+      x: event.offsetX / this.imageDimensions.width * 100,
+      y: event.offsetY / this.imageDimensions.height * 100
+    }
+
+    // Move the cropped thumbnail depending on mouse position
+    const position = positionThumbnail(this.imgElement, offset);
+
+    // Give data about current element back to parent action
+    this.mouseMoveAction(offset, position);
+  }
+
+  didInsertElement() {
+    super.didInsertElement(...arguments);
+    this.element.addEventListener('mousemove', this.handleMouseMove);
+    this.element.addEventListener('mouseenter', this.handleMouseEnter);
+    this.element.addEventListener('mouseleave', this.handleMouseLeave);
+  }
+
+  willDestroyElement() {
+    super.willDestroyElement(...arguments);
+    this.element.removeEventListener('mousemove', this.handleMouseMove);
+    this.element.removeEventListener('mouseenter', this.handleMouseEnter);
+    this.element.removeEventListener('mouseleave', this.handleMouseLeave);
+  }
 }
 
-function movePreviewBackground(offsetX, offsetY) {
-  $('.image-preview').css({
-    'background-position': offsetX + '% ' + offsetY + '%'
-  });
+function positionThumbnail(imgElement, offset) {
+  // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
+  const position = {
+    x: (offset.x - 50) * RANGE_SHRINK + 50,
+    y: (offset.y - 50) * RANGE_SHRINK + 50
+  }
+  if (position.x < 0) position.x = 0;
+  if (position.x > 100) position.x = 100;
+  if (position.y < 0) position.y = 0;
+  if (position.y > 100) position.y = 100;
+  // Move the image
+  imgElement.style.objectPosition = `${position.x}% ${position.y}%`;
+
+  return position;
 }
 
-function calculateZoomOverlay(mouse, thumb) {
+function calculateZoomViewport(mouse, thumb) {
   let t = thumb.position();
   t.width = thumb.width();
   t.height = thumb.height();
