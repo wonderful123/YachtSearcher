@@ -378,6 +378,8 @@ footer {
   .zoom-overlay {
     // background-image: radial-gradient(orange 1px, transparent 1%);
     // background-size: 4px 4px;
+    width: 10px;
+    height: 10px;
     position: absolute;
   	background-image: radial-gradient(green 33%, transparent 33%);
   	background-size: 3px 3px;
@@ -420,14 +422,6 @@ footer {
   .image-preview {
     position: fixed;
     overflow: hidden;
-    border: 3px solid orange;
-
-    // img {
-    //   transition: transform 0.1s ease;
-    // }
-
-    img {
-      visibility: hidden;
-    }
+    border: 2px solid orange;
   }
 }
