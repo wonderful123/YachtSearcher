@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { inject } from '@ember/service';
+import { inject as service } from '@ember/service';
 
 export default
 class FavouriteList extends Component {
-  @inject
+  @service
   favourites
 
   isModalOpen = false;
