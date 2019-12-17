@@ -1,17 +1,78 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 const MAX_ZOOM = 1.5;
 const CONTAINER_PADDING = 10;
+const RANGE_SHRINK = 2;
 
 export default
 class ImagePreview extends Component {
+  @computed
+  get imgElement() {
+    return this.element.getElementsByTagName('img')[0];
+  }
+
+  @action
+  moveImage() {
+let x, y;
+    // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
+    x = (this.offset.x - 50) * RANGE_SHRINK + 50;
+    y = (this.offset.y - 50) * RANGE_SHRINK + 50;
+
+    if (x < 0) x = 0;
+    if (x > 100 / this.zoomLevel) x = 100 / this.zoomLevel;
+    if (y < 0) y = 0;
+    if (y > 100 / this.zoomLevel) y = 100 / this.zoomLevel;
+
+    x = x * (1 - 1 / this.zoomLevel);
+    y = y * (1 - 1 / this.zoomLevel);
+
+    // Move the image
+    this.imgElement.style.transform = `translate(-${x}%, -${y}%)`;
+
+
+    // this.$('.image-preview').css({
+    //   'background-image': `url(${this.url})`,
+    //   'background-size': `${c.width * zoomLevel}px ${c.height * zoomLevel}px`
+    // });
+  }
+
+  @action
+  setContainer() {
+    const maxContainerSize = this.maxContainerSize();
+    let c = this.fitInsideContainer(maxContainerSize);
+    c = this.positionContainer(c);
+
+    const element = this.element.querySelector('.image-preview');
+    element.style.width = c.width + 'px';
+    element.style.height = c.height + 'px';
+    element.style.top = c.top + 'px';
+    element.style.left = c.left + 'px';
+
+    this.set('zoomLevel', this.calculateZoom(c));
+    this.imgElement.style.width = `${c.width * this.zoomLevel}px`;
+    this.imgElement.style.height = `${c.height * this.zoomLevel}px`;
+
+    // Calculate the translate factor. It depends on zoom level and image size
+    // const previewWidth = c.width * zoomLevel;
+    //
+    // const left = previewWidth * this.offsetX * (1 - 1 / zoomLevel) / 100;
+    // const top = c.height * zoomLevel * this.offsetY * (1 - 1 / zoomLevel) / 100;
+    //
+    // const translateX = this.offsetX * (1 - 1 / zoomLevel);
+    // const translateY = this.offsetY * (1 - 1 / zoomLevel);
+
+  }
+
   // Calculate max dimensions for preview container
-  containerSize() {
+  maxContainerSize() {
     // Width is from the right of listing images plus the padding
-    const windowWidth = this.$(window).width();
-    const width = windowWidth - this.thumbnailListPosition.right - CONTAINER_PADDING * 2;
-    const windowHeight = this.$(window).height();
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    const width = windowWidth - this.thumbnailListContainer.right - CONTAINER_PADDING * 2 - 15;
+//******************************************************
+// TODO: CHANGE -15 to SCROLLBAR WIDTH
+//******************************************************
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
     const height = windowHeight - CONTAINER_PADDING * 2;
     const aspect = width / height;
 
@@ -19,20 +80,19 @@ class ImagePreview extends Component {
   }
 
   imageSize() {
-    const height = this.$('img')[0].naturalHeight;
-    const width = this.$('img')[0].naturalWidth;
+    const height = this.imgElement.naturalHeight;
+    const width = this.imgElement.naturalWidth;
     const aspect = width / height;
 
     return { width: width, height: height, aspect: aspect };
   }
 
-  // Calculate the container dimensions keeping image aspect ratio
-  fitContainer() {
-    let container = this.containerSize();
+  // Calculate the container dimensions inside the max size keeping image aspect ratio
+  fitInsideContainer(maxSize) {
+    let container = maxSize;
     const image = this.imageSize();
 
-
-    // IF container aspect taller than image then shrink vertically.
+    // If container aspect taller than image then shrink to fit.
     if (container.aspect < image.aspect) {
       container.height = container.width / image.aspect;
     } else {
@@ -50,9 +110,9 @@ class ImagePreview extends Component {
 
   // Returns top and left position for container.
   // Try to align preview with middle of thumbnail but bouce off top and bottom of window
-  containerPosition(container) {
-    const left = this.thumbnailListPosition.right + CONTAINER_PADDING;
-    let top = this.thumbnailListPosition.middle - container.height / 2;
+  positionContainer(container) {
+    const left = this.thumbnailListContainer.right + CONTAINER_PADDING;
+    let top = this.thumbnailListContainer.middle - container.height / 2;
 
     // Check not above top of window
     if (top - CONTAINER_PADDING < 0) {
@@ -60,7 +120,7 @@ class ImagePreview extends Component {
     }
 
     // Check not below bottom
-    const windowHeight = this.$(window).height();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
     if (top + container.height + CONTAINER_PADDING > windowHeight)
     {
       top = windowHeight - container.height - CONTAINER_PADDING;
@@ -68,14 +128,6 @@ class ImagePreview extends Component {
 
     container.top = top;
     container.left = left;
-
-    return container;
-  }
-
-  // Get the container dimensions and position respecting image aspect
-  getContainer() {
-    let container = this.fitContainer();
-    container = this.containerPosition(container);
 
     return container;
   }
@@ -89,46 +141,5 @@ class ImagePreview extends Component {
     if (zoom > MAX_ZOOM) zoom = MAX_ZOOM;
 
     return zoom;
-  }
-
-  @action
-  setImagePosition() {
-    const c = this.getContainer();
-
-    this.$('.image-preview').css({top: c.top, left: c.left, width: c.width, height: c.height});
-
-    const zoomLevel = this.calculateZoom(c);
-    this.$('.image-preview').css({
-      'background-image': `url(${this.url})`,
-      'background-size': `${c.width * zoomLevel}px ${c.height * zoomLevel}px`
-    });
-
-    this.$('.image-preview').clearQueue().animate({
-      'background-position-x': `${this.offsetX}%`,
-      'background-position-y': `${this.offsetY}%`
-    }, 10)
-
-    // Calculate the translate factor. It depends on zoom level and image size
-    const previewWidth = c.width * zoomLevel;
-
-    const left = previewWidth * this.offsetX * (1 - 1 / zoomLevel) / 100;
-    const top = c.height * zoomLevel * this.offsetY * (1 - 1 / zoomLevel) / 100;
-
-    const translateX = this.offsetX * (1 - 1 / zoomLevel);
-    const translateY = this.offsetY * (1 - 1 / zoomLevel);
-
-    // this.$('.image-preview-container img')
-    // .css({
-    //   width: previewWidth,
-    //   height: 'auto',
-    //   position: 'absolute',
-    // })
-    // this.$('.image-preview-container img')
-    // .finish()
-    // .animate({
-    //   top: -top,
-    //   left: -left
-    //   // 'transform', `translate(${-translateX}%, ${-translateY}%)`
-    // }, 10)
   }
 }
