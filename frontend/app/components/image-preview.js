@@ -4,6 +4,7 @@ import { action, computed } from '@ember/object';
 const MAX_ZOOM = 1.5;
 const CONTAINER_PADDING = 10;
 const RANGE_SHRINK = 2;
+const SMOOTHING = 8;
 
 export default
 class ImagePreview extends Component {
@@ -14,10 +15,9 @@ class ImagePreview extends Component {
 
   @action
   moveImage() {
-let x, y;
     // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
-    x = (this.offset.x - 50) * RANGE_SHRINK + 50;
-    y = (this.offset.y - 50) * RANGE_SHRINK + 50;
+    let x = (this.offset.x - 50) * RANGE_SHRINK + 50;
+    let y = (this.offset.y - 50) * RANGE_SHRINK + 50;
 
     if (x < 0) x = 0;
     if (x > 100 / this.zoomLevel) x = 100 / this.zoomLevel;
@@ -29,16 +29,10 @@ let x, y;
 
     // Move the image
     this.imgElement.style.transform = `translate(-${x}%, -${y}%)`;
-
-
-    // this.$('.image-preview').css({
-    //   'background-image': `url(${this.url})`,
-    //   'background-size': `${c.width * zoomLevel}px ${c.height * zoomLevel}px`
-    // });
   }
 
   @action
-  setContainer() {
+  setupContainer() {
     const maxContainerSize = this.maxContainerSize();
     let c = this.fitInsideContainer(maxContainerSize);
     c = this.positionContainer(c);
@@ -52,16 +46,6 @@ let x, y;
     this.set('zoomLevel', this.calculateZoom(c));
     this.imgElement.style.width = `${c.width * this.zoomLevel}px`;
     this.imgElement.style.height = `${c.height * this.zoomLevel}px`;
-
-    // Calculate the translate factor. It depends on zoom level and image size
-    // const previewWidth = c.width * zoomLevel;
-    //
-    // const left = previewWidth * this.offsetX * (1 - 1 / zoomLevel) / 100;
-    // const top = c.height * zoomLevel * this.offsetY * (1 - 1 / zoomLevel) / 100;
-    //
-    // const translateX = this.offsetX * (1 - 1 / zoomLevel);
-    // const translateY = this.offsetY * (1 - 1 / zoomLevel);
-
   }
 
   // Calculate max dimensions for preview container
