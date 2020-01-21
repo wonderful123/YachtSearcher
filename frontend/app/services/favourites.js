@@ -1,20 +1,18 @@
 import Service from '@ember/service';
-import { set, computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default
 class Favourites extends Service {
-  boats = [];
+  @tracked boats = [];
   name = 'Favourites';
   note = '';
 
   lists = []; // Multiple lists can be stored.
 
-  @computed('boats.[]')
   get current() {
     return this.boats;
   }
 
-  @computed('boats.[]')
   get count() {
     return this.boats.length;
   }
@@ -28,8 +26,8 @@ class Favourites extends Service {
   }
 
   deleteCurrent() {
-    set(this, 'boats', []);
-    set(this, 'name', 'Favourites');
+    this.boats = [];
+    this.name = 'Favourites';
   }
 
   // is boat in current list?
