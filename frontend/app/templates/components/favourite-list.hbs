@@ -1,10 +1,10 @@
 <div class="favourites-list">
-  <button class="nav-link transparent-button" {{action "toggleModal"}}>
+  <button type="button" lass="nav-link transparent-button" {{on "click" this.toggleModal}}>
     Favourites<sup><span class="badge badge-info">{{this.currentCount}}</span></sup>
     <FaIcon @icon="caret-down" />
   </button>
 
-  <BsModal @open={{this.isModalOpen}} @onHide={{action "toggleModal"}} as |Modal|>
+  <BsModal @open={{this.isModalOpen}} @onHide={{on "click" this.toggleModal}} as |Modal|>
     <Modal.header>
       <form class="px-4 py-3">
         <div class="form-group">
@@ -12,7 +12,7 @@
           <Input @value={{this.favourites.name}} type="text" class="form-control" id="favourite-list-name" />
         </div>
         {{#if this.hasFavourites}}
-          <button type="submit" class="btn btn-sm btn-primary" {{action "deleteCurrent"}}>Clear list</button>
+          <button type="submit" class="btn btn-sm btn-primary" {{on "click" this.deleteCurrent}}>Clear list</button>
         {{/if}}
       </form>
     </Modal.header>

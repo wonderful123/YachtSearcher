@@ -3,7 +3,7 @@
     Showing {{@meta.from}}-{{@meta.to}}
   </div>
   <div class="pages">
-    {{#each series as |page|}}
+    {{#each this.series as |page|}}
       {{#if page.url}}
         <a href={{page.url}}>{{page.text}}</a>
       {{else}}

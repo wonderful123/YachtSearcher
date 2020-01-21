@@ -9,9 +9,9 @@
       <ThumbWithZoom
         @url="{{this.baseImageUrl}}{{url}}"
         class={{if (eq this.selectedThumbnail url) "highlight"}}
-        @handleMouseEnter={{action "handleMouseEnter" url}}
-        @handleMouseLeave={{action "handleMouseLeave"}}
-        @mouseMoveAction={{action "handleMouseMove"}}
+        @handleMouseEnter={{on "click" (fn this.handleMouseEnter url)}}
+        @handleMouseLeave={{on "click" this.handleMouseLeave}}
+        @mouseMoveAction={{on "click" this.handleMouseMove}}
        />
     {{/each}}
 
@@ -20,9 +20,9 @@
         <ThumbWithZoom
           @url="{{this.baseImageUrl}}{{this.lastImage}}"
           class={{if this.hasMoreImages "more-images"}}
-          @handleMouseEnter={{action "handleMouseEnter" this.lastImage}}
-          @handleMouseLeave={{action "handleMouseLeave"}}
-          @mouseMoveAction={{action "handleMouseMove"}}
+          @handleMouseEnter={{on "click" (fn this.handleMouseEnter this.lastImage)}}
+          @handleMouseLeave={{on "click" this.handleMouseLeave}}
+          @mouseMoveAction={{on "click" this.handleMouseMove}}
         />
         {{#if this.hasMoreImages}}
           <div class="remaining-count">

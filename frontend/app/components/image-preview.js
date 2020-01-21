@@ -4,7 +4,6 @@ import { action, computed } from '@ember/object';
 const MAX_ZOOM = 1.5;
 const CONTAINER_PADDING = 10;
 const RANGE_SHRINK = 2;
-const SMOOTHING = 8;
 
 export default
 class ImagePreview extends Component {

@@ -1,15 +1,15 @@
 <CollapsableSidebar>
   <BoatFilter
-    @filter={{action "filter"}} />
+    @filter={{on "click" this.filter}} />
 </CollapsableSidebar>
 
 <div class="content">
   <div class="filter-info-container">
-    <div class="boats-found">{{boatsFound}}</div>
-    <div class="search-filter-summary">{{filterSummary}}</div>
+    <div class="boats-found">{{this.boatsFound}}</div>
+    <div class="search-filter-summary">{{this.filterSummary}}</div>
   </div>
 
-  <LocationMap @boats={{filteredBoats}} />
+  <LocationMap @boats={{this.filteredBoats}} />
 
   {{!-- <BoatListingSort @sort={{action "sort"}} />
 

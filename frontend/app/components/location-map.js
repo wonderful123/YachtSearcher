@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { divIcon } from 'ember-leaflet/helpers/div-icon';
+import { point } from 'ember-leaflet/helpers/point';
 
 export default Component.extend({
   lat: -25.2743988,
@@ -18,7 +20,7 @@ export default Component.extend({
     let formattedCurrency = kFormatter(averagePrice).split('k')[0];
     formattedCurrency = parseInt(formattedCurrency);
     formattedCurrency = formattedCurrency.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-		return L.divIcon({
+		return divIcon({
       html: `<div>
                <div class="number-of-boats">
                  ${markers.length}
@@ -28,6 +30,6 @@ export default Component.extend({
                </div>
              </div>`,
       className: 'marker-cluster-small',
-      iconSize: new L.Point(50, 50) });
+      iconSize: new point(50, 50) });
 	},
 });

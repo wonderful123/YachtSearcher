@@ -1,5 +1,5 @@
 <CollapsableSidebar>
-  <BoatFilter @updateFilters={{action "updateFilters"}} @urlQueryParams={{this.urlQueryParams}} />
+  <BoatFilter @updateFilters={{this.updateFilters}} @urlQueryParams={{this.urlQueryParams}} />
 </CollapsableSidebar>
 
 <section class="boat-listings">
@@ -8,7 +8,7 @@
       {{this.model.meta.count}} boats found
     </div>
 
-    <BoatListingSort @doSort={{action "doSort"}} @urlSortParam={{this.urlSortParam}} />
+    <BoatListingSort @doSort={{this.doSort}} @urlSortParam={{this.urlSortParam}} />
 
     {{#each this.model as |boat|}}
       <BoatListing @boat={{boat}} />

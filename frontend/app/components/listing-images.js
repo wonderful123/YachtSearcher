@@ -72,7 +72,6 @@ class ListingImages extends Component {
   moveZoomOverlay(element, left, top) {
     element.style.top = top;
     element.style.left = left;
-    console.log('movecursor')
 
     //  $('.zoom-overlay').css({
     //   top: top,
