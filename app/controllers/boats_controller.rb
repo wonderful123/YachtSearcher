@@ -8,7 +8,7 @@ class BoatsController < ApplicationController
   has_scope :search, :sortby
 
   def apply_filters(params)
-    filtered = Boat.all
+    filtered = Boat.all.includes(:listings)
     filtered = filtered.filter_range('length_inches', params[:length]) unless params[:length].blank?
     filtered = filtered.filter_range('price', params[:price]) unless params[:price].blank?
     filtered = filtered.filter_range('year', params[:year]) unless params[:year].blank?
@@ -16,6 +16,7 @@ class BoatsController < ApplicationController
     if params[:sortby] && params[:sort_dir]
       params[:sortby] += "_#{params[:sort_dir].downcase}"
     end
+
     apply_scopes(filtered)
   end
 
@@ -34,9 +35,11 @@ class BoatsController < ApplicationController
       page: params[:page],
       items: params[:per_page]
     )
+    pp params[:thumbnails]
 
     options = {
-      meta: pagy_metadata(@pagy)
+      meta: pagy_metadata(@pagy),
+      params: { thumbnails: params[:thumbnails] } # Send to serializer
     }
 
     render json: SimpleBoatSerializer.new(@boats, options).serialized_json
