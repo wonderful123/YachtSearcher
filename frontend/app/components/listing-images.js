@@ -1,8 +1,6 @@
-import Component from '@ember/component';
-import {
-  computed,
-  action
-} from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 import config from '../config/environment';
 import { inject as service } from '@ember/service';
 import jQuery from 'jquery'
@@ -11,38 +9,34 @@ export default
 class ListingImages extends Component {
   @service ajax;
 
+  @tracked images = [];
+  @tracked selectedThumbnail;
+
   imagesLoading = true;
-  images = [];
   showPreview = false;
   MAX_THUMBNAILS = 8;
   ZOOM_LEVEL = 1.5;
 
-  @computed
   get baseImageUrl() {
     return config.image_server;
   }
 
-  @computed('images.[]')
   get thumbnails() {
     return this.images.slice(0, this.MAX_THUMBNAILS - 1);
   }
 
-  @computed('images.[]')
   get lastImage() {
     return this.images[this.MAX_THUMBNAILS - 1];
   }
 
-  @computed('images.[]')
   get remaingImagesCount() {
     return this.images.length - this.MAX_THUMBNAILS;
   }
 
-  @computed('image.[]')
   get hasMoreImages() {
     return this.remaingImagesCount > 0;
   }
 
-  @computed('selectedThumbnail')
   get selectedImageAttributes() {
     return null;
   }

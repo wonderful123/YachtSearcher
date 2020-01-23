@@ -10,6 +10,7 @@ class extends Route {
     length: { refreshModel: true },
     price: { refreshModel: true },
     year: { refreshModel: true },
+    thumbnails: 6,
   }
 
   model(params) {

@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 import { inject as service } from '@ember/service';
 
 export default
 class FavouriteList extends Component {
-  @service
-  favourites
+  @service favourites
 
-  isModalOpen = false;
+  @tracked isModalOpen = false;
 
   get currentCount() {
     return this.favourites.count;
@@ -15,7 +15,7 @@ class FavouriteList extends Component {
 
   @action
   toggleModal() {
-    this.toggleProperty('isModalOpen');
+    this.isModalOpen = !this.isModalOpen;
   }
 
   @action

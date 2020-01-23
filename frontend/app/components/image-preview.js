@@ -1,5 +1,5 @@
-import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 const MAX_ZOOM = 1.5;
 const CONTAINER_PADDING = 10;
@@ -7,7 +7,6 @@ const RANGE_SHRINK = 2;
 
 export default
 class ImagePreview extends Component {
-  @computed
   get imgElement() {
     return this.element.getElementsByTagName('img')[0];
   }

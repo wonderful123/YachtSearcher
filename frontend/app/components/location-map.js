@@ -1,15 +1,16 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { divIcon } from 'ember-leaflet/helpers/div-icon';
 import { point } from 'ember-leaflet/helpers/point';
 
-export default Component.extend({
-  lat: -25.2743988,
-  lng: 133.7751312,
-  zoom: 4,
-  tileUrl: "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg", // Pastel tile
-  tileUrl2: "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png", // Label overlay
+export default
+class LocationMap extends Component {
+  lat = -25.2743988;
+  lng = 133.7751312;
+  zoom = 4;
+  tileUrl = "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg"; // Pastel tile
+  tileUrl2 = "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png"; // Label overlay
 
-  iconCreateFunction: function(cluster) {
+  iconCreateFunction = function(cluster) {
     let markers = cluster.getAllChildMarkers();
     let total = 0;
     markers.forEach(m => {
@@ -31,5 +32,5 @@ export default Component.extend({
              </div>`,
       className: 'marker-cluster-small',
       iconSize: new point(50, 50) });
-	},
-});
+	};
+}

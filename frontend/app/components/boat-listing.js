@@ -1,11 +1,9 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
 export default
 class BoatListing extends Component {
-  @computed('boat.firstFound')
   get firstFound() {
-    const m = new Date(this.boat.firstFound);
+    const m = new Date(this.args.boat.firstFound);
     return m.getUTCDate() + "/" + + m.getUTCMonth()  + "/" + m.getUTCFullYear();
   }
 }

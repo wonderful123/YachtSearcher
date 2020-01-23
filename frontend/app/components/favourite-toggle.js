@@ -1,11 +1,10 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action, computed } from '@ember/object';
 import { inject } from '@ember/service';
 
 export default
 class FavouriteIcon extends Component {
-  @inject
-  favourites
+  @inject favourites
 
   @computed('favourites.boats.[]')
   get isActive() {

@@ -1,14 +1,10 @@
-import Component from '@ember/component';
-import {
-  computed
-} from '@ember/object';
+import Component from '@glimmer/component';
 
 export default
 class ListingPagination extends Component {
-  @computed('meta')
   get series() {
-    const seriesData = this.meta.series;
-    const scaffoldUrl = this.meta.scaffold_url;
+    const seriesData = this.args.meta.series;
+    const scaffoldUrl = this.args.meta.scaffold_url;
     let series = [];
 
     seriesData.forEach(page => {

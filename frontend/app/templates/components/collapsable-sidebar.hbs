@@ -1,5 +1,5 @@
 <div id="sidebar-wrapper" class={{if this.isActive "active" "hidden"}}>
-  <button type="button" class="close" aria-label="Close" {{on "click" this.toggleCollapse}}>
+  <button type="button" class="close" aria-label="Close" role="button" {{on "click" this.toggleCollapse}}>
     <span aria-hidden="true"><FaIcon @icon="chevron-left" /></span>
   </button>
   {{yield}}

@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { set, action } from '@ember/object';
 
 const CATEGORIES = [
@@ -70,6 +70,6 @@ class BoatListingSort extends Component {
     });
 
     // Call parent action
-    this.doSort(selection.property, selection.sortDirection);
+    this.args.doSort(selection.property, selection.sortDirection);
   }
 }
