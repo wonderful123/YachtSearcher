@@ -1,56 +1,86 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 
 const MAX_ZOOM = 1.5;
 const CONTAINER_PADDING = 10;
-const RANGE_SHRINK = 2;
+const RANGE_SHRINK = 0.9; // Percentage of smaller boundary
 
 export default
 class ImagePreview extends Component {
-  get imgElement() {
-    return this.element.getElementsByTagName('img')[0];
-  }
+  @tracked container;
 
   @action
-  moveImage() {
-    // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
-    let x = (this.offset.x - 50) * RANGE_SHRINK + 50;
-    let y = (this.offset.y - 50) * RANGE_SHRINK + 50;
+  moveImage(imgElement) {
+    const mousePosition = this.args.mouseThumbnailPosition;
 
+    // inner box reduced by equal pixels for top and sides. Just use the smallest.
+    const rangeX = (this.container.width / RANGE_SHRINK) - this.container.width;
+    const rangeY = (this.container.height / RANGE_SHRINK) - this.container.height;
+    const rangeShrink = rangeX >= rangeY ? rangeX : rangeY;
+
+    let innerRatioX = (this.container.width - rangeShrink * 2) / this.container.width;
+    let innerRatioY = (this.container.height - rangeShrink * 2) / this.container.height
+innerRatioX = 1; innerRatioY = 1
+    // Offset is between 0 and 100. Make it -50 to +50, apply shrink then return to normal.
+    let x = (mousePosition.offsetX - 50) / innerRatioX + 50;
+    let y = (mousePosition.offsetY - 50) / innerRatioY + 50;
+
+    // Bounding box
     if (x < 0) x = 0;
-    if (x > 100 / this.zoomLevel) x = 100 / this.zoomLevel;
+    if (x > 100) x = 100;
     if (y < 0) y = 0;
-    if (y > 100 / this.zoomLevel) y = 100 / this.zoomLevel;
+    if (y > 100) y = 100;
 
-    x = x * (1 - 1 / this.zoomLevel);
-    y = y * (1 - 1 / this.zoomLevel);
+    // x = x * this.zoomLevel;
+    // y = y * this.zoomLevel;
 
     // Move the image
-    this.imgElement.style.transform = `translate(-${x}%, -${y}%)`;
+    this.imagePreviewElement.style.objectPosition = `${x}% ${y}%`;
+    console.log(`zoom: ${this.zoomLevel} x:${x} y:${y} container width:${this.container.width} img width:${this.imagePreviewElement.width}`)
+
+
+    // // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
+    // let x = (mousePosition.offsetX - 50) * RANGE_SHRINK + 50;
+    // let y = (mousePosition.offsetY - 50) * RANGE_SHRINK + 50;
+    //
+    // if (x < 0) x = 0;
+    // if (x > 100 / this.zoomLevel) x = 100 / this.zoomLevel;
+    // if (y < 0) y = 0;
+    // if (y > 100 / this.zoomLevel) y = 100 / this.zoomLevel;
+    //
+    // x = x * (1 - 1 / this.zoomLevel);
+    // y = y * (1 - 1 / this.zoomLevel);
+    //
+    // // Move the image
+    // imgElement.style.transform = `translate(-${x}%, -${y}%)`;
   }
 
   @action
-  setupContainer() {
+  setupContainer(element) {
     const maxContainerSize = this.maxContainerSize();
-    let c = this.fitInsideContainer(maxContainerSize);
+    let c = this.fitInsideContainer(maxContainerSize, this.imagePreviewElement);
     c = this.positionContainer(c);
 
-    const element = this.element.querySelector('.image-preview');
+    // const element = this.element.querySelector('.image-preview');
     element.style.width = c.width + 'px';
     element.style.height = c.height + 'px';
     element.style.top = c.top + 'px';
     element.style.left = c.left + 'px';
 
-    this.set('zoomLevel', this.calculateZoom(c));
-    this.imgElement.style.width = `${c.width * this.zoomLevel}px`;
-    this.imgElement.style.height = `${c.height * this.zoomLevel}px`;
+    this.zoomLevel = this.calculateZoom(c);
+    this.imagePreviewElement.style.width = `${c.width * this.zoomLevel}px`;
+    this.imagePreviewElement.style.height = `${c.height * this.zoomLevel}px`;
+
+    // Save the container element,
+    this.container = c;
   }
 
   // Calculate max dimensions for preview container
   maxContainerSize() {
     // Width is from the right of listing images plus the padding
     const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-    const width = windowWidth - this.thumbnailListContainer.right - CONTAINER_PADDING * 2 - 15;
+    const width = windowWidth - this.args.thumbnailListingContainer.right - CONTAINER_PADDING * 2 - 15;
 //******************************************************
 // TODO: CHANGE -15 to SCROLLBAR WIDTH
 //******************************************************
@@ -62,8 +92,8 @@ class ImagePreview extends Component {
   }
 
   imageSize() {
-    const height = this.imgElement.naturalHeight;
-    const width = this.imgElement.naturalWidth;
+    const height = this.imagePreviewElement.naturalHeight;
+    const width = this.imagePreviewElement.naturalWidth;
     const aspect = width / height;
 
     return { width: width, height: height, aspect: aspect };
@@ -93,8 +123,8 @@ class ImagePreview extends Component {
   // Returns top and left position for container.
   // Try to align preview with middle of thumbnail but bouce off top and bottom of window
   positionContainer(container) {
-    const left = this.thumbnailListContainer.right + CONTAINER_PADDING;
-    let top = this.thumbnailListContainer.middle - container.height / 2;
+    const left = this.args.thumbnailListingContainer.right + CONTAINER_PADDING;
+    let top = this.args.thumbnailListingContainer.middle - container.height / 2;
 
     // Check not above top of window
     if (top - CONTAINER_PADDING < 0) {

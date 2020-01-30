@@ -1,16 +1,14 @@
 import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 
 const RANGE_SHRINK = 2.5;
 
 export default
 class ThumbWithZoom extends Component {
-  @computed
   get imgElement() {
     return this.element.getElementsByTagName('img')[0];
   }
 
-  @computed
   get imageDimensions() {
     const img = this.imgElement;
     return {
@@ -34,7 +32,7 @@ class ThumbWithZoom extends Component {
     const position = positionThumbnail(this.imgElement, offset);
 
     // Give data about current element back to parent action
-    this.mouseMoveAction(offset, position);
+    this.args.mouseMoveAction(offset, position);
   }
 
   didInsertElement() {
