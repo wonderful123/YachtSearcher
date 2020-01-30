@@ -1,0 +1,53 @@
+<div class="listing-images" {{did-insert this.setListingContainer}}>
+
+  <PanningThumbnail
+    class="main-image"
+    @url={{this.selectedThumbnail}}
+    @updateMouseOffset={{this.updateMouseOffset}}
+    {{on "mouseenter" (fn this.handleMouseEnter url)}}
+    {{on "mouseleave" this.handleMouseLeave}}
+  />
+
+  <div class="thumbnail-list">
+    {{#each this.thumbnails as |url|}}
+      <PanningThumbnail
+        @url={{url}}
+        class="thumbnail {{if (eq this.selectedThumbnail url) "highlight"}}"
+        @updateMouseOffset={{this.updateMouseOffset}}
+        {{on "mouseenter" (fn this.handleMouseEnter url)}}
+        {{on "mouseleave" this.handleMouseLeave}}
+      />
+    {{/each}}
+
+    {{#if this.lastImage}}
+      <div class="last-image-container">
+
+        <PanningThumbnail
+          @url={{this.lastImage}}
+          class="thumbnail {{if this.hasMoreImages "more-images"}}"
+          @updateMouseOffset={{this.updateMouseOffset}}
+          {{on "mouseenter" (fn this.handleMouseEnter this.lastImage)}}
+          {{on "mouseleave" this.handleMouseLeave}}
+        />
+
+        {{#if this.hasMoreImages}}
+          <div class="remaining-count">
+            {{this.remainingImagesCount}}+
+            <FaIcon @icon="images" />
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+  </div>
+
+  <!-- {{#if this.showPreview}}
+    <ImagePreview
+      @url={{this.selectedThumbnail}}
+      @thumbnailListingContainer={{this.thumbnailListingContainer}}
+      @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
+    />
+
+    <div class="zoom-overlay"></div>
+  {{/if}} -->
+</div>

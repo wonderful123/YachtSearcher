@@ -1,0 +1,6 @@
+<div class="image-preview" {{did-insert this.setupContainer}}>
+  <img src={{@url}}
+    {{ref this "imagePreviewElement"}}
+    {{did-update this.moveImage @mouseThumbnailPosition}}
+    alt="preview">
+</div>

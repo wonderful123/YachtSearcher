@@ -1,0 +1,76 @@
+<div class="sidebar-search">
+  <div class="sidebar-search-heading">Search</div>
+
+  <label>Boat name/listing title:</label>
+  <Input
+    @value={{this.search}}
+    @key-up={{this.handleFilter}}
+    type="search"
+    placeholder="Search by name"
+    class="form-control"
+  />
+
+  <label>Length (ft)</label>
+  <div class="twin-inputs">
+    <Input
+      @value={{this.minLength}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Min"
+      class="form-control"
+    />
+    <Input
+      @value={{this.maxLength}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Max"
+      class="form-control"
+    />
+  </div>
+
+  <label>Year</label>
+  <div class="twin-inputs">
+    <Input
+      @value={{this.minYear}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Min"
+      class="form-control"
+    />
+    <Input
+      @value={{this.maxYear}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Max"
+      class="form-control"
+    />
+  </div>
+
+  <label>Price range</label>
+  <div class="twin-inputs">
+    <Input
+      @value={{this.minPrice}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Min"
+      class="form-control"
+    />
+    <Input
+      @value={{this.maxPrice}}
+      @key-up={{this.handleFilter}}
+      type="number"
+      placeholder="Max"
+      class="form-control"
+    />
+  </div>
+</div>
+
+<div class="sidebar-filter">
+  <div class="sidebar-filter-heading">Filter by:</div>
+  <hr>
+  <div class="filter-subheading">Region</div>
+  <ul>
+    <li>Australia</li>
+    <li>World</li>
+  </ul>
+</div>
