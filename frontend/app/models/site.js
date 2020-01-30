@@ -1,9 +1,8 @@
-import DS from 'ember-data';
-const { Model, attr, hasMany } = DS;
+import Model, { attr } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr('string'),
-  url: attr('string'),
-  lastUpdate: attr('date'),
-  boats: hasMany('boat')
-});
+export default class SiteModel extends Model {
+  @attr name;
+  @attr url;
+  @attr('date') lastUpdate;
+  @attr boats;
+}

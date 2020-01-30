@@ -1,8 +1,7 @@
-import DS from 'ember-data';
-const { Model, attr, belongsTo } = DS;
+import Model, { attr } from '@ember-data/model';
 
-export default Model.extend({
-  price: attr('number'),
-  changeDate: attr('date'),
-  boat: belongsTo('boat')
-});
+export default class HistoryModel extends Model {
+  @attr('number') price;
+  @attr('number') changeDate;
+  @attr boat;
+}
