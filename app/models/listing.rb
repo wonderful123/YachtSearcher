@@ -3,5 +3,5 @@ class Listing < ApplicationRecord
   belongs_to :site
   has_many :histories, dependent: :destroy
 
-  serialize :images, Array 
+  serialize :images, Array
 end
