@@ -355,18 +355,12 @@ footer {
   display: flex;
   margin-right: 10px;
 
-  .main-image-container {
-    width: 200px;
-    height: 156px;
-  }
-
   .main-image {
     width: 200px;
     height: 156px;
-    object-fit: cover;
     margin-left: auto;
-    margin-right: auto;
-    display: block;
+    margin-top: auto;
+    object-fit: cover;
   }
 
   .highlight {
@@ -393,7 +387,7 @@ footer {
     grid-template-columns: 50px 50px;
     margin-left: 4px;
 
-    img {
+    .thumbnail {
       width: 50px;
       height: 36px;
       object-fit: cover;
@@ -423,5 +417,6 @@ footer {
     position: fixed;
     overflow: hidden;
     border: 2px solid orange;
+    object-fit: cover;
   }
 }
