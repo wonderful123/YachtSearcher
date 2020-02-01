@@ -4,10 +4,10 @@ import { tracked } from '@glimmer/tracking';
 export default
 class Favourites extends Service {
   @tracked boats = [];
-  name = 'Favourites';
-  note = '';
+  @tracked name = 'Favourites';
+  @tracked note = '';
 
-  lists = []; // Multiple lists can be stored.
+  @tracked lists = []; // Multiple lists can be stored.
 
   get current() {
     return this.boats;

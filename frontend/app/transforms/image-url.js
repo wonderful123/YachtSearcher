@@ -5,7 +5,11 @@ export default class ImageUrlTransform extends Transform {
   deserialize(images) {
     const baseUrl = config.image_server;
 
-    return images.map(imageUrl => baseUrl + imageUrl)
+    if (Array.isArray(images)) {
+      return images.map(imageUrl => baseUrl + imageUrl);
+    } else {
+      return baseUrl + images;
+    }
   }
 
   serialize(deserialized) {

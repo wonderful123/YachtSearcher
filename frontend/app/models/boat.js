@@ -16,7 +16,7 @@ export default class BoatModel extends Model {
   @attr make;
   @attr model;
   @attr('number') cabins;
-  @attr thumbnail;
+  @attr('image-url') thumbnail;
   @attr('number') latitude;
   @attr('number') longitude;
   @attr location;

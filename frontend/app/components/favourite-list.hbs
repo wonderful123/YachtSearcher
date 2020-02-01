@@ -4,7 +4,7 @@
     <FaIcon @icon="caret-down" />
   </button>
 
-  <BsModal @open={{this.isModalOpen}} @onHide={{fn this.toggleModal}} as |Modal|>
+  <BsModal @open={{this.isModalOpen}} @onHide={{this.toggleModal}} as |Modal|>
     <Modal.header>
       <form class="px-4 py-3">
         <div class="form-group">
@@ -20,10 +20,10 @@
       {{#each this.favourites.current as |boat|}}
         <div class="dropdown-divider"></div>
         <div class="dropdown-item">
-          <ThumbnailImage @record={{boat}} />
+          <img src={{boat.thumbnail}} alt="boat">
           {{boat.make}} {{boat.model}}
           {{boat.year}}
-          <PriceText @record={{boat}} />
+          {{format-currency boat.price boat.priceSymbol}}
         </div>
       {{/each}}
     </Modal.body>
