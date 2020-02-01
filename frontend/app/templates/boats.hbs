@@ -1,5 +1,5 @@
 <CollapsableSidebar>
-  <BoatFilter
+  <Listing::Filter
     @updateFilters={{this.updateFilters}}
     @urlQueryParams={{this.urlQueryParams}}
   />
@@ -11,13 +11,13 @@
       {{this.model.meta.count}} boats found
     </div>
 
-    <BoatListingSort @doSort={{this.doSort}} @urlSortParam={{this.urlSortParam}} />
+    <Listing::SortBar @doSort={{this.doSort}} @urlSortParam={{this.urlSortParam}} />
 
     {{#each this.model as |boat|}}
-      <BoatListing @boat={{boat}} />
+      <Listing @boat={{boat}} />
     {{/each}}
 
-    <ListingPagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
+    <Listing::Pagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
   {{else}}
     <div class="boats-found">
       No matching boats found
