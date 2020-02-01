@@ -21,6 +21,7 @@ export default class BoatModel extends Model {
   @attr('number') longitude;
   @attr location;
   @attr('image-url') images;
+  @attr('number') totalImages;
   @attr histories;
   @attr listings;
 }

@@ -21,6 +21,7 @@ class ListingImages extends Component {
   }
 
   get remainingImagesCount() {
+    console.log('THIS.ARGS.BOAT', this.args.boat)
     return this.args.boat.totalImages - this.MAX_THUMBNAILS;
   }
 
