@@ -29,6 +29,7 @@
 **/scraper/data/*
 **/*pycache*
 **/.pytest_cache
+*.pyc
 
 # Ignore swap file
 *.swp
