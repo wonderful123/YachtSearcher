@@ -3,8 +3,7 @@
 
   <label>Boat name/listing title:</label>
   <Input
-    @value={{this.search}}
-    {{on "change" this.handleFilter}}
+    {{on "input" (fn this.handleFilter "search")}}
     type="search"
     placeholder="Search by name"
     class="form-control"
@@ -13,15 +12,13 @@
   <label>Length (ft)</label>
   <div class="twin-inputs">
     <Input
-      @value={{this.minLength}}
-      {{on "input" this.handleFilter}}
+      {{on "input" (fn this.handleFilter "minLength")}}
       type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
-      @value={{this.maxLength}}
-      {{on "input" this.handleFilter}}
+      {{on "input" (fn this.handleFilter "maxLength")}}
       type="number"
       placeholder="Max"
       class="form-control"
@@ -31,15 +28,13 @@
   <label>Year</label>
   <div class="twin-inputs">
     <Input
-      @value={{this.minYear}}
-      {{on "input" this.handleFilter}}
+      {{on "input" (fn this.handleFilter "minYear")}}
       type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
-      @value={{this.maxYear}}
-      {{on "input" this.handleFilter}}
+      {{on "input" (fn this.handleFilter "maxYear")}}
       type="number"
       placeholder="Max"
       class="form-control"
@@ -48,17 +43,14 @@
 
   <label>Price range</label>
   <div class="twin-inputs">
-    <EmberMaskInput value={{this.minPrice}} mask="000.000.000" class="form-control" placeholder="Min" {{on "input" this.handleFilter}} />
-    <!-- <Input
-      @value={{this.minPrice}}
-      {{on "keyup" this.handleFilter}}
+    <Input
+      {{on "input" (fn this.handleFilter "minPrice")}}
       type="number"
       placeholder="Min"
       class="form-control"
-    /> -->
+    />
     <Input
-      @value={{this.maxPrice}}
-      {{on "keyup" this.handleFilter}}
+      {{on "input" (fn this.handleFilter "maxPrice")}}
       type="number"
       placeholder="Max"
       class="form-control"

@@ -33,8 +33,10 @@ class extends Component {
 
   // Convert input to values parent action expects
   @action
-  handleFilter(x) {
-    console.log('VALUE', x)
+  handleFilter(property, event) {
+    // Set property manual because on modifier runs before @value={{this.property}}
+    this[property] = event.target.value;
+
     const buildQuery = (min, max) => `${min}to${max}` === 'to' ? '' : `${min}to${max}`;
     const maxInches = get(this, 'maxLength') === '' ? '' : get(this, 'maxLength') * 12
     const minInches = this.minLength === '' ? '' : this.minLength * 12
@@ -48,7 +50,6 @@ class extends Component {
       price: priceQuery,
       year: yearQuery
     }
-    console.log('FILTERS', filters)
 
     // Call parent action and update query filters
     this.args.updateFilters(filters);
