@@ -11,7 +11,10 @@
       {{this.model.meta.count}} boats found
     </div>
 
-    <Listing::SortBar @doSort={{this.doSort}} @urlSortParam={{this.urlSortParam}} />
+    <Listing::SortBar
+      @doSort={{this.doSort}}
+      @urlSortParam={{this.urlSortParam}}
+    />
 
     {{#each this.model as |boat|}}
       <Listing @boat={{boat}} />
