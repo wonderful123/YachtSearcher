@@ -1,7 +1,9 @@
 <div class="boat-listing">
+
   <div class="left-column">
     <Listing::Images @boat={{@boat}} />
   </div>
+
   <div class="right-column">
     <div class="title">
       <FavouriteToggle @boat={{@boat}} />
@@ -13,4 +15,5 @@
     <div class="location">{{@boat.location}}</div>
     <div class="date-listed">Listed: {{this.firstFound}}</div>
   </div>
+  
 </div>
