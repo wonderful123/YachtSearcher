@@ -8,20 +8,26 @@ const RANGE_SHRINK = 0.9; // Percentage of smaller boundary
 
 export default
 class ImagePreview extends Component {
-  @tracked container;
+  @tracked containerElement;
+  @tracked containerDimensions;
 
   @action
   moveImage(imgElement) {
+    this.setupContainer(this.containerElement);
+    const c = this.containerDimensions;
     const mousePosition = this.args.mouseThumbnailPosition;
 
+    imgElement.style.width = `${c.width * this.zoomLevel}px`;
+    imgElement.style.height = `${c.height * this.zoomLevel}px`;
+
     // inner box reduced by equal pixels for top and sides. Just use the smallest.
-    const rangeX = (this.container.width / RANGE_SHRINK) - this.container.width;
-    const rangeY = (this.container.height / RANGE_SHRINK) - this.container.height;
+    const rangeX = (c.width / RANGE_SHRINK) - c.width;
+    const rangeY = (c.height / RANGE_SHRINK) - c.height;
     const rangeShrink = rangeX >= rangeY ? rangeX : rangeY;
 
-    let innerRatioX = (this.container.width - rangeShrink * 2) / this.container.width;
-    let innerRatioY = (this.container.height - rangeShrink * 2) / this.container.height
-innerRatioX = 1; innerRatioY = 1
+    let innerRatioX = (c.width - rangeShrink * 2) / c.width;
+    let innerRatioY = (c.height - rangeShrink * 2) / c.height
+
     // Offset is between 0 and 100. Make it -50 to +50, apply shrink then return to normal.
     let x = (mousePosition.offsetX - 50) / innerRatioX + 50;
     let y = (mousePosition.offsetY - 50) / innerRatioY + 50;
@@ -32,55 +38,50 @@ innerRatioX = 1; innerRatioY = 1
     if (y < 0) y = 0;
     if (y > 100) y = 100;
 
-    // x = x * this.zoomLevel;
-    // y = y * this.zoomLevel;
+    let percentX = -x * (this.zoomLevel - 1);
+    let percentY = -y * (this.zoomLevel - 1);
 
-    // Move the image
-    this.imagePreviewElement.style.objectPosition = `${x}% ${y}%`;
-    console.log(`zoom: ${this.zoomLevel} x:${x} y:${y} container width:${this.container.width} img width:${this.imagePreviewElement.width}`)
+    imgElement.style.top = `${percentY}%`
+    imgElement.style.left = `${percentX}%`
+  }
 
-
-    // // Shrink the movement range down so mouse doesn't need to be in the extremes to move the whole image
-    // let x = (mousePosition.offsetX - 50) * RANGE_SHRINK + 50;
-    // let y = (mousePosition.offsetY - 50) * RANGE_SHRINK + 50;
-    //
-    // if (x < 0) x = 0;
-    // if (x > 100 / this.zoomLevel) x = 100 / this.zoomLevel;
-    // if (y < 0) y = 0;
-    // if (y > 100 / this.zoomLevel) y = 100 / this.zoomLevel;
-    //
-    // x = x * (1 - 1 / this.zoomLevel);
-    // y = y * (1 - 1 / this.zoomLevel);
-    //
-    // // Move the image
-    // imgElement.style.transform = `translate(-${x}%, -${y}%)`;
+  get active() {
+    return this.args.isActive;
   }
 
   @action
-  setupContainer(element) {
-    const maxContainerSize = this.maxContainerSize();
-    let c = this.fitInsideContainer(maxContainerSize, this.imagePreviewElement);
+  setupContainer(containerElement) {
+    // Calculate maximum container size and fit/position the image within that container
+    let c = this.fitPreviewToContainer(this.maxContainerSize, containerElement);
     c = this.positionContainer(c);
 
-    // const element = this.element.querySelector('.image-preview');
-    element.style.width = c.width + 'px';
-    element.style.height = c.height + 'px';
-    element.style.top = c.top + 'px';
-    element.style.left = c.left + 'px';
+    containerElement.style.width = c.width + 'px';
+    containerElement.style.height = c.height + 'px';
+    containerElement.style.top = c.top + 'px';
+    containerElement.style.left = c.left + 'px';
 
     this.zoomLevel = this.calculateZoom(c);
-    this.imagePreviewElement.style.width = `${c.width * this.zoomLevel}px`;
-    this.imagePreviewElement.style.height = `${c.height * this.zoomLevel}px`;
 
-    // Save the container element,
-    this.container = c;
+    // Store elements in class
+    this.containerElement = containerElement;
+    this.containerDimensions = c;
+  }
+
+  get listingContainerDimensions() {
+    // Calculate position of right side of listing images so preview can be shown on the right.
+    const elementBoundingRect = this.args.listingImagesContainer.getBoundingClientRect();
+
+    return {
+      right: elementBoundingRect.right,
+      middle: elementBoundingRect.top + elementBoundingRect.height / 2
+    }
   }
 
   // Calculate max dimensions for preview container
-  maxContainerSize() {
-    // Width is from the right of listing images plus the padding
+  get maxContainerSize() {
+    // Width is from the right of listing images plus the padding to right side of window
     const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-    const width = windowWidth - this.args.thumbnailListingContainer.right - CONTAINER_PADDING * 2 - 15;
+    const width = windowWidth - this.listingContainerDimensions.right - CONTAINER_PADDING * 2 - 15;
 //******************************************************
 // TODO: CHANGE -15 to SCROLLBAR WIDTH
 //******************************************************
@@ -91,30 +92,27 @@ innerRatioX = 1; innerRatioY = 1
     return { width: width, height: height, aspect: aspect };
   }
 
-  imageSize() {
-    const height = this.imagePreviewElement.naturalHeight;
-    const width = this.imagePreviewElement.naturalWidth;
+  get imageDimensions() {
+    const height = this.imageElement.naturalHeight;
+    const width = this.imageElement.naturalWidth;
     const aspect = width / height;
 
     return { width: width, height: height, aspect: aspect };
   }
 
   // Calculate the container dimensions inside the max size keeping image aspect ratio
-  fitInsideContainer(maxSize) {
-    let container = maxSize;
-    const image = this.imageSize();
-
+  fitPreviewToContainer(container) {
     // If container aspect taller than image then shrink to fit.
-    if (container.aspect < image.aspect) {
-      container.height = container.width / image.aspect;
+    if (container.aspect < this.imageDimensions.aspect) {
+      container.height = container.width / this.imageDimensions.aspect;
     } else {
-      container.width = container.height * image.aspect;
+      container.width = container.height * this.imageDimensions.aspect;
     }
 
     // No point making container bigger than image resolution. Set it to that if so
-    if (image.width < container.width) {
-      container.width = image.width;
-      container.height = image.height;
+    if (this.imageDimensions.width < container.width) {
+      container.width = this.imageDimensions.width;
+      container.height = this.imageDimensions.height;
     }
 
     return { width: container.width, height: container.height };
@@ -123,8 +121,8 @@ innerRatioX = 1; innerRatioY = 1
   // Returns top and left position for container.
   // Try to align preview with middle of thumbnail but bouce off top and bottom of window
   positionContainer(container) {
-    const left = this.args.thumbnailListingContainer.right + CONTAINER_PADDING;
-    let top = this.args.thumbnailListingContainer.middle - container.height / 2;
+    const left = this.listingContainerDimensions.right + CONTAINER_PADDING;
+    let top = this.listingContainerDimensions.middle - container.height / 2;
 
     // Check not above top of window
     if (top - CONTAINER_PADDING < 0) {
@@ -147,7 +145,7 @@ innerRatioX = 1; innerRatioY = 1
   // Calculates the zoom level of original image compared to container and capped at max
   calculateZoom(container) {
     // Aspect of container and image are the same so we can just compare widths
-    let zoom = this.imageSize().width / container.width;
+    let zoom = this.imageDimensions.width / container.width;
 
     // Cap the zoom level
     if (zoom > MAX_ZOOM) zoom = MAX_ZOOM;

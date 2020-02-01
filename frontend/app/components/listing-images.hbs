@@ -1,4 +1,4 @@
-<div class="listing-images" {{did-insert this.setListingContainer}}>
+<div class="listing-images" {{ref this "listingImagesContainer"}}>
 
   <PanningThumbnail
     class="main-image"
@@ -41,13 +41,11 @@
 
   </div>
 
-  {{#if this.showPreview}}
-    <ImagePreview
-      @url={{this.selectedThumbnail}}
-      @thumbnailListingContainer={{this.thumbnailListingContainer}}
-      @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
-    />
-
-    <div class="zoom-overlay"></div>
-  {{/if}}
+  <ImagePreview
+    @isActive={{this.showPreview}}
+    @listingImagesContainer={{this.listingImagesContainer}}
+    @url={{this.selectedThumbnail}}
+    @thumbnailListingContainer={{this.thumbnailListingContainer}}
+    @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
+  />
 </div>

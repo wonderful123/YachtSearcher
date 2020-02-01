@@ -417,6 +417,24 @@ footer {
     position: fixed;
     overflow: hidden;
     border: 2px solid orange;
-    object-fit: cover;
+    // visibility: hidden;
+    //
+    // .is-active {
+    //   visibility: visible;
+    // }
+
+    img {
+      position: relative;
+      top: 50%;
+      left: 50%;
+    }
+    // img {
+    //   width: 50px;
+    //   height: 36px;
+    //   margin-left: auto;
+    //   margin-top: auto;
+    //   object-fit: cover;
+    // }
   }
+
 }
