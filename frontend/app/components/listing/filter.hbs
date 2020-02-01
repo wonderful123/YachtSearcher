@@ -1,8 +1,9 @@
-<div class="sidebar-search boat-filter" {{did-insert this.setUrlQueryParams}}>
+<div class="sidebar-search boat-filter">
   <div class="sidebar-search-heading">Search</div>
 
   <label>Boat name/listing title:</label>
   <Input
+    @value={{this.search}}
     {{on "input" (fn this.handleFilter "search")}}
     type="search"
     placeholder="Search by name"
@@ -12,12 +13,14 @@
   <label>Length (ft)</label>
   <div class="twin-inputs">
     <Input
+      @value={{this.minLength}}
       {{on "input" (fn this.handleFilter "minLength")}}
       type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
+      @value={{this.maxLength}}
       {{on "input" (fn this.handleFilter "maxLength")}}
       type="number"
       placeholder="Max"
@@ -28,12 +31,14 @@
   <label>Year</label>
   <div class="twin-inputs">
     <Input
+      @value={{this.minYear}}
       {{on "input" (fn this.handleFilter "minYear")}}
       type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
+      @value={{this.maxYear}}
       {{on "input" (fn this.handleFilter "maxYear")}}
       type="number"
       placeholder="Max"
@@ -44,12 +49,14 @@
   <label>Price range</label>
   <div class="twin-inputs">
     <Input
+      @value={{this.minPrice}}
       {{on "input" (fn this.handleFilter "minPrice")}}
       type="number"
       placeholder="Min"
       class="form-control"
     />
     <Input
+      @value={{this.maxPrice}}
       {{on "input" (fn this.handleFilter "maxPrice")}}
       type="number"
       placeholder="Max"
