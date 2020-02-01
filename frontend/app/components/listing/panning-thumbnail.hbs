@@ -1,9 +1,8 @@
 <div class="thumbnail-container" {{ref this "containerElement"}}>
-  <img src={{@url}}
-    ...attributes
+  <img ...attributes
+    alt="Thumbnail"
     {{ref this "imageElement"}}
     {{on "mousemove" this.handleMouseMove}}
-    alt="Thumbnail"
   >
   <div class="zoom-overlay" {{ref this "zoomOverlay"}}></div>
 </div>

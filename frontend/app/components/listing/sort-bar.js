@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
-import { set, action } from '@ember/object';
+import { action, set } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 
 const CATEGORIES = [
   {
@@ -17,36 +18,43 @@ const CATEGORIES = [
   }
 ];
 
+// Class to hold tracked sort properties
+class SortProperty {
+  constructor({ title, property }) {
+    this.title = title;
+    this.property = property;
+  }
+
+  @tracked isSelected = false;
+  @tracked sortDirection = 'desc';
+  @tracked sortIcon = 'caret-down';
+}
+
 export default
 class BoatListingSort extends Component {
+  @tracked categories;
+
   constructor() {
     super(...arguments);
 
-    // initialize sort properties for each column
-    const sortProperties = {
-      isSelected: false,
-      sortDirection: 'desc',
-      sortIcon: 'caret-down'
-    };
-
     // Add sort properties to each category
-    const categoryList = CATEGORIES;
-    categoryList.forEach(c => Object.assign(c, sortProperties));
+    let categoryList = CATEGORIES.map(c => new SortProperty(c));
 
     // Set selected if in url param
-    if (this.urlSortParam) {
-      const urlProperty = this.urlSortParam.split('_')[0];
-      const urlDirection = this.urlSortParam.split('_')[1];
+    if (this.args.urlSortParam) {
+      const urlProperty = this.args.urlSortParam.split('_')[0];
+      const urlDirection = this.args.urlSortParam.split('_')[1];
+      
       categoryList.forEach(c => {
         if (c.property === urlProperty) {
           c.isSelected = true;
-          c.sortDirection = urlDirection;
-          c.sortIcon = (urlDirection === 'desc') ? 'caret-down' : 'caret-up';
+          set(c, 'sortDirection', urlDirection);
+          set(c, 'sortIcon', (urlDirection === 'desc') ? 'caret-down' : 'caret-up');
         }
       });
     }
 
-    set(this, 'categories', categoryList);
+    this.categories = categoryList;
   }
 
   @action
@@ -56,16 +64,16 @@ class BoatListingSort extends Component {
         // If selection is already selected then toggle icon and direction
         if (selection.isSelected) {
           if (c.sortDirection === 'desc') {
-            set(c, 'sortDirection', 'asc');
-            set(c, 'sortIcon', 'caret-up');
+            c.sortDirection = 'asc';
+            c.sortIcon = 'caret-up';
           } else {
-            set(c, 'sortDirection', 'desc');
-            set(c, 'sortIcon', 'caret-down');
+            c.sortDirection = 'desc';
+            c.sortIcon = 'caret-down';
           }
         }
-        set(c, 'isSelected', true);
+        c.isSelected = true;
       } else {
-        set(c, 'isSelected', false);
+        c.isSelected = false;
       }
     });
 

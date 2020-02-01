@@ -1,40 +1,42 @@
-import Component from '@ember/component';
-import { action, set } from '@ember/object';
+import Component from '@glimmer/component';
+import { action, get } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 
 export default
 class extends Component {
-  classNames = ['boat-filter'];
-  search = '';
-  minPrice = '';
-  maxPrice = '';
-  minYear = '';
-  maxYear = '';
-  minLength = '';
-  maxLength = '';
+  @tracked search = '';
+  @tracked minPrice = '';
+  @tracked maxPrice = '';
+  @tracked minYear = '';
+  @tracked maxYear = '';
+  @tracked minLength = '';
+  @tracked maxLength = '';
 
-  didInsertElement() {
+  @action setUrlQueryParams() {
     const setMinMax = (param) => {
       const p = param.toLowerCase();
-      if (this.urlQueryParams[p]) {
-        let minMax = this.urlQueryParams[p].split('to');
-        set(this, `min${param}`, minMax[0]);
-        set(this, `max${param}`, minMax[1]);
+      if (this.args.urlQueryParams[p]) {
+        let minMax = this.args.urlQueryParams[p].split('to');
+        this[`min${param}`] = minMax[0];
+        this[`max${param}`] = minMax[1];
       }
     }
+
     setMinMax('Price');
     setMinMax('Year');
     setMinMax('Length');
     // Return length from inches back to feet
-    if (this.minLength) set(this, 'minLength', this.minLength/12);
-    if (this.maxLength) set(this, 'maxLength', this.maxLength/12);
-    if (this.urlQueryParams.search) set(this, 'search', this.urlQueryParams.search);
+    if (this.minLength) this.minLength = this.minLength / 12;
+    if (this.maxLength) this.maxLength = this.maxLength / 12;
+    if (this.args.urlQueryParams.search) this.search = this.args.urlQueryParams.search;
   }
 
   // Convert input to values parent action expects
   @action
-  handleFilter() {
+  handleFilter(x) {
+    console.log('VALUE', x)
     const buildQuery = (min, max) => `${min}to${max}` === 'to' ? '' : `${min}to${max}`;
-    const maxInches = this.maxLength === '' ? '' : this.maxLength * 12
+    const maxInches = get(this, 'maxLength') === '' ? '' : get(this, 'maxLength') * 12
     const minInches = this.minLength === '' ? '' : this.minLength * 12
     const lengthQuery = buildQuery(minInches, maxInches)
     const priceQuery = buildQuery(this.minPrice, this.maxPrice)
@@ -46,10 +48,12 @@ class extends Component {
       price: priceQuery,
       year: yearQuery
     }
+    console.log('FILTERS', filters)
 
     // Call parent action and update query filters
-    this.updateFilters(filters);
+    this.args.updateFilters(filters);
   }
+
 
   //
   // maskMaxPrice = computed('maxPrice', function() {

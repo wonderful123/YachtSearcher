@@ -1,9 +1,0 @@
-{{#if @isActive}}
-<div class="image-preview"
-  {{did-insert this.setupContainer}}>
-  <img src={{@url}}
-    {{ref this "imageElement"}}
-    {{did-update this.moveImage @mouseThumbnailPosition}}
-    alt="preview">
-</div>
-{{/if}}

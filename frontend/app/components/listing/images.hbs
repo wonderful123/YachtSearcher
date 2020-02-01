@@ -1,8 +1,8 @@
 <div class="listing-images" {{ref this "listingImagesContainer"}}>
 
-  <PanningThumbnail
+  <Listing::PanningThumbnail
     class="main-image"
-    @url={{this.selectedThumbnail}}
+    src={{this.selectedThumbnail}}
     @updateMouseOffset={{this.updateMouseOffset}}
     {{on "mouseenter" (fn this.handleMouseEnter url)}}
     {{on "mouseleave" this.handleMouseLeave}}
@@ -10,8 +10,8 @@
 
   <div class="thumbnail-list">
     {{#each this.thumbnails as |url|}}
-      <PanningThumbnail
-        @url={{url}}
+      <Listing::PanningThumbnail
+        src={{url}}
         class="thumbnail {{if (eq this.selectedThumbnail url) "highlight"}}"
         @updateMouseOffset={{this.updateMouseOffset}}
         {{on "mouseenter" (fn this.handleMouseEnter url)}}
@@ -22,8 +22,8 @@
     {{#if this.lastImage}}
       <div class="last-image-container">
 
-        <PanningThumbnail
-          @url={{this.lastImage}}
+        <Listing::PanningThumbnail
+          src={{this.lastImage}}
           class="thumbnail {{if this.hasMoreImages "more-images"}}"
           @updateMouseOffset={{this.updateMouseOffset}}
           {{on "mouseenter" (fn this.handleMouseEnter this.lastImage)}}
@@ -41,10 +41,10 @@
 
   </div>
 
-  <ImagePreview
+  <Listing::ImagePreview
+    src={{this.selectedThumbnail}}
     @isActive={{this.showPreview}}
     @listingImagesContainer={{this.listingImagesContainer}}
-    @url={{this.selectedThumbnail}}
     @thumbnailListingContainer={{this.thumbnailListingContainer}}
     @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
   />
