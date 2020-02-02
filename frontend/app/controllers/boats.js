@@ -13,6 +13,8 @@ class BoatsController extends Controller {
   @tracked price = '';
   @tracked length = '';
 
+  FILTERS = ['search', 'year', 'price', 'length'];
+
   // These are used to set inital component states, eg. Filter
   get urlQueryParams() {
     return {
@@ -21,6 +23,29 @@ class BoatsController extends Controller {
       price: this.price,
       length: this.length
     }
+  }
+
+  // Return array of filters used
+  get filters() {
+    // Convert query string to { min: value, max: value }
+    const getMinMax = (param) => {
+      const minMax = this[param].toLowerCase().split('to');
+      return { min: minMax[0], max: minMax[1] };
+    }
+
+    return this.FILTERS.map(f => {
+      if (f === 'search') {
+        return { name: 'search', value: this[f] };
+      } else {
+        let values = getMinMax(f);
+        values.name = f;
+        if (f === 'length') {
+          values.min /= 12;
+          values.max /= 12;
+        }
+        return values;
+      }
+    });
   }
 
   get urlSortParam() {
