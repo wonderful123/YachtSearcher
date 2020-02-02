@@ -6,6 +6,10 @@
 </CollapsableSidebar>
 
 <section class="boat-listings">
+  {{#each this.filters as |filter|}}
+    <Listing::FilterButton @filter={{filter}} />
+  {{/each}}
+
   {{#if this.boatsFound}}
     <div class="boats-found">
       {{this.model.meta.count}} boats found
@@ -21,9 +25,12 @@
     {{/each}}
 
     <Listing::Pagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
+    
   {{else}}
+
     <div class="boats-found">
       No matching boats found
     </div>
+
   {{/if}}
 </section>
