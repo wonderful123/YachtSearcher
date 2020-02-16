@@ -1,10 +1,50 @@
 @import "ember-bootstrap/bootstrap";
 @import "ember-power-select";
+@import "variables";
+@import "components/filter-bar";
+
+@font-face {
+  font-family: 'PromixaNova';
+  src: url(/assets/fonts/ProximaNova-Regular.otf) format('otf');
+}
+
+.no-border {
+  border: none;
+  outline: none;
+}
+
+.mask-content {
+  opacity: 0.1;
+}
+
+.hidden {
+  display: none;
+}
+
+.shown {
+  display: block;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Opera and Firefox */
+}
+
+.two-columns {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
 
 body {
-  color: rgb(44, 44, 44);
+  color: $font-color;
   font-size: 14px;
-  font-family: Montserrat, "Helvetica Neue", Arial, sans-serif;
+  font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -27,11 +67,6 @@ footer {
 
 .wrapper {
   width: 100%;
-}
-
-.body-wrapper {
-  padding: 10px;
-  display: flex;
 }
 
 .hidden {
@@ -131,7 +166,7 @@ footer {
   width: 200px;
   padding: 10px;
   border-radius: 3px;
-  background: #febb02;
+  background: $yellow;
 
   .sidebar-search-heading {
     font-size: 1.2rem;
@@ -171,6 +206,53 @@ footer {
   hr {
     margin-top: 5px;
   }
+}
+
+.filter-button2 {
+  position: relative;
+  display: inline-block;
+  padding: 3px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  background-color: $yellow;
+  transition: .3s ease;
+  cursor: default;
+  margin-bottom: 8px;
+
+  .remove-icon {
+    transition: .3s ease;
+    opacity: 1;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 2px #888;
+    padding: 0.1em 0.2em;
+    width: 15px;
+    z-index: 100;
+    color: red;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+
+.filter-button:hover .remove-icon {
+  opacity: 1;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .listing-sort-wrapper {
@@ -282,7 +364,7 @@ footer {
     color: white;
 
     span {
-      color: #febb02;
+      color: $yellow;
     }
   }
 }
@@ -299,6 +381,10 @@ footer {
     height: 30px;
     margin-right: 10px;
   }
+}
+
+.boat-listings {
+  padding: 0 10px;
 }
 
 .boat-listing {
@@ -332,7 +418,7 @@ footer {
     }
 
     .active {
-      color: #febb02;
+      color: $yellow;
     }
   }
 }
