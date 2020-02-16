@@ -1,0 +1,110 @@
+.filter-bar-container {
+  color: $light-grey;
+  width: 100%;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.1), inset 0 0 0 0 #f2f2f2;
+  height: 48px;
+  padding: 0 16px 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: nowrap;
+
+  .search-icon {
+    color: $light-grey;
+    margin-left: 10px;
+  }
+
+  input.search-input {
+    color: $light-grey;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 13px 16px;
+    height: 100%;
+  }
+
+  input.search-input::placeholder {
+    color: $light-grey;
+  }
+
+  .filter-button {
+    cursor: pointer;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-right: 5px;
+
+    .dropdown-icon {
+      font-size: 12px;
+      margin-left: 3px;
+    }
+  }
+
+  .selected {
+    color: $teal;
+    border: 2px solid $teal;
+  }
+}
+
+.modal-container {
+  margin-top: 15px;
+  z-index: 100;
+  position: absolute;
+  width: 400px;
+  background: white;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 1px 30px 0 rgba(0,0,0,.15);
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+
+  .noUi-horizontal {
+    margin: 45px 20px 25px 15px;
+  }
+
+  a.reset {
+    color: $light-grey;
+  }
+
+  .content {
+    padding: 15px 0 20px;
+
+    .min-to-max {
+      display: flex;
+      align-content: space-between;
+      vertical-align: middle;
+
+      input {
+        width: 100%;
+        text-align: center;
+        color: #888;
+
+        &::placeholder {
+          color: $light-grey;
+        }
+
+        &:focus {
+          border-color: $teal;
+          outline: 0;
+        }
+      }
+
+      span {
+        padding: 0 20px;
+        align-self: center;
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid lightgrey;
+    padding-top: 10px;
+
+    a {
+      color: $teal;
+    }
+  }
+}
