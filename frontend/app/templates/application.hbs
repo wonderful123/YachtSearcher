@@ -1,34 +1,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
 
-<div class="wrapper">
-  <header>
-    <BsNav as |nav|>
-      <div class="navbar-brand">
-        <img src="assets/header-icon.png" width="35" height="35" alt="icon">
-        Boat<span>Searcher</span>
-      </div>
-      <nav.item>
-        <nav.linkTo @route="boats">
-          Boats
-        </nav.linkTo>
-      </nav.item>
-      <nav.item>
-        <nav.linkTo @route="map">
-          Map
-        </nav.linkTo>
-      </nav.item>
-      <nav.item>
-        <nav.linkTo @route="boat-images">
-          Images
-        </nav.linkTo>
-      </nav.item>
-      <nav.item>
-        <FavouriteList class="nav-link" />
-      </nav.item>
-    </BsNav>
-  </header>
-  <div class="body-wrapper container-fluid">
-    {{outlet}}
-  </div>
-  <footer></footer>
-</div>
+<NavBar />
+
+{{outlet}}
+
+<footer></footer>
