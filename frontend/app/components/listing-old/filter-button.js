@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 export default class ListingFilterButtonComponent extends Component {
   get isSearchFilter() {
@@ -26,7 +27,7 @@ export default class ListingFilterButtonComponent extends Component {
     // Helper function to check if input property is defined
     const defined = (property) => (filter[property] && filter[property] !== '' && filter[property] !== "0");
 
-    const formatCurrency = (price) => price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    const formatCurrency = (price) => { if (price) return price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") };
 
     // Helper checks how property range is defined and creates string to append to summary info
     const rangeSummary = (min, max, suffix = '', prefix = '') => {
@@ -43,5 +44,10 @@ export default class ListingFilterButtonComponent extends Component {
     else if (filter.name === 'price') return rangeSummary(formatCurrency(filter.min), formatCurrency(filter.max), '', '$');
     else if (filter.name === 'year') return rangeSummary(filter.min, filter.max);
     else return false;
+  }
+
+  @action
+  removeFilter() {
+    this.args.removeFilter(this.args.filter.name);
   }
 }

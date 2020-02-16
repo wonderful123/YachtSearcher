@@ -1,10 +1,19 @@
 <div class="sidebar-search boat-filter">
-  <div class="sidebar-search-heading">Search</div>
-
+  <div class="sidebar-search-heading">Quick search</div>
+  <RangeSlider
+    @start={{this.start}}
+    @min={{this.min}}
+    @max={{this.max}}
+    @connect={{this.connect}}
+    @formatTo={{this.sliderFormat.to}}
+    @formatFrom={{this.sliderFormat.from}}
+    @tooltips={{this.tooltips}}
+    @on-change={{this.changeAction}}
+  />
   <label>Boat name/listing title:</label>
   <Input
     @value={{this.search}}
-    {{on "input" (fn this.handleFilter "search")}}
+    {{on "input" (fn this.updateFilter "search")}}
     type="search"
     placeholder="Search by name"
     class="form-control"
@@ -14,7 +23,7 @@
   <div class="twin-inputs">
     <Input
       @value={{this.minLength}}
-      {{on "input" (fn this.handleFilter "minLength")}}
+      {{on "input" (fn this.updateFilter "minLength")}}
       type="number"
       placeholder="Min"
       class="form-control"
@@ -30,36 +39,45 @@
 
   <label>Year</label>
   <div class="twin-inputs">
+    <MaskedInput @value={{this.testValue}} @placeholder="Min" @type="number" />
     <Input
       @value={{this.minYear}}
       {{on "input" (fn this.handleFilter "minYear")}}
+      min="1900"
+      max="2030"
       type="number"
+      step="1"
       placeholder="Min"
       class="form-control"
     />
     <Input
       @value={{this.maxYear}}
-      {{on "input" (fn this.handleFilter "maxYear")}}
+      {{on "input" (fn this.handleFilter "maxPrice")}}
       type="number"
+      min="1900"
+      max="2030"
+      step="1"
       placeholder="Max"
       class="form-control"
     />
   </div>
 
   <label>Price range</label>
+  {{@filterTest.price.min}}
   <div class="twin-inputs">
     <Input
-      @value={{this.minPrice}}
-      {{on "input" (fn this.handleFilter "minPrice")}}
+      @value={{@filterTest.price.min}}
+      {{on "input" (fn this.updatePrice "price.min")}}
       type="number"
       placeholder="Min"
+      step="1000"
       class="form-control"
     />
     <Input
-      @value={{this.maxPrice}}
-      {{on "input" (fn this.handleFilter "maxPrice")}}
+      @value={{@filterTest.price.max}}
       type="number"
       placeholder="Max"
+      step="1000"
       class="form-control"
     />
   </div>

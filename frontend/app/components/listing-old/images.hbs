@@ -1,13 +1,5 @@
-<div class="listing-images">
+<div class="listing-images" {{ref this "listingImagesContainer"}}>
 
-  {{#each this.thumbnails as |imageUrl|}}
-    <img
-      src={{imageUrl}}
-    />
-  {{/each}}
-  <!-- @class="thumbnail {{if (eq this.selectedThumbnail url) "highlight"}}" -->
-
-<!--
   <Listing::PanningThumbnail
     class="main-image"
     src={{this.selectedThumbnail}}
@@ -55,5 +47,5 @@
     @listingImagesContainer={{this.listingImagesContainer}}
     @thumbnailListingContainer={{this.thumbnailListingContainer}}
     @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
-  /> -->
+  />
 </div>

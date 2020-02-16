@@ -1,6 +1,7 @@
 {{#if this.buttonText}}
-  <button type="button" class="btn btn-info filter-button" aria-label="Close">
+  <div class="filter-button">
     <FaIcon @icon={{this.icon.type}} class={{this.icon.size}} />
     {{this.buttonText}}
-  </button>
+    <FaIcon @icon="times" class="remove-icon" {{on "click" this.removeFilter}} />
+  </div>
 {{/if}}
