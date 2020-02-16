@@ -1,31 +1,26 @@
-<CollapsableSidebar>
-  <Listing::Filter
-    @updateFilters={{this.updateFilters}}
-    @urlQueryParams={{this.urlQueryParams}}
-  />
-</CollapsableSidebar>
+<FilterBar::FilterBar
+  @filter={{this.filter}}
+  @updateFilter={{this.updateFilter}}
+  @maskMainContent={{this.maskMainContent}}
+/>
 
-<section class="boat-listings">
-  {{#each this.filters as |filter|}}
-    <Listing::FilterButton @filter={{filter}} />
-  {{/each}}
+<Listing::SortBar
+  @doSort={{this.doSort}}
+  @urlSortParam={{this.urlSortParam}}
+/>
 
+<section class="boat-listings {{if this.isMasked "mask-content"}}">
   {{#if this.boatsFound}}
     <div class="boats-found">
       {{this.model.meta.count}} boats found
     </div>
 
-    <Listing::SortBar
-      @doSort={{this.doSort}}
-      @urlSortParam={{this.urlSortParam}}
-    />
-
     {{#each this.model as |boat|}}
-      <Listing @boat={{boat}} />
+      <Listing::Listing @boat={{boat}} />
     {{/each}}
 
     <Listing::Pagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
-    
+
   {{else}}
 
     <div class="boats-found">
