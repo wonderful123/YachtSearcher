@@ -1,0 +1,18 @@
+{{#if @isOpen}}
+  <div class="modal-container" {{on-click-outside @closeModal}}>
+
+    <div class="two-columns">
+      <div class="title">{{@title}}</div>
+      <a class="reset" href="#" {{on "click" @resetFilter}}>reset</a>
+    </div>
+
+    <div class="content">
+      {{yield}}
+    </div>
+
+    <div class="bottom">
+      <a href="#" {{on "click" @closeModal}}>Done</a>
+    </div>
+
+  </div>
+{{/if}}

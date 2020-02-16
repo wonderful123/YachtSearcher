@@ -1,0 +1,23 @@
+<div class="filter-button-container">
+
+  <div class="filter-button filter-dropdown no-select {{if @filterComponent.isOpen "selected"}}"
+    {{on "click" (stop-propagation this.toggleModal)}}
+  >
+    {{this.minMaxLabel}}
+    <FaIcon @icon="chevron-{{if @filterComponent.isOpen "down" "up"}}" class="dropdown-icon" />
+  </div>
+
+  <FilterBar::Modal
+    @title={{@filterComponent.title}}
+    @isOpen={{@filterComponent.isOpen}}
+    @resetFilter={{@resetFilter}}
+    @closeModal={{this.toggleModal}}
+  >
+    {{component
+      @filterComponent.component
+      filterComponent=@filterComponent
+      updateFilter=@updateFilter
+    }}
+  </FilterBar::Modal>
+
+</div>

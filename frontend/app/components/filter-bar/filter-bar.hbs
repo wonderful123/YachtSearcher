@@ -1,0 +1,21 @@
+<div class="filter-bar-container">
+
+  <FaIcon @icon="search" class="search-icon" />
+  <Input
+    placeholder="Search"
+    type="search"
+    @value={{@filter.search.value}}
+    {{on "input" (fn this.updateSearchFilter "search")}}
+    class="no-border search-input no-select"
+  />
+
+  {{#each this.filterComponents as |c|}}
+    <FilterBar::FilterButton
+      @filterComponent={{c}}
+      @updateFilter={{@updateFilter}}
+      @resetFilter={{action (fn this.resetFilter c)}}
+      @toggleFilterButton={{action (fn this.toggleFilterButton c)}}
+    />
+  {{/each}}
+
+</div>
