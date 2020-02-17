@@ -1,0 +1,41 @@
+.nav-bar {
+  padding: 7px 15px;
+  width: 100%;
+  display: flex;
+  background-color: #07c;
+  border-bottom: 1px solid slategrey;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  li {
+    margin-right: 10px;
+  }
+
+  li a {
+    color: $light-grey;
+  }
+
+  .logo {
+    display: flex;
+
+    img {
+      margin-right: 5px;
+    }
+
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+
+    span {
+      color: $yellow;
+    }
+  }
+}

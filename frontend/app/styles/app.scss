@@ -1,6 +1,7 @@
 @import "swiper.min"; // Carousel
 @import "variables";
 @import "utils";
+@import "components/navbar";
 @import "components/filter-bar";
 @import "components/carousel";
 @import "components/listings";
@@ -33,14 +34,7 @@ body {
   font-size: 14px;
   font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-header {
-  padding: 7px 15px;
-  width: 100%;
-  display: flex;
-  background-color: #07c;
-  border-bottom: 1px solid slategrey;
+  margin: 0;
 }
 
 footer {
@@ -332,43 +326,6 @@ footer {
   font-size: 14px;
 }
 
-.nav {
-  align-items: center;
-
-  .nav-link {
-    color: white;
-  }
-
-  .navbar-brand {
-    display: flex;
-
-    img {
-      margin-right: 5px;
-    }
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-
-    span {
-      color: $yellow;
-    }
-  }
-}
-
-.boat-search,
-.globalSearch {
-  margin: 0 0 10px 10px;
-
-  label {
-    margin-right: 5px;
-  }
-
-  input {
-    height: 30px;
-    margin-right: 10px;
-  }
-}
 //
 // .boat-listings {
 //   padding: 0 10px;

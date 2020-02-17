@@ -1,26 +1,26 @@
-<header>
-  <BsNav as |nav|>
-    <div class="navbar-brand">
+<nav class="nav-bar">
+  <ul>
+    <li class="logo">
       <img src="assets/header-icon.png" width="35" height="35" alt="icon">
       Boat<span>Searcher</span>
-    </div>
-    <nav.item>
-      <nav.linkTo @route="boats">
+    </li>
+    <li>
+      <LinkTo @route="boats">
         Boats
-      </nav.linkTo>
-    </nav.item>
-    <nav.item>
-      <nav.linkTo @route="map">
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo @route="map">
         Map
-      </nav.linkTo>
-    </nav.item>
-    <nav.item>
-      <nav.linkTo @route="boat-images">
+      </LinkTo>
+    </li>
+    <li>
+      <LinkTo @route="boat-images">
         Images
-      </nav.linkTo>
-    </nav.item>
-    <nav.item>
-      <FavouriteList class="nav-link" />
-    </nav.item>
-  </BsNav>
-</header>
+      </LinkTo>
+    </li>
+    <li>
+      <FavouriteList />
+    </li>
+  </ul>
+</nav>
