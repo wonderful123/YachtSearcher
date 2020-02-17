@@ -2,6 +2,12 @@
 
 <NavBar />
 
+<div class="flash-message-container">
+  {{#each this.flashMessages.queue as |flash|}}
+    <FlashMessage @flash={{flash}} />
+  {{/each}}
+</div>
+
 {{outlet}}
 
 <footer></footer>
