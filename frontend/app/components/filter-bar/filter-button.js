@@ -8,6 +8,10 @@ export default class FilterBarComponent extends Component {
     this.args.toggleFilterButton();
   }
 
+  get iconDirection() {
+    return this.args.filterComponent.isOpen ? 'chevron-up' : 'chevron-down';
+  }
+
   get minMaxLabel() {
     const f = this.args.filterComponent;
 

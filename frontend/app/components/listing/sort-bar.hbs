@@ -4,7 +4,7 @@
       <li role="button" class={{if category.isSelected "selected"}} {{on "click" (fn this.handleSelection category)}}>
         {{category.title}}
         {{#if category.isSelected}}
-          <FaIcon @icon={{category.sortIcon}} />
+          {{svg-jar category.sortIcon class="icon"}}
         {{/if}}
       </li>
     {{/each}}

@@ -1,7 +1,7 @@
 <div class="favourites-list">
   <button type="button" lass="nav-link transparent-button" {{on "click" this.toggleModal}}>
     Favourites<sup><span class="badge badge-info">{{this.currentCount}}</span></sup>
-    <FaIcon @icon="caret-down" />
+    {{svg-jar "caret-down" class="icon"}}
   </button>
 
   <BsModal @open={{this.isModalOpen}} @onHide={{this.toggleModal}} as |Modal|>

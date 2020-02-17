@@ -4,7 +4,7 @@
     {{on "click" (stop-propagation this.toggleModal)}}
   >
     {{this.minMaxLabel}}
-    <FaIcon @icon="chevron-{{if @filterComponent.isOpen "down" "up"}}" class="dropdown-icon" />
+    {{svg-jar this.iconDirection class="icon dropdown-icon"}}
   </div>
 
   <FilterBar::Modal

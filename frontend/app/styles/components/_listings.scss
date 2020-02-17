@@ -1,11 +1,11 @@
 .listings {
-  flex: 1 0 280px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .boat-listing {
+  flex: 0 0 280px;
   margin: 10px;
 
   .carousel-container:hover {
@@ -31,15 +31,10 @@
   }
 
   .listing-actions {
+
     .star-icon {
       width: 15px;
       height: 15px;
-      stroke-width: 0.4;
-    }
-
-    .favourite-toggle: {
-      width: 10px;
-      height: 10px;
     }
 
     .favourite-toggle::before {
