@@ -14,7 +14,12 @@ module.exports = function(environment) {
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
         Date: false
-      }
+      },
+    },
+    flashMessageDefaults: {
+      timeOut: 1000,
+      extendedTimeout: 500,
+      showProgress: true,
     },
 
     APP: {
