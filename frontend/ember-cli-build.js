@@ -7,6 +7,12 @@ module.exports = function(defaults) {
     'ember-bootstrap': {
       'bootstrapVersion': 4,
       'importBootstrapCSS': false
+    },
+
+    sassOptions: {
+      includePaths: [
+        'node_modules/swiper/css'
+      ]
     }
   });
 
