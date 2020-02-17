@@ -1,11 +1,19 @@
 <div class="boat-listing">
-  <Listing::Images @boat={{@boat}} />
+  <Ui::Carousel @images={{@boat.images}}>
+
+    <div class="price">{{format-currency @boat.price @boat.priceSymbol}}</div>
+    <div class="listing-actions">
+      <Ui::FavouriteToggle @boat={{@boat}} />
+    </div>
+
+  </Ui::Carousel>
+
+  <div class="title">
+    {{@boat.make}} {{@boat.model}}
+  </div>
 
   <!-- <div class="right-column">
-    <div class="title">
-      <FavouriteToggle @boat={{@boat}} />
-      {{@boat.make}} {{@boat.model}}
-    </div>
+
     <div class="price">{{format-currency @boat.price @boat.priceSymbol}}</div>
     <div class="details">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
     <div class="description">{{@boat.description}}</div>
