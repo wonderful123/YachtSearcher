@@ -9,15 +9,17 @@
   @urlSortParam={{this.urlSortParam}}
 />
 
-<section class="boat-listings {{if this.isMasked "mask-content"}}">
+<section class="boat-listings-container {{if this.isMasked "mask-content"}}">
   {{#if this.boatsFound}}
     <div class="boats-found">
       {{this.model.meta.count}} boats found
     </div>
 
-    {{#each this.model as |boat|}}
-      <Listing::Listing @boat={{boat}} />
-    {{/each}}
+    <section class="listings">
+      {{#each this.model as |boat|}}
+        <Listing::Listing @boat={{boat}} />
+      {{/each}}
+    </section>
 
     <Listing::Pagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
 
