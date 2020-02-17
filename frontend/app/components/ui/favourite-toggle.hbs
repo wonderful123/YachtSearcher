@@ -1,0 +1,8 @@
+<button
+  role="button"
+  class="favourite-toggle transparent-button"
+  {{on "click" this.toggleFavourite}}
+  data-tooltip={{if this.isActive "remove from favourites" "add to favourites"}}
+>
+  {{svg-jar "star" class=(concat "star-icon " this.activeClass)}}
+</button>
