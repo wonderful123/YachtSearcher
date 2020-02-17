@@ -1,0 +1,23 @@
+<div class="carousel-container" {{did-insert (action this.registerSwiper)}}>
+  <div class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+      {{#each @images as |image|}}
+        <div class="swiper-slide" {{did-insert (fn this.setBackgroundImage image)}}></div>
+      {{/each}}
+    </div>
+
+    <div class="swiper-button-prev swiper-button-white"></div>
+    <div class="swiper-button-next swiper-button-white"></div>
+  </div>
+
+  <!-- <div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper">
+      {{#each @images as |image|}}
+        <div class="swiper-slide" {{did-insert (fn this.setBackgroundImage image)}}></div>
+      {{/each}}
+    </div>
+  </div> -->
+
+  {{yield}}
+  
+</div>
