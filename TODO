@@ -6,14 +6,6 @@
 - [ ] Reporting for website structure changes in spider
 - [ ] Some lengths are incorrect. Way too big
 
-- Fix favicon in ember
 - Add cookie session. Needs data storage.
-- Mask price in filters
-- Validation in filters (eg. commas in price, feet correct)
-- Add outline to icon
-- Change icon for filter sidebar
-- Small number above favourites
-- Fix css cursor on sorting
-- Ember selection (bootstrap? or ember?)
-- Input clear button ideas
-- Add icon for text edit in favourites. Material?
+- Remove bootstrap
+- Remove font awesome
