@@ -26,8 +26,7 @@ class extends Component {
     }
   };
 
-  @action changeAction(value) {
-    // console.log('VALUE', value)
+  @action changeAction() {
   }
 
   testValue = '10000'
