@@ -1,0 +1,48 @@
+:root {
+  --swiper-navigation-size: 20px;
+}
+
+.carousel-container {
+  width: 280px;
+  height: 220px;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+  border-radius: $border-radius;
+}
+
+.carousel-container:hover {
+  .gallery-thumbs, .swiper-button-white {
+    transition: opacity 0.3s;
+    opacity: 1;
+  }
+}
+
+.swiper-button-white {
+  opacity: 0;
+}
+
+.gallery-top {
+  height: 100%;
+  width: 100%;
+}
+
+.gallery-thumbs {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+  box-sizing: border-box;
+  opacity: 0;
+}
+
+.gallery-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+  box-shadow: 0 0 5px 2px orange;
+}
