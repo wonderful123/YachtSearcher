@@ -1,8 +1,11 @@
-<div class="carousel-container" {{did-insert (action this.registerSwiper)}}>
+<div class="carousel" {{did-insert (action this.registerSwiper)}}>
   <div class="swiper-container gallery-top">
     <div class="swiper-wrapper">
       {{#each @images as |image|}}
-        <div class="swiper-slide" {{did-insert (fn this.setBackgroundImage image)}}></div>
+        <div class="swiper-slide">
+          <img data-src={{image}} class="swiper-lazy">
+          <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+        </div>
       {{/each}}
     </div>
 
@@ -19,5 +22,5 @@
   </div> -->
 
   {{yield}}
-  
+
 </div>

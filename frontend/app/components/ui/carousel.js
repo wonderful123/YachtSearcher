@@ -7,10 +7,6 @@ export default class CarouselComponent extends Component {
     return this.args.images.length;
   }
 
-  setBackgroundImage(image, element) {
-    element.style.backgroundImage = `url(${image})`;
-  }
-
   @action
   registerSwiper(element) {
     // const galleryThumbs = new Swiper(element.querySelector('.gallery-thumbs'), {
@@ -39,6 +35,10 @@ export default class CarouselComponent extends Component {
       pagination: {
         el: '.swiper-pagination',
         dynamicBullets: true,
+      },
+      preloadImages: false,
+      lazy: {
+        loadPrevNext: true,
       },
     });
   }
