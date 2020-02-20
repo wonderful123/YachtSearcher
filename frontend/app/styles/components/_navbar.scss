@@ -2,8 +2,7 @@
   padding: 7px 15px;
   width: 100%;
   display: flex;
-  background-color: #07c;
-  border-bottom: 1px solid slategrey;
+  border-bottom: 1px solid $separator-light;
 
   ul {
     list-style-type: none;
