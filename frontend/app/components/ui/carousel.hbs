@@ -3,23 +3,16 @@
     <div class="swiper-wrapper">
       {{#each @images as |image|}}
         <div class="swiper-slide">
-          <img data-src={{image}} class="swiper-lazy">
-          <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+          <img src={{image}}>
+          <!-- <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div> -->
         </div>
       {{/each}}
     </div>
 
     <div class="swiper-button-prev swiper-button-white"></div>
     <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-pagination"></div>
   </div>
-
-  <!-- <div class="swiper-container gallery-thumbs">
-    <div class="swiper-wrapper">
-      {{#each @images as |image|}}
-        <div class="swiper-slide" {{did-insert (fn this.setBackgroundImage image)}}></div>
-      {{/each}}
-    </div>
-  </div> -->
 
   {{yield}}
 
