@@ -41,10 +41,8 @@ body {
 footer {
   height: 20px;
   padding: 7px 15px;
-  display: flex;
-  background-color: #07c;
   margin-top: 10px;
-  border-top: 1px solid slategrey;
+  border-top: 1px solid $separator-light;
 }
 
 .wrapper {
@@ -118,7 +116,7 @@ footer {
 }
 
 .boats-found {
-  font-weight: bold;
+  color: $light-grey;
   font-size: 1.3rem;
 }
 
