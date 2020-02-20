@@ -1,23 +1,23 @@
 <div class="pagination">
+
+  <div class="links">
+    <div class="pages">
+      <a class="previous {{if this.previous.isDisabled "disabled"}}" href={{this.previous.url}} rel="prev">&#x27F5;</a>
+
+      {{#each this.series as |page|}}
+        {{#if page.url}}
+          <a class={{if page.isCurrent "disabled current"}} href={{page.url}}>{{page.text}}</a>
+        {{else}}
+          ...
+        {{/if}}
+      {{/each}}
+
+      <a class="next {{if this.next.isDisabled "disabled"}}" href={{this.next.url}} rel="next">&#x27F6;</a>
+    </div>
+  </div>
+
   <div class="showing">
-    Showing {{@meta.from}}-{{@meta.to}}
+    Showing {{@meta.from}}-{{@meta.to}} of {{@meta.count}} boats
   </div>
-  <div class="pages">
-    {{#each this.series as |page|}}
-      {{#if page.url}}
-        <a href={{page.url}}>{{page.text}}</a>
-      {{else}}
-        ...
-      {{/if}}
-    {{/each}}
-  </div>
-  <div class="per-page">
-    <select class="custom-select" id="inputGroupSelect01">
-      <option selected>Choose...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
-    Per page: {{@meta.items}}
-  </div>
+
 </div>
