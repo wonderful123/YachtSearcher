@@ -1,5 +1,5 @@
 .content {
-  background-color: $background-grey;
+  // background-color: $background-grey;
 }
 
 .boat-listings-container {
@@ -19,34 +19,47 @@
   margin: 10px;
 
   .carousel:hover {
-    transform: scale(1.02);
-
-    .price {
-      transform: scale(0.8);
-
+    .price, .year-length {
+      transform: scale(0.75);
     }
   }
 
-  .price {
-    transition: all .5s;
-    transform-origin: bottom left;
+  .carousel-bubble {
+    transition: all 0.5s;
     position: absolute;
-    float: left;
-    left: 10px;
-    bottom: 10px;
     margin: 0;
-    background-color: rgba($carousel-green, .9);
     border-radius: $border-radius;
-    padding: 3px 10px;
+    padding: 3px 8px;
     line-height: 22px;
     color: white;
-    font-weight: 700;
-    font-size: 13px;
+    font-weight: 600;
+    font-size: 11px;
     z-index: 20;
     cursor: default;
   }
 
+  .price {
+    float: left;
+    left: 10px;
+    bottom: 10px;
+    background-color: rgba($carousel-green, .9);
+    transform-origin: bottom left;
+  }
+
+  .year-length {
+    float: right;
+    right: 10px;
+    bottom: 10px;
+    background-color: rgba($carousel-red, .9);
+    transform-origin: bottom right;
+  }
+
   .listing-actions {
+    position: absolute;
+    float: right;
+    right: 7px;
+    top: 15px;
+    z-index: 10;
 
     .star-icon {
       width: 15px;
@@ -55,10 +68,7 @@
 
     .favourite-toggle::before {
       content: attr(data-tooltip);
-      position: absolute;
       opacity: 0;
-      bottom: 2em;
-      right: 0;
       background: rgba(0, 0, 0, 0.75);
       border-radius: 4px;
       color: white;
@@ -72,13 +82,6 @@
         opacity: 1;
       }
     }
-
-    position: absolute;
-    float: right;
-    right: 7px;
-    bottom: 15px;
-    top: auto;
-    z-index: 10;
   }
 
   .title {
@@ -87,6 +90,10 @@
     font-weight: 400;
     display: flex;
     align-items: center;
+  }
+
+  .details {
+    font-size: 0.7rem;
   }
 
   .favourite-toggle {
