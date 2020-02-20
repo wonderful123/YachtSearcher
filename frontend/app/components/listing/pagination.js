@@ -15,8 +15,6 @@ export default
 class ListingPagination extends Component {
   get series() {
     const seriesData = this.args.meta.series;
-    console.log('THIS.ARGS.META', this.args.meta)
-    console.log('SERIESDATA', seriesData)
     const scaffoldUrl = this.args.meta.scaffold_url;
     let series = [];
 
