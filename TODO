@@ -7,11 +7,16 @@
 - [ ] Some lengths are incorrect. Way too big
 
 - Add cookie session. Needs data storage.
-- Remove bootstrap
+x Remove bootstrap
 - Choose colors
 - Header redesign
-- Add boat details
-- Try fade out price on hover
+x Add boat details
+x Try fade out price on hover
 - Look for sorting design
 - Look for number of boats found design
-- Pagination design
+x Pagination design
+- Handle if database is down
+- Move header links
+x Remove background
+- Container for flex wrapper
+x Pagination
