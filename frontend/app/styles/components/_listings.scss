@@ -1,3 +1,5 @@
+$bubble-padding: 8px;
+
 .content {
   // background-color: $background-grey;
 }
@@ -15,11 +17,13 @@
 }
 
 .boat-listing {
+  position: relative;
   flex: 0 0 280px;
   margin: 10px;
 
   .carousel:hover {
-    .price, .year-length {
+    .price,
+    .year-length {
       transform: scale(0.75);
     }
   }
@@ -38,18 +42,43 @@
     cursor: default;
   }
 
+  .date-listed {
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, 0.2);
+    width: 36px;
+    padding: 0;
+    left: -2px;
+    top: -2px;
+    text-align: center;
+    border: 1px solid white;
+
+    .month {
+      border-bottom: 1px solid darken(#f9f9f9, 5%);
+      background-color: #f9f9f9;
+      color: grey;
+      line-height: 13px;
+      font-size: 9px;
+      letter-spacing: -0.3px;
+    }
+
+    .day {
+      background-color: white;
+      color: $carousel-green;
+      font-size: 20px;
+      line-height: 21px;
+      padding-top: 1px;
+    }
+  }
+
   .price {
-    float: left;
-    left: 10px;
-    bottom: 10px;
+    left: $bubble-padding;
+    bottom: $bubble-padding;
     background-color: rgba($carousel-green, .9);
     transform-origin: bottom left;
   }
 
   .year-length {
-    float: right;
-    right: 10px;
-    bottom: 10px;
+    right: $bubble-padding;
+    bottom: $bubble-padding;
     background-color: rgba($carousel-red, .9);
     transform-origin: bottom right;
   }
@@ -86,17 +115,26 @@
 
   .title {
     margin-top: 5px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 400;
-    display: flex;
-    align-items: center;
   }
 
   .details {
     font-size: 0.7rem;
+
+    .description {
+      margin: 2px 0 3px;
+    }
+  }
+
+  .location .icon {
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
   }
 
   .favourite-toggle {
+    cursor: pointer;
     font-size: 0.8rem;
     margin-right: 0.3rem;
 

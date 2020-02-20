@@ -1,9 +1,14 @@
 <div class="boat-listing">
-
+  <div class="carousel-bubble date-listed">
+    <div class="month">{{this.date.month}}</div>
+    <div class="day">{{this.date.day}}</div>
+  </div>
   <Ui::Carousel @images={{@boat.images}}>
 
     <div class="carousel-bubble price">{{format-currency @boat.price @boat.priceSymbol}}</div>
     <div class="carousel-bubble year-length">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
+
+
     <div class="listing-actions">
       <Ui::FavouriteToggle @boat={{@boat}} />
     </div>
@@ -16,8 +21,7 @@
 
   <div class="details">
     <div class="description">{{@boat.description}}</div>
-    <div class="location">{{@boat.location}}</div>
-    <div class="date-listed">Listed: {{this.firstFound}}</div>
+    <div class="location">{{svg-jar "map-marker" class="icon"}}{{@boat.location}}</div>
   </div>
 
 </div>
