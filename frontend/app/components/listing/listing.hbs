@@ -1,8 +1,9 @@
 <div class="boat-listing">
-  
+
   <Ui::Carousel @images={{@boat.images}}>
 
-    <div class="price">{{format-currency @boat.price @boat.priceSymbol}}</div>
+    <div class="carousel-bubble price">{{format-currency @boat.price @boat.priceSymbol}}</div>
+    <div class="carousel-bubble year-length">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
     <div class="listing-actions">
       <Ui::FavouriteToggle @boat={{@boat}} />
     </div>
@@ -13,13 +14,10 @@
     {{@boat.make}} {{@boat.model}}
   </div>
 
-  <!-- <div class="right-column">
-
-    <div class="price">{{format-currency @boat.price @boat.priceSymbol}}</div>
-    <div class="details">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
+  <div class="details">
     <div class="description">{{@boat.description}}</div>
     <div class="location">{{@boat.location}}</div>
     <div class="date-listed">Listed: {{this.firstFound}}</div>
-  </div> -->
+  </div>
 
 </div>
