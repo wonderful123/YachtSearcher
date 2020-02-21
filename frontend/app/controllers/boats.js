@@ -50,9 +50,10 @@ class Filter {
     this.search = new FilterValue('search', search);
     this.year = new FilterValue('year', this.getMinMax(year));
     this.price = new FilterValue('price', this.getMinMax(price));
-    this.length = new FilterValue('length', this.getMinMax(length));
-    if (this.length.min) this.length.min = this.min.length / 12; // Work in feet not total inches
-    if (this.length.max) this.length.max = this.max.length / 12;
+    let lengthMinMax = this.getMinMax(length);
+    if (lengthMinMax[0]) lengthMinMax.min /= 12; // Work in feet not total inches
+    if (lengthMinMax[1]) lengthMinMax.max /= 12;
+    this.length = new FilterValue('length', lengthMinMax);
   }
 }
 
