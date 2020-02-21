@@ -1,3 +1,28 @@
-{{!-- {{boat-table data=model}} --}}
+<FilterBar::FilterBar @filter={{this.filter}} @updateFilter={{this.updateFilter}} @maskMainContent={{this.maskMainContent}} />
 
-{{boat-table-server-side data=model}}
+<!-- <Listing::SortBar @doSort={{this.doSort}} @urlSortParam={{this.urlSortParam}} /> -->
+
+<section class="content {{if this.isMasked "mask-content"}}">
+  <div class="boat-listings-container">
+    {{#if this.boatsFound}}
+      <div class="boats-found">
+        {{this.model.meta.count}} boats were found
+      </div>
+
+      <section class="listings">
+        {{#each this.model as |boat|}}
+          <Listing::Listing @boat={{boat}} />
+        {{/each}}
+      </section>
+
+      <Listing::Pagination @page={{this.page}} @per_page={{this.per_page}} @meta={{this.model.meta}} />
+
+    {{else}}
+
+      <div class="boats-found">
+        No matching boats found
+      </div>
+
+    {{/if}}
+  </div>
+</section>

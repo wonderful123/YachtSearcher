@@ -1,0 +1,10 @@
+<div id="sidebar-wrapper" class={{if this.isActive "active" "hidden"}}>
+  <button type="button" class="close" aria-label="Close" role="button" {{on "click" this.toggleCollapse}}>
+    <!-- <span aria-hidden="true"><FaIcon @icon="chevron-left" /></span> -->
+  </button>
+  {{yield}}
+</div>
+
+<a class="menu-toggle rounded {{if this.isActive "hidden"}}" href="#" {{on "click" this.toggleCollapse}}>
+  <!-- <FaIcon @icon="sliders-h" /> -->
+</a>

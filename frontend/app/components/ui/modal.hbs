@@ -1,0 +1,7 @@
+<div
+  class="modal {{unless @modalActive "hidden"}}"
+  {{on-click-outside @clickedOutside}}
+>
+  @modalActive {{@modalActive}}
+  {{yield}}
+</div>

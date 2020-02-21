@@ -1,11 +1,13 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { tracked } from "@glimmer/tracking";
 
-export default Component.extend({
-  isActive: true,
+export default
+class CollapsableSidebar extends Component {
+  @tracked isActive = true;
 
-  actions: {
-    toggleCollapse() {
-      this.toggleProperty('isActive');
-    }
+  @action
+  toggleCollapse() {
+    this.isActive = !this.isActive;
   }
-});
+}

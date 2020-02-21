@@ -1,0 +1,170 @@
+$bubble-padding: 8px;
+
+.content {
+  // background-color: $background-grey;
+}
+
+.boat-listings-container {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+
+.listings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.boat-listing {
+  position: relative;
+  flex: 0 0 280px;
+  margin: 10px;
+
+  .carousel:hover {
+    .price,
+    .year-length {
+      transform: scale(0.75);
+    }
+  }
+
+  .carousel-bubble {
+    transition: all 0.5s;
+    position: absolute;
+    margin: 0;
+    border-radius: $border-radius;
+    padding: 3px 8px;
+    line-height: 22px;
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    z-index: 20;
+    cursor: default;
+  }
+
+  .date-listed {
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, 0.2);
+    width: 36px;
+    padding: 0;
+    left: -2px;
+    top: -2px;
+    text-align: center;
+    border: 1px solid white;
+
+    .month {
+      border-bottom: 1px solid darken(#f9f9f9, 5%);
+      background-color: #f9f9f9;
+      color: grey;
+      line-height: 13px;
+      font-size: 9px;
+      letter-spacing: -0.3px;
+    }
+
+    .day {
+      background-color: white;
+      color: $carousel-green;
+      font-size: 20px;
+      line-height: 21px;
+      padding-top: 1px;
+    }
+
+    &::before {
+      position: absolute;
+      top: -35px;
+      left: -85%;
+      content: attr(data-tooltip);
+      white-space: nowrap;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 4px;
+      color: white;
+      padding: 0 10px;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  .price {
+    left: $bubble-padding;
+    bottom: $bubble-padding;
+    background-color: rgba($carousel-green, .9);
+    transform-origin: bottom left;
+  }
+
+  .year-length {
+    right: $bubble-padding;
+    bottom: $bubble-padding;
+    background-color: rgba($carousel-red, .9);
+    transform-origin: bottom right;
+  }
+
+  .listing-actions {
+    position: absolute;
+    float: right;
+    right: 7px;
+    top: 15px;
+    z-index: 10;
+
+    .star-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .favourite-toggle::before {
+      content: attr(data-tooltip);
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 4px;
+      color: white;
+      padding: 3px 10px;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .favourite-toggle:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  .title {
+    margin-top: 5px;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .details {
+    font-size: 0.7rem;
+
+    .description {
+      margin: 2px 0 3px;
+    }
+  }
+
+  .location .icon {
+    width: 10px;
+    height: 10px;
+    margin-right: 2px;
+  }
+
+  .favourite-toggle {
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+
+    .not-active {
+      color: white;
+    }
+
+    .active {
+      color: $yellow;
+    }
+  }
+}

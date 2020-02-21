@@ -1,28 +1,27 @@
-import DS from 'ember-data';
-const {
-  Model,
-  attr,
-  hasMany
-} = DS;
+import Model, { attr } from '@ember-data/model';
 
-export default Model.extend({
-  title: attr('string'),
-  price: attr('number'),
-  currency: attr('string'),
-  firstFound: attr('date'),
-  listingId: attr('string'),
-  lengthInches: attr('number'),
-  country: attr('string'),
-  state: attr('string'),
-  city: attr('string'),
-  year: attr('number'),
-  make: attr('string'),
-  model: attr('string'),
-  cabins: attr('number'),
-  thumbnail: attr('string'),
-  latitude: attr('number'),
-  longitude: attr('number'),
-  location: attr('string'),
-  histories: hasMany('history'),
-  listings: hasMany('listing')
-});
+export default class BoatModel extends Model {
+  @attr title;
+  @attr('number') price;
+  @attr priceSymbol;
+  @attr priceFormatted;
+  @attr description;
+  @attr('') firstFound;
+  @attr listingId;
+  @attr('number') lengthInches;
+  @attr country;
+  @attr state;
+  @attr city;
+  @attr('number') year;
+  @attr make;
+  @attr model;
+  @attr('number') cabins;
+  @attr('image-url') thumbnail;
+  @attr('number') latitude;
+  @attr('number') longitude;
+  @attr location;
+  @attr('image-url') images;
+  @attr('number') totalImages;
+  @attr histories;
+  @attr listings;
+}

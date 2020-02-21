@@ -1,0 +1,51 @@
+<div class="listing-images" {{ref this "listingImagesContainer"}}>
+
+  <Listing::PanningThumbnail
+    class="main-image"
+    src={{this.selectedThumbnail}}
+    @updateMouseOffset={{this.updateMouseOffset}}
+    {{on "mouseenter" (fn this.handleMouseEnter url)}}
+    {{on "mouseleave" this.handleMouseLeave}}
+  />
+
+  <div class="thumbnail-list">
+    {{#each this.thumbnails as |url|}}
+      <Listing::PanningThumbnail
+        src={{url}}
+        class="thumbnail {{if (eq this.selectedThumbnail url) "highlight"}}"
+        @updateMouseOffset={{this.updateMouseOffset}}
+        {{on "mouseenter" (fn this.handleMouseEnter url)}}
+        {{on "mouseleave" this.handleMouseLeave}}
+      />
+    {{/each}}
+
+    {{#if this.lastImage}}
+      <div class="last-image-container">
+
+        <Listing::PanningThumbnail
+          src={{this.lastImage}}
+          class="thumbnail {{if this.hasMoreImages "more-images"}}"
+          @updateMouseOffset={{this.updateMouseOffset}}
+          {{on "mouseenter" (fn this.handleMouseEnter this.lastImage)}}
+          {{on "mouseleave" this.handleMouseLeave}}
+        />
+
+        {{#if this.hasMoreImages}}
+          <div class="remaining-count">
+            {{this.remainingImagesCount}}+
+            <!-- <FaIcon @icon="images" /> -->
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+  </div>
+
+  <Listing::ImagePreview
+    src={{this.selectedThumbnail}}
+    @isActive={{this.showPreview}}
+    @listingImagesContainer={{this.listingImagesContainer}}
+    @thumbnailListingContainer={{this.thumbnailListingContainer}}
+    @mouseThumbnailPosition={{this.mouseThumbnailPosition}}
+  />
+</div>

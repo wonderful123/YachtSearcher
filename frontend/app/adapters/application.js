@@ -1,5 +1,7 @@
 import DS from 'ember-data';
+import config from '../config/environment';
 
-export default DS.JSONAPIAdapter.extend({
-  host: 'http://http://108.161.143.35:3000',
-});
+export default
+class extends DS.JSONAPIAdapter {
+  host = config.rails_host;
+}

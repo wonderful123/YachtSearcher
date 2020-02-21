@@ -1,0 +1,14 @@
+<FilterBar::RangeSlider
+  @rangeMin={{@filterComponent.rangeMin}}
+  @rangeMax={{@filterComponent.rangeMax}}
+  @startMin={{this.startMin}}
+  @startMax={{this.startMax}}
+  @onChange={{this.onRangeChange}}
+  @rangeFormatter={{this.rangeFormatter}}
+/>
+
+<div class="min-to-max">
+  <Input @value={{@filterComponent.min}} @placeholder="No min" @class="filter-button" />
+  <span class="to">to</span>
+  <Input @value={{@filterComponent.max}} @placeholder="No max" @class="filter-button" />
+</div>

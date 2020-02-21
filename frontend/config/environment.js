@@ -14,7 +14,12 @@ module.exports = function(environment) {
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
         Date: false
-      }
+      },
+    },
+    flashMessageDefaults: {
+      timeOut: 1000,
+      extendedTimeout: 500,
+      showProgress: true,
     },
 
     APP: {
@@ -23,25 +28,27 @@ module.exports = function(environment) {
     }
   };
 
-  ENV['ember-google-maps'] = {
-    key: process.env.GOOGLE_MAPS_API_KEY, // Using .env files in this example
-    language: 'en',
-    region: 'GB',
-    protocol: 'https',
-    version: '3.35',
-    libraries: ['geometry', 'places'], // Optional libraries
-    // client: undefined,
-    // channel: undefined,
-    // baseUrl: '//maps.googleapis.com/maps/api/js'
-  };
+  // ENV['ember-google-maps'] = {
+  //   key: process.env.GOOGLE_MAPS_API_KEY, // Using .env files in this example
+  //   language: 'en',
+  //   region: 'GB',
+  //   protocol: 'https',
+  //   version: '3.35',
+  //   libraries: ['geometry', 'places'], // Optional libraries
+  //   // client: undefined,
+  //   // channel: undefined,
+  //   // baseUrl: '//maps.googleapis.com/maps/api/js'
+  // };
 
 
   if (environment === 'development') {
     ENV['ember-simple-leaflet-maps'] = {
       apiKey: process.env.MAPBOX_API_KEY,
-    }
+    };
 
-    ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/"
+    ENV['image_server'] = "http://localhost:80/";
+    ENV['rails_host'] = 'http://localhost:3000';
+
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -62,7 +69,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/";
+    ENV['rails_host'] = "http://108.161.143.35:3000";
   }
 
   return ENV;

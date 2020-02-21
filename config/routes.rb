@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get :update_location_data
     resources :listings
     resources :regions
+    get :images
   end
 
   resources :regions do

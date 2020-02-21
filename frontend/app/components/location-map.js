@@ -1,13 +1,16 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { divIcon } from 'ember-leaflet/helpers/div-icon';
+import { point } from 'ember-leaflet/helpers/point';
 
-export default Component.extend({
-  lat: -25.2743988,
-  lng: 133.7751312,
-  zoom: 4,
-  tileUrl: "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg", // Pastel tile
-  tileUrl2: "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png", // Label overlay
+export default
+class LocationMap extends Component {
+  lat = -25.2743988;
+  lng = 133.7751312;
+  zoom = 4;
+  tileUrl = "http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg"; // Pastel tile
+  tileUrl2 = "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}{r}.png"; // Label overlay
 
-  iconCreateFunction: function(cluster) {
+  iconCreateFunction = function(cluster) {
     let markers = cluster.getAllChildMarkers();
     let total = 0;
     markers.forEach(m => {
@@ -18,7 +21,7 @@ export default Component.extend({
     let formattedCurrency = kFormatter(averagePrice).split('k')[0];
     formattedCurrency = parseInt(formattedCurrency);
     formattedCurrency = formattedCurrency.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-		return L.divIcon({
+		return divIcon({
       html: `<div>
                <div class="number-of-boats">
                  ${markers.length}
@@ -28,6 +31,6 @@ export default Component.extend({
                </div>
              </div>`,
       className: 'marker-cluster-small',
-      iconSize: new L.Point(50, 50) });
-	},
-});
+      iconSize: new point(50, 50) });
+	};
+}
