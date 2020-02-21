@@ -1,8 +1,10 @@
 <div class="boat-listing">
-  <div class="carousel-bubble date-listed">
+
+  <div class="carousel-bubble date-listed" data-tooltip="date first found">
     <div class="month">{{this.date.month}}</div>
     <div class="day">{{this.date.day}}</div>
   </div>
+
   <Ui::Carousel @images={{@boat.images}}>
 
     <div class="carousel-bubble price">{{format-currency @boat.price @boat.priceSymbol}}</div>

@@ -67,6 +67,27 @@ $bubble-padding: 8px;
       line-height: 21px;
       padding-top: 1px;
     }
+
+    &::before {
+      position: absolute;
+      top: -35px;
+      left: -85%;
+      content: attr(data-tooltip);
+      white-space: nowrap;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 4px;
+      color: white;
+      padding: 0 10px;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
   }
 
   .price {
