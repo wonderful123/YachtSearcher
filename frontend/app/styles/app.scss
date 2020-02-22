@@ -1,16 +1,29 @@
-@import "swiper.min"; // Carousel
 @import "variables";
+@import "mixins";
 @import "utils";
+@import "swiper.min"; // Carousel
 @import "components/navbar";
 @import "components/filter-bar";
+@import "components/listings";
 @import "components/carousel";
 @import "components/pagination";
-@import "components/listings";
 @import "components/flash-message";
 
 @font-face {
   font-family: 'PromixaNova';
   src: url("/assets/fonts/ProximaNova-Regular.otf") format('otf');
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: $font-color;
+  font-size: 1.6rem;
+  font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
 }
 
 .two-columns {
@@ -20,22 +33,14 @@
 }
 
 .icon {
-  width: 13px;
-  height: 13px;
+  width: 1.3rem;
+  height: 1.3rem;
   stroke-width: 0.4;
 }
 
 svg {
   fill: currentColor;
   stroke: currentColor;
-}
-
-body {
-  color: $font-color;
-  font-size: 14px;
-  font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
 }
 
 footer {
@@ -92,7 +97,6 @@ footer {
   }
 }
 /* Side Menu */
-
 .menu-toggle {
   position: fixed;
   right: 15px;
@@ -324,7 +328,6 @@ footer {
   font-weight: bold;
   font-size: 14px;
 }
-
 //
 // .boat-listings {
 //   padding: 0 10px;

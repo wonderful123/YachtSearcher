@@ -1,0 +1,21 @@
+@mixin data-tooltip {
+  &::before {
+    font-size: 1.1rem;
+    line-height: 2.2rem;
+    position: absolute;
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: $border-radius;
+    color: white;
+    font-weight: bold;
+    padding: 0 1rem !important;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::before { opacity: 1; }
+  }
+}
