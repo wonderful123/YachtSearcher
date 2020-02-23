@@ -39,10 +39,10 @@ module ScraperData
       site_name = file[/\[(.*)\]/, 1]
 
       timestamp = file[/\d{4}.*\d/, 0]
-      pattern = "%Y-%m-%d--%H-%M-%S"
+      pattern = '%Y-%m-%d--%H-%M-%S'
       timestamp = DateTime.strptime(timestamp, pattern)
 
-      return { site_name: site_name, timestamp: timestamp }
+      { site_name: site_name, timestamp: timestamp }
     end
 
     def load(file)
@@ -54,6 +54,5 @@ module ScraperData
     def archive(file)
       FileUtils.mv(file, @archive_location)
     end
-
   end
 end
