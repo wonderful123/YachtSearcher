@@ -45,12 +45,12 @@ class Database:
         self.__conn.close()
 
     def __create_listing_data_table(self):
-        sql = ''' CREATE TABLE IF NOT EXISTS listing_data (
+        sql = """ CREATE TABLE IF NOT EXISTS listing_data (
           listing_id INTEGER PRIMARY KEY,
           url TEXT NOT NULL UNIQUE,
           is_deep_scraped TEXT,
           is_location_scraped TEXT
-          ) '''
+          ) """
         cur = self.__conn.cursor()
         cur.execute(sql)
         self.__conn.commit()
@@ -62,15 +62,15 @@ class Database:
         :return: None
         """
         # Uses 2 queries to upsert
-        sql = f''' UPDATE listing_data
+        sql = f""" UPDATE listing_data
             SET {field} = "true"
-            WHERE url = "{url}" '''
+            WHERE url = '{url}' """
         cur = self.__conn.cursor()
         cur.execute(sql)
 
-        sql = f''' INSERT OR IGNORE INTO listing_data
+        sql = f""" INSERT OR IGNORE INTO listing_data
             (url, {field})
-            VALUES ( "{url}", 'true' ) '''
+            VALUES ( '{url}', 'true' ) """
         cur.execute(sql)
         self.__conn.commit()
 
@@ -81,7 +81,7 @@ class Database:
         flags are is_deep_scraped or is_location_scraped
         """
         prev_visited_listings = {}
-        sql = ''' SELECT * FROM listing_data '''
+        sql = """ SELECT * FROM listing_data """
         # Returns dict rather than tuple
         self.__conn.row_factory = sqlite3.Row
         cur = self.__conn.cursor()
