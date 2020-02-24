@@ -9,19 +9,7 @@ export default class CarouselComponent extends Component {
 
   @action
   registerSwiper(element) {
-    // const galleryThumbs = new Swiper(element.querySelector('.gallery-thumbs'), {
-    //   spaceBetween: 3,
-    //   slidesPerView: 6,
-    //   slidesPerGroup: 6,
-    //   loop: true,
-    //   freeMode: true,
-    //   loopedSlides: this.imageCount, //looped slides should be the same
-    //   watchSlidesVisibility: true,
-    //   watchSlidesProgress: true,
-    //   centeredSlides: true,
-    // });
-
-    new Swiper(element.querySelector('.gallery-top'), {
+    new Swiper(element.querySelector('.swiper-container'), {
       spaceBetween: 0,
       loop: true,
       loopedSlides: this.imageCount, //looped slides should be the same
@@ -29,9 +17,6 @@ export default class CarouselComponent extends Component {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       },
-      // thumbs: {
-      //   swiper: galleryThumbs,
-      // },
       pagination: {
         el: '.swiper-pagination',
         dynamicBullets: true,
