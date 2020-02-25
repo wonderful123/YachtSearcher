@@ -18,3 +18,9 @@ Stores files in data directory. There is a file that stores which urls have been
 `scrape_location (false)`
 - Default true
 Only scrapes location if not in deep scraped list.
+
+## Problems with python version - use virtualenv
+`virtualenv -p /usr/bin/python3.6 venv`
+
+To begin using the virtual environment, it needs to be activated:
+`source venv/bin/activate`
