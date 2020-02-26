@@ -42,3 +42,5 @@
 # Deployment
 
 -   Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
+
+-   Had trouble with stupid sqlite3 version. Run `export LD_LIBRARY_PATH="/usr/local/lib"`
