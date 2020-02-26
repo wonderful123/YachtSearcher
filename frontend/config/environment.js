@@ -70,7 +70,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV['image_server'] = "http://108.161.143.35/YachtSearcher/scraper/data/images/";
-    ENV['rails_host'] = "http://smoothcontrol:3000";
+    ENV['rails_host'] = "http://108.161.143.35:3000";
   }
 
   return ENV;
