@@ -47,7 +47,7 @@ module.exports = function(environment) {
     };
 
     ENV['image_server'] = "http://localhost:80/";
-    ENV['rails_host'] = 'http://localhostx:3000';
+    ENV['rails_host'] = 'http://localhost:3000';
 
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
