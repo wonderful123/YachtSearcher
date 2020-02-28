@@ -1,8 +1,19 @@
 .nav-bar {
-  padding: 7px 15px;
-  width: 100%;
+  padding: 0.5rem 1rem;
   display: flex;
-  border-bottom: 1px solid $separator-light;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.1rem solid $separator-light;
+  font-size: 1.4rem;
+
+  .logo {
+    margin-right: 1rem;
+  }
+
+  .nav-right {
+    color: $light-grey;
+    font-size: 1.4rem;
+  }
 
   ul {
     list-style-type: none;
@@ -10,31 +21,16 @@
     padding: 0;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    justify-content: space-around;
+    width: 60%;
   }
 
   li {
-    margin-right: 10px;
+    margin-right: 1rem;
   }
 
   li a {
     color: $light-grey;
-  }
-
-  .logo {
-    display: flex;
-
-    img {
-      margin-right: 5px;
-    }
-
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-
-    span {
-      color: $yellow;
-    }
+    text-decoration: none;
   }
 }
