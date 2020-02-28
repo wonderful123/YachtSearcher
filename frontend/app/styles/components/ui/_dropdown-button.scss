@@ -1,0 +1,19 @@
+.dropdown-button {
+  cursor: pointer;
+  white-space: nowrap;
+  border: 0.1rem solid lightgrey;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+
+  .dropdown-icon {
+    width: 1rem;
+    margin-left: 0.3rem;
+    margin-bottom: -0.2rem;
+  }
+}
+
+.dropdown-selected {
+  color: $teal;
+  border-color: $teal;
+}
