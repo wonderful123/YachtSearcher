@@ -1,31 +1,43 @@
-<div class="favourites-list">
-  <button type="button" lass="nav-link transparent-button" {{on "click" this.toggleModal}}>
-    Favourites<sup><span class="badge badge-info">{{this.currentCount}}</span></sup>
-    {{svg-jar "caret-down" class="icon"}}
-  </button>
-<!--
-  <BsModal @open={{this.isModalOpen}} @onHide={{this.toggleModal}} as |Modal|>
-    <Modal.header>
-      <form class="px-4 py-3">
-        <div class="form-group">
-          <label for="favourite-list-name">List: </label>
-          <Input @value={{this.favourites.name}} type="text" class="form-control" id="favourite-list-name" />
-        </div>
-        {{#if this.hasFavourites}}
-          <button type="submit" class="btn btn-sm btn-primary" {{on "click" this.deleteCurrent}}>Clear list</button>
-        {{/if}}
-      </form>
+<Ui::DropdownButton
+  @onClick={{this.toggleModal}}
+  class="favourites-dropdown"
+>
+  {{svg-jar "star" class="icon"}} {{this.currentCount}} boats
+</Ui::DropdownButton>
+
+<Ui::Modal
+  @isShown={{this.isModalOpen}}
+  @close={{this.toggleModal}}
+  as |Modal|
+>
+
+  {{#if this.hasFavourites}}
+    <Modal.header
+      @linkTitle="clear list"
+      @linkAction={{this.deleteCurrent}}
+    >
+      Favourites
     </Modal.header>
-    <Modal.body>
-      {{#each this.favourites.current as |boat|}}
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-item">
-          <img src={{boat.thumbnail}} alt="boat">
-          {{boat.make}} {{boat.model}}
-          {{boat.year}}
-          {{format-currency boat.price boat.priceSymbol}}
-        </div>
-      {{/each}}
-    </Modal.body>
-  </BsModal> -->
-</div>
+  {{else}}
+    <Modal.header>
+      No favourites added
+    </Modal.header>
+  {{/if}}
+
+  <Modal.body>
+    {{#each this.favourites.current as |boat|}}
+      <div class="favourite-item">
+        <img src={{boat.thumbnail}} alt="boat">
+        {{boat.make}} {{boat.model}}
+        {{boat.year}}
+        {{format-currency boat.price boat.priceSymbol}}
+      </div>
+      <div class="dropdown-divider"></div>
+    {{/each}}
+  </Modal.body>
+
+  <Modal.footer @close={{this.toggleModal}}>
+    Footer
+  </Modal.footer>
+
+</Ui::Modal>

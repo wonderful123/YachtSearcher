@@ -9,6 +9,10 @@ class FavouriteList extends Component {
 
   @tracked isModalOpen = false;
 
+  get label() {
+    return `Favourites<sup><span class="badge badge-info">${this.currentCount}</span></sup>`;
+  }
+
   get currentCount() {
     return this.favourites.count;
   }
