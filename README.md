@@ -44,3 +44,11 @@
 -   Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
 
 -   Had trouble with stupid sqlite3 version. Run `export LD_LIBRARY_PATH="/usr/local/lib"`
+
+-   Rails deployed through passenger and apache.
+Apache settings in /etc/apache2/httpd
+`passenger start`
+
+-   Building ember:
+`ember b --environment=production`
+`scp -r dist/* ../..`
