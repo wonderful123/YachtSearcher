@@ -9,12 +9,12 @@
     class="no-border search-input no-select"
   />
 
-  {{#each this.filterComponents as |c|}}
+  {{#each this.filterComponents as |component|}}
     <FilterBar::FilterButton
-      @filterComponent={{c}}
+      @filterComponent={{component}}
       @updateFilter={{@updateFilter}}
-      @resetFilter={{action (fn this.resetFilter c)}}
-      @toggleFilterButton={{action (fn this.toggleFilterButton c)}}
+      @resetFilter={{action (fn this.resetFilter component)}}
+      @toggleFilterButton={{action (fn this.toggleFilterButton component)}}
     />
   {{/each}}
 
