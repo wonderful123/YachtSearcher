@@ -1,7 +1,11 @@
-<div
-  class="modal {{unless @modalActive "hidden"}}"
-  {{on-click-outside @clickedOutside}}
->
-  @modalActive {{@modalActive}}
-  {{yield}}
-</div>
+{{#if @isShown}}
+  <div class="overlay-container">
+    <div class="ui-modal" {{on-click-outside @close}}>
+      {{yield (hash
+        header=(component "ui/modal/header")
+        body=(component "ui/modal/body")
+        footer=(component "ui/modal/footer")
+      )}}
+    </div>
+  </div>
+{{/if}}

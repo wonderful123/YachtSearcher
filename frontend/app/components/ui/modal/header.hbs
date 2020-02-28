@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <div class="two-columns">
+    <div>
+      {{yield}}
+    </div>
+    <div>
+      {{#if @linkTitle}}
+        <a class="header-link" href="#" {{on "click" @linkAction}}>{{@linkTitle}}</a>
+      {{/if}}
+    </div>
+  </div>
+</div>
