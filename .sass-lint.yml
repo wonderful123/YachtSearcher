@@ -1,0 +1,2 @@
+files:
+  include: 'frontend/styles/**/*.s+(a|c)ss'
