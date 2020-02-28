@@ -1,8 +1,8 @@
 .flash-message-container {
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  margin: 0 0 6px;
+  position: absolute;
+  top: 5rem;
+  right: 1rem;
+  // margin: 20px;
   z-index: 999999;
 }
 
@@ -13,7 +13,7 @@
   pointer-events: auto;
   overflow: hidden;
   padding: 15px 15px 15px 50px;
-  width: 300px;
+  width: 250px;
   -moz-border-radius: 3px 3px 3px 3px;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
@@ -52,21 +52,22 @@
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==") !important;
   }
 }
+
 @media all and (max-width: 240px) {
   .flash-message {
     padding: 8px 8px 8px 50px;
-    width: 11em;
+    width: 11rem;
   }
 }
 @media all and (min-width: 241px) and (max-width: 480px) {
   .flash-message {
     padding: 8px 8px 8px 50px;
-    width: 18em;
+    width: 18rem;
   }
 }
 @media all and (min-width: 481px) and (max-width: 768px) {
   .flash-message {
     padding: 15px 15px 15px 50px;
-    width: 25em;
+    width: 25rem;
   }
 }
