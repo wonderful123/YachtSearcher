@@ -1,8 +1,10 @@
 <nav class="nav-bar">
-  <ul>
-    <li class="logo">
-      <img src="assets/logo-v2-small.png" width="32" height="35" alt="logo">
-    </li>
+
+  <div class="logo">
+    <img src="assets/logo-v2-small.png" width="32" height="35" alt="logo">
+  </div>
+
+  <ul class="links">
     <li>
       <LinkTo @route="boats">
         Boats
@@ -18,8 +20,10 @@
         Images
       </LinkTo>
     </li>
-    <li>
-      <FavouriteList />
-    </li>
   </ul>
+
+  <div class="nav-right">
+    <FavouriteList />
+  </div>
+
 </nav>
