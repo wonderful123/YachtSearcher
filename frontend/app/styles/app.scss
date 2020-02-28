@@ -2,12 +2,16 @@
 @import "mixins";
 @import "utils";
 @import "swiper.min"; // Carousel
+@import "components/ui";
 @import "components/navbar";
 @import "components/filter-bar";
 @import "components/listings";
 @import "components/carousel";
 @import "components/pagination";
 @import "components/flash-message";
+@import "components/favourites-dropdown";
+
+$main-font-size: 1.6rem;
 
 @font-face {
   font-family: 'PromixaNova';
@@ -20,21 +24,23 @@ html {
 
 body {
   color: $font-color;
-  font-size: 1.6rem;
+  font-size: $main-font-size;
   font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0;
+  position: relative;
 }
 
 .two-columns {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
+  width: 100%;
 }
 
 .icon {
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.4rem;
+  height: 1.4rem;
   stroke-width: 0.4;
 }
 
@@ -52,12 +58,6 @@ footer {
 
 .wrapper {
   width: 100%;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 0.33s, opacity 0.33s linear;
 }
 
 .leaflet-container {
@@ -121,7 +121,8 @@ footer {
 
 .boats-found {
   color: $light-grey;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
 }
 
 #sidebar-wrapper {
