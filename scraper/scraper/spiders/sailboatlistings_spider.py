@@ -1,10 +1,12 @@
 from scraper.spiders.basespider import BaseSpider
-import scrapy, re
+import scrapy
+import re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.utils.markup import remove_tags
 from furl import furl
+
 
 class SailBoatListingsSpider(BaseSpider):
     name = "sailboatlistings"
@@ -14,7 +16,8 @@ class SailBoatListingsSpider(BaseSpider):
         super(SailBoatListingsSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
-        yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
+        yield scrapy.Request(url=self.start_url,
+                             callback=self.parse_listings_page1)
 
     def parse_listings_page1(self, response):
         # parse first page, schedule all other pages at once!

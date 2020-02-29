@@ -1,11 +1,11 @@
-- Rails listing match
-- Decide what to do when there's no price
-- Which thumbnail to use? (rails import)
-- Yoti page depth not working at 200
-- Sailboatdata - get make and model from description.
-- Command line arguments not working
-- Project startup file
--  Set image folder for ember
--  Fix ember errors
-
-  - Change image-preview.js width calculation to include scrollbar
+-   Rails listing match
+-   Decide what to do when there's no price
+-   Which thumbnail to use? (rails import)
+-   Yoti page depth not working at 200
+-   Sailboatdata - get make and model from description.
+-   Command line arguments not working
+-   Project startup file
+-   Set image folder for ember
+-   Fix ember errors
+-   Logging of scrape and warning of errors
+    -   Change image-preview.js width calculation to include scrollbar

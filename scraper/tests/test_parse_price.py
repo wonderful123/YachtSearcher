@@ -1,7 +1,7 @@
 import sys
 import pytest
 sys.path.append("..")
-from scraper.pipelines import parse_price
+from scraper.lib import parse
 
 basictestdata = [(
     "$109",
@@ -56,9 +56,10 @@ basictestdata = [(
 )]
 
 
-@pytest.mark.parametrize("s, formatted_string, currency_code, value", basictestdata)
+@pytest.mark.parametrize("s, formatted_string, currency_code, value",
+                         basictestdata)
 def test_parse_price(s, formatted_string, currency_code, value):
-    data = parse_price(s)
+    data = parse.price(s)
     assert formatted_string == data['formatted']
     assert currency_code == data['code']
     assert value == data['value']

@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import os
 
+
 class Database:
     """Handles simple sqlite database to keep track of urls already visited.
     We want to avoid having to check for changes on each individual listing
@@ -11,7 +12,8 @@ class Database:
     Parameters
     ----------
     db_name : string
-        Use the spider name and it will store the database file in ./data/db_name.db
+        Use the spider name and it will store the database file in
+        ./data/db_name.db
 
     """
 
@@ -75,9 +77,10 @@ class Database:
         self.__conn.commit()
 
     def load_prev_visited(self):
-        """ Returns previously visited listings with flags to know if they have been
-        deep scraped or location scraped
-        :return: Dict with the listing url as the key and the flags set to 'true' or None.
+        """ Returns previously visited listings with flags to know if they have
+        been deep scraped or location scraped
+        :return: Dict with the listing url as the key and the flags set to
+        'true' or None.
         flags are is_deep_scraped or is_location_scraped
         """
         prev_visited_listings = {}
