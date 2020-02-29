@@ -1,6 +1,8 @@
 from scrapy.loader import ItemLoader
 from scraper.spiders.basespider import BaseSpider
-import scrapy, re, json
+import scrapy
+import re
+import json
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from furl import furl
 
@@ -8,9 +10,6 @@ from furl import furl
 class YachthubSpider(BaseSpider):
     name = "yachthub"
     start_url = 'https://yachthub.com/list/search.html?page=1&order_by=added_desc&se_region=all&action=adv_search&new=used&cate=Sail&price_from=1&price_to=100000000'
-
-    def __init__(self, category=None, *args, **kwargs):
-        super(YachthubSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)

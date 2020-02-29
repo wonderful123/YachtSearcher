@@ -9,9 +9,6 @@ class YotiSpider(BaseSpider):
     name = "yoti"
     start_url = 'https://www.yoti.com.au/search-result/1/'
 
-    def __init__(self, category=None, *args, **kwargs):
-        super(YotiSpider, self).__init__(*args, **kwargs)
-
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
 

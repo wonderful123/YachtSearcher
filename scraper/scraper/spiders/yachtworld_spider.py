@@ -1,20 +1,20 @@
 from scraper.spiders.basespider import BaseSpider
-import scrapy, re
+import scrapy
+import re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.utils.markup import remove_tags
 from furl import furl
 
+
 class YachtWorldSpider(BaseSpider):
     name = "yachtworld"
     start_url = 'https://www.yachtworld.com/boats-for-sale/condition-used/type-sail/?fractionalShares=0&page=1'
 
-    def __init__(self, category=None, *args, **kwargs):
-        super(YachtWorldSpider, self).__init__(*args, **kwargs)
-
     def start_requests(self):
-        yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
+        yield scrapy.Request(url=self.start_url,
+                             callback=self.parse_listings_page1)
 
     def parse_listings_page1(self, response):
         # parse first page, schedule all other pages at once!
@@ -23,7 +23,7 @@ class YachtWorldSpider(BaseSpider):
 
         # Each page has 15 listings
         total_listings = response.xpath('//div[@class="page-selector-text"]/text()').get()
-        total_listings = re.search('(?<=of\s).*', total_listings).group(0)
+        total_listings = re.search(r'(?<=of\s).*', total_listings).group(0)
         total_listings = int(total_listings.replace(',', ''))
         total_pages = int(total_listings / 15) + (total_listings % 15 > 0) # Rounded up
 
@@ -49,7 +49,9 @@ class YachtWorldSpider(BaseSpider):
 
         for l in listings:
             location = DefaultLoader(item=Location(), selector=l)
-            location.add_xpath('location', './/div[@class="listing-card-location"]', MapCompose(remove_tags))
+            location.add_xpath('location',
+                               './/div[@class="listing-card-location"]',
+                               MapCompose(remove_tags))
             location.load_item()
 
             price = DefaultLoader(item=Price(), selector=l)
@@ -57,7 +59,8 @@ class YachtWorldSpider(BaseSpider):
             price.load_item()
 
             length = DefaultLoader(item=Length(), selector=l)
-            length.add_xpath('length', './/div[contains(@class,"listing-card-length-year")]/text()')
+            length.add_xpath('length',
+                             './/div[contains(@class,"listing-card-length-year")]/text()')
             length.load_item()
 
             listing = DefaultLoader(item=Listing(), selector=l)
@@ -86,34 +89,43 @@ class YachtWorldSpider(BaseSpider):
     # This is the parser for the deep scraped listing page
     def parse_listing_page(self, response, listing):
         loader = DefaultLoader(item=listing, response=response)
-        loader.add_xpath('hull_material', '//strong[text()="Hull Type"]/../span/text()', re='(?<=: ).*')
-        loader.add_xpath('full_description', '//div[@class="desc"]/p/text()', Join())
+        loader.add_xpath('hull_material',
+                         '//strong[text()="Hull Type"]/../span/text()',
+                         re='(?<=: ).*')
+        loader.add_xpath('full_description', '//div[@class="desc"]/p/text()',
+                         Join())
         loader.add_xpath('image_urls', '//div[@id="galleria"]//a/@href')
-        loader.add_xpath('make', '//strong[text()="Brand"]/../span/text()', re='(?<=: ).*')
-        loader.add_xpath('model', '//strong[text()="Model"]/../span/text()', re='(?<=: ).*')
-        loader.add_value('is_deep_scraped', 'true') # flag item for database
+        loader.add_xpath('make', '//strong[text()="Brand"]/../span/text()',
+                         re='(?<=: ).*')
+        loader.add_xpath('model', '//strong[text()="Model"]/../span/text()',
+                         re='(?<=: ).*')
+        loader.add_value('is_deep_scraped', 'true')  # flag item for database
         listing = loader.load_item()
         return listing
+
 
 def parse_location(s):
     pass
 
+
 def parse_sale_status(s):
-    s = s.replace("Price : " , "") # remove leading tag
-    s = re.sub("(\$|€)\d+(,|.)\d+", "", s) # remove price
-    s = re.sub("- Now", "", s) # remove "- Now"
-    s = re.sub("($i)\s*million", '', s) # remove "Million"
-    s = s.strip().title() # remove extra spaces and title case
-    s = " ".join(s.split()) # normalize spaces
+    s = s.replace("Price : ", "")  # remove leading tag
+    s = re.sub(r"(\$|€)\d+(,|.)\d+", "", s)  # remove price
+    s = re.sub("- Now", "", s)  # remove "- Now"
+    s = re.sub(r"($i)\s*million", '', s)  # remove "Million"
+    s = s.strip().title()  # remove extra spaces and title case
+    s = " ".join(s.split())  # normalize spaces
     return s
+
 
 def parse_title(title):
     # Remove price from title
     title = re.sub(r'(\$|€).*', '', title)
     title = title.strip()
-    items = re.split("\s*-\s*", title)
+    items = re.split(r"\s*-\s*", title)
     title = f"{items[0]} - {items[1]}"
     return title
+
 
 def parse_price(s):
     # Grab the price and add AUD to it if it contains a $ sign
@@ -121,16 +133,17 @@ def parse_price(s):
     s = re.findall(currency_symbols+r'.*', s)
     if s:
         s = s[0]
-        if re.search('\$', s):
+        if re.search(r'\$', s):
             return "AUD " + s
         return s
     return ''
 
+
 def parse_uniq_id(title):
     # Take title such as "GP42 - Elena Nova - SOLD"
     # Return yoti-gp42-elena-nova
-    title = re.sub('(\$|€).*', '', title)
+    title = re.sub(r'(\$|€).*', '', title)
     title = title.strip()
-    items = re.split("\s*-\s*", title)
+    items = re.split(r"\s*-\s*", title)
     uniq_id = f"yoti-{items[0]}-{items[1]}".lower().replace(' ', '-')
     return uniq_id
