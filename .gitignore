@@ -28,6 +28,7 @@
 # Ignore scraper files
 **/scraper/data/*
 **/*pycache*
+**/__pycache__/*
 **/.pytest_cache
 *.pyc
 
