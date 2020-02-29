@@ -4,16 +4,13 @@ import re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from scrapy.loader.processors import MapCompose, Join
-from scrapy.utils.markup import remove_tags
+from w3lib.html import remove_tags
 from furl import furl
 
 
 class SailBoatListingsSpider(BaseSpider):
     name = "sailboatlistings"
     start_url = 'https://www.sailboatlistings.com/cgi-bin/saildata/db.cgi?db=default&uid=default&view_records=1&ID=*&sb=date&so=descend&nh=1'
-
-    def __init__(self, category=None, *args, **kwargs):
-        super(SailBoatListingsSpider, self).__init__(*args, **kwargs)
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url,
