@@ -4,7 +4,7 @@ import re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from scrapy.loader.processors import MapCompose, Join
-from scrapy.utils.markup import remove_tags
+from w3lib.html import remove_tags
 from furl import furl
 
 

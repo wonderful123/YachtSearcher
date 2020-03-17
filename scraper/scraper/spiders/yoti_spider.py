@@ -1,16 +1,19 @@
 from scraper.spiders.basespider import BaseSpider
-import scrapy, re
+import scrapy
+import re
 from scrapy.loader import ItemLoader
 from scraper.items import Location, Price, Listing, Length, DefaultLoader
 from scrapy.loader.processors import MapCompose, Join
 from furl import furl
+
 
 class YotiSpider(BaseSpider):
     name = "yoti"
     start_url = 'https://www.yoti.com.au/search-result/1/'
 
     def start_requests(self):
-        yield scrapy.Request(url=self.start_url, callback=self.parse_listings_page1)
+        yield scrapy.Request(url=self.start_url,
+                             callback=self.parse_listings_page1)
 
     def parse_listings_page1(self, response):
         # parse first page, schedule all other pages at once!
@@ -55,7 +58,7 @@ class YotiSpider(BaseSpider):
 
             listing = DefaultLoader(item=Listing(), selector=l)
             listing.add_xpath('description', 'normalize-space(.//div[@class="text"]/p/text())')
-            listing.add_xpath('year', './/span[contains(@class, "search-result-year")]/text()', re='\d+')
+            listing.add_xpath('year', './/span[contains(@class, "search-result-year")]/text()', re=r'\d+')
             listing.add_xpath('sale_status', './/span[@class="price"]/text()', MapCompose(parse_sale_status))
             listing.add_xpath('title', './/span[@class="title"]/a/text()', MapCompose(parse_title))
             url = response.urljoin(l.xpath(".//span[@class='title']/a/@href").get())
@@ -83,26 +86,29 @@ class YotiSpider(BaseSpider):
         loader.add_xpath('image_urls', '//div[@id="galleria"]//a/@href')
         loader.add_xpath('make', '//strong[text()="Brand"]/../span/text()', re='(?<=: ).*')
         loader.add_xpath('model', '//strong[text()="Model"]/../span/text()', re='(?<=: ).*')
-        loader.add_value('is_deep_scraped', 'true') # flag item for database
+        loader.add_value('is_deep_scraped', 'true')  # flag item for database
         listing = loader.load_item()
         return listing
 
+
 def parse_sale_status(s):
-    s = s.replace("Price : " , "") # remove leading tag
-    s = re.sub("(\$|€)\d+(,|.)\d+", "", s) # remove price
-    s = re.sub("- Now", "", s) # remove "- Now"
-    s = re.sub("($i)\s*million", '', s) # remove "Million"
-    s = s.strip().title() # remove extra spaces and title case
-    s = " ".join(s.split()) # normalize spaces
+    s = s.replace("Price : ", "")  # remove leading tag
+    s = re.sub(r"(\$|€)\d+(,|.)\d+", "", s)  # remove price
+    s = re.sub("- Now", "", s)  # remove "- Now"
+    s = re.sub(r"($i)\s*million", '', s)  # remove "Million"
+    s = s.strip().title()  # remove extra spaces and title case
+    s = " ".join(s.split())  # normalize spaces
     return s
+
 
 def parse_title(title):
     # Remove price from title
     title = re.sub(r'(\$|€).*', '', title)
     title = title.strip()
-    items = re.split("\s*-\s*", title)
+    items = re.split(r"\s*-\s*", title)
     title = f"{items[0]} - {items[1]}"
     return title
+
 
 def parse_price(s):
     # Grab the price and add AUD to it if it contains a $ sign
@@ -110,16 +116,17 @@ def parse_price(s):
     s = re.findall(currency_symbols+r'.*', s)
     if s:
         s = s[0]
-        if re.search('\$', s):
+        if re.search(r'\$', s):
             return "AUD " + s
         return s
     return ''
 
+
 def parse_uniq_id(title):
     # Take title such as "GP42 - Elena Nova - SOLD"
     # Return yoti-gp42-elena-nova
-    title = re.sub('(\$|€).*', '', title)
+    title = re.sub(r'(\$|€).*', '', title)
     title = title.strip()
-    items = re.split("\s*-\s*", title)
+    items = re.split(r"\s*-\s*", title)
     uniq_id = f"yoti-{items[0]}-{items[1]}".lower().replace(' ', '-')
     return uniq_id

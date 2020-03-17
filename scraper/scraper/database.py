@@ -15,6 +15,10 @@ class Database:
         Use the spider name and it will store the database file in
         ./data/db_name.db
 
+    Database fields
+    ---------------
+    is_deep_scraped
+    is_location_scraped
     """
 
     def __init__(self, db_name):

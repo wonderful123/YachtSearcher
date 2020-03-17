@@ -65,7 +65,7 @@ class Listing(scrapy.Item):
     make = scrapy.Field()
     model = scrapy.Field()
     year = scrapy.Field(input_processor=MapCompose(str.strip))
-    location = scrapy.Field()
+    location = scrapy.Field(output_process=TakeFirst())
     price = scrapy.Field()
     type = scrapy.Field()
     first_found = scrapy.Field()

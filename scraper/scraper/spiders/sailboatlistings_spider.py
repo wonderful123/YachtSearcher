@@ -53,7 +53,7 @@ class SailBoatListingsSpider(BaseSpider):
             price.load_item()
 
             length = DefaultLoader(item=Length(), selector=l)
-            length.add_xpath('length', './/span[contains(text(),"Length:")]/../../td[2]/span[1]/text()')
+            length.add_xpath('length', './/span[contains(text(),"Length:")]/../../td[2]/span[1]/text()', MapCompose(parse_length))
             length.load_item()
 
             listing = DefaultLoader(item=Listing(), selector=l)
@@ -66,8 +66,8 @@ class SailBoatListingsSpider(BaseSpider):
                 listing.add_value('thumbnail_url', thumbnail_url)
             listing.add_xpath('year', './/span[contains(text(),"Year:")]/../../td[2]/span[1]/text()')
             listing.add_xpath('type', './/span[contains(text(),"Type:")]/../../td[2]/span[1]/text()')
-            listing.add_xpath('hull_material', './/span[contains(text(),"Hull:")]/../../td[2]/span[1]/text()', re=('.*(?=\s)'))
-            listing.add_xpath('first_found', '..//span[@class="details"]/text()', re='(?<=Added\s).*(?=\s)')
+            listing.add_xpath('hull_material', './/span[contains(text(),"Hull:")]/../../td[2]/span[1]/text()', re=(r'.*(?=\s)'))
+            listing.add_xpath('first_found', '..//span[@class="details"]/text()', re=r'(?<=Added\s).*(?=\s)')
             title = l.xpath('.//a[@class="sailheader"]/text()').get()
             url_id = furl(url).path.segments[-1]
             uniq_id = f"sailboatlistings-{title}-{url_id}".replace(' ', '-').lower()
@@ -89,6 +89,12 @@ class SailBoatListingsSpider(BaseSpider):
     # This is the parser for the deep scraped listing page
     def parse_listing_page(self, response, listing):
         loader = DefaultLoader(item=listing, response=response)
+
+        # Commented out because sometimes the location isn't in the description but is in the page
+        loader.add_xpath('location', '//td/div/font/text()[contains(.,"Location")]/../../../td[4]/div/font/text()')
+        # location = DefaultLoader(item=Location(), response=response)
+        # location.load_item()
+
         loader.add_xpath('description', '//td/font/text()[contains(.,"Description")]/../../../td[2]/font/text()', Join())
         loader.add_xpath('full_description', '//td/font/text()[contains(.,"Description")]/../../../td[2]/font/text()', Join())
         # Also add equipment list
@@ -101,7 +107,14 @@ class SailBoatListingsSpider(BaseSpider):
         make_model = response.xpath('//font[@size="3"]/..//font[@size="4"]/text()').get().split('\n')
         loader.add_value('make', make_model[1])
         loader.add_value('model', make_model[2])
-        loader.add_value('is_deep_scraped', 'true') # flag item for database
+        loader.add_value('is_deep_scraped', 'true')  # flag item for database
         listing = loader.load_item()
 
         return listing
+
+
+# Get some weird ones like 50'' or 29'8'
+def parse_length(s):
+    length = re.search(r"\d+'?(\d+)", s)
+    s = length.group(0) if length else s
+    return s

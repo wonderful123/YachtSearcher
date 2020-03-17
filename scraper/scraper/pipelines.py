@@ -6,6 +6,8 @@ from .lib import parse
 from scraper.database import Database
 from scrapy.pipelines.images import ImagesPipeline
 import scrapy
+import logging
+from pprint import pformat
 
 
 class ScraperPipeline(object):
@@ -20,8 +22,13 @@ class ScraperPipeline(object):
             item['price'] = parse.price(item['price'])
 
         if item.get('location'):
-            item['location'] = item['location'] \
-                .get_collected_values('location')[0]
+            values = item['location'].get_collected_values('location')
+            logging.warning(values)
+            if values != []:
+                item['location'] = values[0]
+            else:
+                item['location'] = ''
+
             # parse location with API - this can be set to false for testing
             if spider.scrape_location == "true":
                 location_data = parse.location(item['location'])
