@@ -1,3 +1,7 @@
+.relative-wrapper {
+  position: relative;
+}
+
 .filter-bar-container {
   color: $light-grey;
   font-size: 1.4rem;
@@ -37,86 +41,50 @@
   input.search-input::placeholder {
     color: $light-grey;
   }
-}
 
-.filter-button {
-  cursor: pointer;
-  border: 0.1rem solid lightgrey;
-  border-radius: 0.4rem;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-
-  .dropdown-icon {
-    width: 1rem;
-    margin-left: 0.3rem;
-    margin-bottom: -0.2rem;
-  }
-}
-
-.selected {
-  color: $teal;
-  border: 0.2rem solid $teal;
-}
-
-.modal-container {
-  margin-top: 2rem;
-  z-index: 100;
-  position: absolute;
-  width: 400px;
-  background: white;
-  border-radius: $border-radius;
-  padding: 1.5rem;
-  box-shadow: 0 0.1rem 3rem 0 rgba(0,0,0,.15);
-  display: flex;
-  flex-direction: column;
-  align-content: space-between;
-
-  .noUi-horizontal {
-    margin: 4.5rem 2rem 2.5rem 1.5rem;
-  }
-
-  a.reset {
-    color: $light-grey;
-  }
-
-  .content {
-    padding: 1.5rem 0 2rem;
-
-    .min-to-max {
-      display: flex;
-      align-content: space-between;
-      vertical-align: middle;
-
-      input {
-        width: 100%;
-        text-align: center;
-        color: $light-grey;
-
-        &::placeholder {
-          color: $light-grey;
-        }
-
-        &:focus {
-          border-color: $teal;
-          outline: 0;
-        }
-      }
-
-      span {
-        padding: 0 2rem;
-        align-self: center;
-      }
-    }
-  }
-
-  .bottom {
+  .filter-wrapper {
     display: flex;
-    justify-content: center;
-    border-top: 1px solid lightgrey;
-    padding-top: 10px;
+    flex-direction: column;
+    padding-right: 1rem;
 
-    a {
-      color: $teal;
+    .ui-modal {
+      position: absolute;
+      top: 10rem;
+
+      .noUi-horizontal {
+        margin: 4.5rem 1.5rem 2.5rem 1.5rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem 0 2rem;
+        overflow: visible;
+
+        .min-to-max {
+          display: flex;
+          align-content: space-between;
+          vertical-align: middle;
+
+          input {
+            width: 100%;
+            text-align: center;
+            color: $light-grey;
+
+            &::placeholder {
+              color: $light-grey;
+            }
+
+            &:focus {
+              border-color: $teal;
+              outline: 0;
+            }
+          }
+
+          span {
+            padding: 0 2rem;
+            align-self: center;
+          }
+        }
+      }
     }
   }
 }
