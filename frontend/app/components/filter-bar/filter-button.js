@@ -1,13 +1,7 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { addAffix } from 'frontend/utils/formatting';
 
 export default class FilterBarComponent extends Component {
-  @action
-  toggleModal() {
-    this.args.toggleFilterButton();
-  }
-
   get iconDirection() {
     return this.args.filterComponent.isOpen ? 'chevron-up' : 'chevron-down';
   }
