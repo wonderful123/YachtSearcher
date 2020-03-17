@@ -1,26 +1,29 @@
 <nav class="nav-bar">
+  <div class="nav-left">
 
-  <div class="logo">
-    <img src="assets/logo-v2-small.png" width="32" height="35" alt="logo">
+    <div class="logo">
+      <img src="assets/logo-v2-small.png" width="32" height="35" alt="logo">
+    </div>
+
+    <ul class="links">
+      <li>
+        <LinkTo @route="boats">
+          Boats
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="map">
+          Map
+        </LinkTo>
+      </li>
+      <li>
+        <LinkTo @route="boat-images">
+          Images
+        </LinkTo>
+      </li>
+    </ul>
+
   </div>
-
-  <ul class="links">
-    <li>
-      <LinkTo @route="boats">
-        Boats
-      </LinkTo>
-    </li>
-    <li>
-      <LinkTo @route="map">
-        Map
-      </LinkTo>
-    </li>
-    <li>
-      <LinkTo @route="boat-images">
-        Images
-      </LinkTo>
-    </li>
-  </ul>
 
   <div class="nav-right">
     <FavouriteList />
