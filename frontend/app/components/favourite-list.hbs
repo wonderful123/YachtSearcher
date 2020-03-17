@@ -2,12 +2,14 @@
   @onClick={{this.toggleModal}}
   class="favourites-dropdown"
 >
-  {{svg-jar "star" class="icon"}} {{this.currentCount}} boats
+  {{svg-jar "star" class="icon"}}
+  <span class="count">{{this.currentCount}} boats</span>
 </Ui::DropdownButton>
 
 <Ui::Modal
   @isShown={{this.isModalOpen}}
   @close={{this.toggleModal}}
+  @hideBackground=true
   as |Modal|
 >
 
@@ -37,7 +39,7 @@
   </Modal.body>
 
   <Modal.footer @close={{this.toggleModal}}>
-    Footer
+    Done
   </Modal.footer>
 
 </Ui::Modal>
