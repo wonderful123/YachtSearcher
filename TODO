@@ -8,15 +8,13 @@
 
 - Add cookie session. Needs data storage.
 
-- Header redesign
 - Look for sorting design
 - Look for number of boats found design
-- Handle if database is down
 - Lazy loading performance
 - Scrolling thumbnail
 - Exclusion filter
-- Download more boats
-- Make layout responsive
 - Clean old css code out of main file
-- Tidy filterbar
-- Responsive filterbar
+- Responsive filter modal handling
+
+- Handle zero price listings in yoti. Mark status as sold?
+- Handle import if not listed and doesn't have a price
