@@ -1,23 +1,32 @@
-<div class="filter-button-container">
-
-  <div class="filter-button filter-dropdown no-select {{if @filterComponent.isOpen "selected"}}"
-    {{on "click" (stop-propagation this.toggleModal)}}
-  >
+<div class="filter-wrapper">
+  <Ui::DropdownButton @onClick={{@toggleModal}} @isSelected={{@filterComponent.isOpen}}>
     {{this.minMaxLabel}}
-    {{svg-jar this.iconDirection class="icon dropdown-icon"}}
-  </div>
+  </Ui::DropdownButton>
 
-  <FilterBar::Modal
-    @title={{@filterComponent.title}}
-    @isOpen={{@filterComponent.isOpen}}
-    @resetFilter={{@resetFilter}}
-    @closeModal={{this.toggleModal}}
+  <Ui::Modal
+    @isShown={{@filterComponent.isOpen}}
+    @close={{@toggleModal}}
+    as |Modal|
   >
-    {{component
-      @filterComponent.component
-      filterComponent=@filterComponent
-      updateFilter=@updateFilter
-    }}
-  </FilterBar::Modal>
 
+    <Modal.header
+      @linkTitle="reset"
+      @linkAction={{@resetFilter}}
+    >
+      {{@filterComponent.title}}
+    </Modal.header>
+
+    <Modal.body>
+      {{component
+        @filterComponent.component
+        filterComponent=@filterComponent
+        updateFilter=@updateFilter
+      }}
+    </Modal.body>
+
+    <Modal.footer @close={{@toggleModal}}>
+      Done
+    </Modal.footer>
+
+  </Ui::Modal>
 </div>
