@@ -51,8 +51,8 @@ class Filter {
     this.year = new FilterValue('year', this.getMinMax(year));
     this.price = new FilterValue('price', this.getMinMax(price));
     let lengthMinMax = this.getMinMax(length);
-    if (lengthMinMax[0]) lengthMinMax.min /= 12; // Work in feet not total inches
-    if (lengthMinMax[1]) lengthMinMax.max /= 12;
+    if (lengthMinMax[0]) lengthMinMax[0] /= 12; // Work in feet not total inches
+    if (lengthMinMax[1]) lengthMinMax[1] /= 12;
     this.length = new FilterValue('length', lengthMinMax);
   }
 }
