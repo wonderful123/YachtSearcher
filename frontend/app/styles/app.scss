@@ -2,6 +2,8 @@
 @import "mixins";
 @import "utils";
 @import "swiper.min"; // Carousel
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 @import "components/ui";
 @import "components/navbar";
 @import "components/filter-bar";

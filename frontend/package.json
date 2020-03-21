@@ -70,6 +70,7 @@
     "edition": "octane"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.4.1",
     "swiper": "^5.3.1"
   }
 }

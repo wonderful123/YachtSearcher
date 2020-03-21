@@ -14,10 +14,27 @@ $height-aspect: 70%;
   position: relative;
   padding-bottom: $height-aspect;
 
+  .glide__slides {
+    margin: 0;
+  }
+
+  .glide__arrow {
+    box-shadow: none;
+    border: none;
+  }
+
+  .glide__slide img {
+    transition: all 0.3s;
+  }
+
+  .glide__slide--active {
+    z-index: 1000;
+  }
+
   &:hover {
     box-shadow: 0 0 1rem 0.2rem rgba(0,0,0,.3);
 
-    .swiper-slide-active img {
+    .glide__slide img {
       transform: scale(1.05);
     }
 
