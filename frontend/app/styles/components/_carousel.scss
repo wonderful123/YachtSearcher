@@ -14,6 +14,11 @@ $height-aspect: 70%;
   position: relative;
   padding-bottom: $height-aspect;
 
+  ul, .swiper-container {
+    display: flex;
+    align-items: center;
+  }
+
   .glide__slides {
     margin: 0;
   }
