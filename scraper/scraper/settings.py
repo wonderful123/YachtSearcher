@@ -15,9 +15,9 @@ BOT_NAME = 'scraper'
 SPIDER_MODULES = ['scraper.spiders']
 NEWSPIDER_MODULE = 'scraper.spiders'
 
-LOG_STDOUT = True
-LOG_FILE = 'crawl.log'
-LOG_LEVEL = logging.WARNING
+# LOG_STDOUT = True
+# LOG_FILE = 'crawl.log'
+# LOG_LEVEL = logging.WARNING
 
 # Crawl responsibly by identifying yourself (and your website) on the
 # user-agent

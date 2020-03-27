@@ -23,7 +23,6 @@ class ScraperPipeline(object):
 
         if item.get('location'):
             values = item['location'].get_collected_values('location')
-            logging.warning(values)
             if values != []:
                 item['location'] = values[0]
             else:
