@@ -6,6 +6,7 @@
   - Automate scraping schedule
   - Geocode error handling
   - Error or website structure change handling and notification
+  - BUG: parse-price: THB ß5,100,000
 
 -- FRONTEND
   - Internal server error on routes outside root
