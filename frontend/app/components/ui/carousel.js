@@ -1,30 +1,20 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import Swiper from 'swiper';
+import Glide from '@glidejs/glide'
 
 export default class CarouselComponent extends Component {
   get imageCount() {
     return this.args.images.length;
   }
 
+  get navElements() {
+    return new Array(this.imageCount);
+  }
+
   @action
-  registerSwiper(element) {
-    new Swiper(element.querySelector('.swiper-container'), {
-      spaceBetween: 0,
-      loop: true,
-      loopedSlides: this.imageCount, //looped slides should be the same
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        dynamicBullets: true,
-      },
-      preloadImages: false,
-      lazy: {
-        loadPrevNext: true,
-      },
-    });
+  registerGlide(element) {
+    new Glide(element.querySelector('.carousel'), {
+      gap: 0,
+    }).mount();
   }
 }

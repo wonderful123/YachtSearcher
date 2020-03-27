@@ -5,7 +5,7 @@
     <div class="day">{{this.date.day}}</div>
   </div>
 
-  <Ui::Carousel2 @images={{@boat.images}}>
+  <Ui::Carousel @images={{@boat.images}}>
 
     <div class="carousel-bubble price">{{format-currency @boat.price @boat.priceSymbol}}</div>
     <div class="carousel-bubble year-length">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
@@ -14,7 +14,7 @@
       <Ui::FavouriteToggle @boat={{@boat}} />
     </div>
 
-  </Ui::Carousel2>
+  </Ui::Carousel>
 
   <div class="title">
     {{@boat.make}} {{@boat.model}}
