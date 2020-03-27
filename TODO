@@ -1,20 +1,24 @@
 # TODO #
-- [ ] Add regions
-- [ ] add yachtworld scraper
-- [ ] Geocode error handling
-- [ ] Deal with different currencies
-- [ ] Reporting for website structure changes in spider
-- [ ] Some lengths are incorrect. Way too big
 
-- Add cookie session. Needs data storage.
+-- SCRAPER
+  - Handle import if not listed and doesn't have a price
+  - Handle zero price listings in yoti. Mark status as sold?
+  - Automate scraping schedule
+  - Geocode error handling
+  - Error or website structure change handling and notification
 
-- Look for sorting design
-- Look for number of boats found design
-- Lazy loading performance
-- Scrolling thumbnail
-- Exclusion filter
-- Clean old css code out of main file
-- Responsive filter modal handling
+-- FRONTEND
+  - Internal server error on routes outside root
+  - Cookie sessions
+  - Sorting
+  - Lazy loading
+  - Panning thumbnail
+  - Exclusion filter
+  - Remove old css code
+  - Responsive filters
+  - Only 1 modal open
+  - Responsive favourites
+  - Toaster message spacing
+  - Range slider: when setting one then the other is set even if no value selected
 
-- Handle zero price listings in yoti. Mark status as sold?
-- Handle import if not listed and doesn't have a price
+-- RAILS
