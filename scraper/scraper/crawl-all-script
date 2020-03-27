@@ -1,0 +1,7 @@
+#!/bin/bash
+# set python version
+source venv/bin/activate
+cd /home/smoothcontrol/public_html/YachtSearcher/scraper
+./scrapy crawl yachthub >> ~/scrapy-crawl.log 2>&1
+./scrapy crawl yoti >> ~/scrapy-crawl.log 2>&1
+./scrapy crawl sailboatlistings >> ~/scrapy-crawl.log 2>&1
