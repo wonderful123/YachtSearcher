@@ -1,7 +1,13 @@
 #!/bin/bash
+
 # set python version
-source venv/bin/activate
-cd /home/smoothcontrol/public_html/YachtSearcher/scraper
-./scrapy crawl yachthub >> ~/scrapy-crawl.log 2>&1
-./scrapy crawl yoti >> ~/scrapy-crawl.log 2>&1
-./scrapy crawl sailboatlistings >> ~/scrapy-crawl.log 2>&1
+source venv/bin/activate;
+
+crawl() {
+  echo "========= Starting $1 crawl =========="
+  scrapy crawl $1 | tee -a "crawl-$1.log";
+}
+
+crawl yoti
+crawl sailboatlistings
+crawl yachthub
