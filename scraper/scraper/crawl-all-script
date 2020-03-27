@@ -11,3 +11,5 @@ crawl() {
 crawl yoti
 crawl sailboatlistings
 crawl yachthub
+
+echo =================== ALL DONE ====================
