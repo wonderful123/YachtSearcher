@@ -5,6 +5,12 @@ $bubble-padding: 0.8rem;
   margin: 1rem 1.5rem;
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+  .boats-found {
+    color: $light-grey;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+  }
 }
 
 .boat-listing {
