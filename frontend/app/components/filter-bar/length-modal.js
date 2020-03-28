@@ -16,8 +16,8 @@ export default class FilterBarLengthModalComponent extends Component {
 
   @action
   onRangeChange(values) {
-    const min = (values[0] === this.rangeMin) ? '' : values[0].toFixed(0);
-    const max = (values[1] === this.rangeMax) ? '' : values[1].toFixed(0);
+    const min = (values[0] === this.args.filterComponent.rangeMin) ? '' : values[0].toFixed(0);
+    const max = (values[1] === this.args.filterComponent.rangeMax) ? '' : values[1].toFixed(0);
 
     const type = this.args.filterComponent.type;
     this.args.updateFilter(type, 'min', min);
