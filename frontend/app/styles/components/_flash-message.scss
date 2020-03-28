@@ -1,27 +1,27 @@
 .flash-message-container {
-  position: absolute;
-  top: 5rem;
+  position: fixed;
+  top: 4.5rem;
   right: 1rem;
-  // margin: 20px;
   z-index: 999999;
 }
 
 .flash-message {
+  margin-bottom: 1rem;
   opacity: 0;
   transition: all 300ms ease;
   position: relative;
   pointer-events: auto;
   overflow: hidden;
-  padding: 15px 15px 15px 50px;
+  padding: 1.5rem 1.5rem 1.5rem 5rem;
   width: 250px;
-  -moz-border-radius: 3px 3px 3px 3px;
-  -webkit-border-radius: 3px 3px 3px 3px;
-  border-radius: 3px 3px 3px 3px;
-  background-position: 15px center;
+  -moz-border-radius: $border-radius;
+  -webkit-border-radius: $border-radius;
+  border-radius: $border-radius;
+  background-position: 1.5rem center;
   background-repeat: no-repeat;
-  box-shadow: 0 0 12px #999999;
+  box-shadow: 0 0 1rem #999999;
   color: #FFFFFF;
-  background-position: left 15px center;
+  background-position: left 1.5rem center;
   border: none;
 
   &.alert {
@@ -33,11 +33,11 @@
 
     &.active {
       opacity: 1;
-      left: 0px;
+      left: 0;
 
       &.exiting {
         opacity: 0;
-        left: 300px;
+        left: 30rem;
       }
     }
   }
@@ -55,19 +55,19 @@
 
 @media all and (max-width: 240px) {
   .flash-message {
-    padding: 8px 8px 8px 50px;
+    padding: 0.8rem 0.8rem 0.8rem 5rem;
     width: 11rem;
   }
 }
 @media all and (min-width: 241px) and (max-width: 480px) {
   .flash-message {
-    padding: 8px 8px 8px 50px;
+    padding: 0.8rem 0.8rem 0.8rem 5rem;
     width: 18rem;
   }
 }
 @media all and (min-width: 481px) and (max-width: 768px) {
   .flash-message {
-    padding: 15px 15px 15px 50px;
+    padding: 0.8rem 0.8rem 0.8rem 5rem;
     width: 25rem;
   }
 }
