@@ -26,6 +26,19 @@ $height-aspect: 70%;
   .glide__arrow {
     box-shadow: none;
     border: none;
+
+    .icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  .glide__arrow--right {
+    right: 0.5rem;
+  }
+
+  .glide__arrow--left {
+    left: 0.5rem;
   }
 
   .glide__slide img {
