@@ -15,11 +15,12 @@
   - Lazy loading
   - Panning thumbnail
   - Exclusion filter
-  - Remove old css code
   - Responsive filters
   - Only 1 modal open
   - Responsive favourites
-  - Toaster message spacing
-  - Range slider: when setting one then the other is set even if no value selected
+  - Carousel navigation buttons
+  - Carousel zoom on slide
+  - Clear all filters
+  - Only update filter when done clicked
 
 -- RAILS
