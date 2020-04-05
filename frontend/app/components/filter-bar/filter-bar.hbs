@@ -8,8 +8,13 @@
     class="no-border search-input no-select"
   />
 
+  <FilterBar::AllOptionsButton
+    @filterComponents={{this.filterComponents}}
+    @updateFilter={{@updateFilter}}
+  />
+
   {{#each this.filterComponents as |fc|}}
-    <FilterBar::FilterButton
+    <FilterBar::RangeFilterButton
       @filterComponent={{fc}}
       @updateFilter={{@updateFilter}}
       @resetFilter={{action (fn this.resetFilter fc)}}
