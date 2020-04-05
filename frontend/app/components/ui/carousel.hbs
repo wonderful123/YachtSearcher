@@ -1,5 +1,5 @@
-<div {{did-insert (action this.registerGlide)}}>
-  <div class="carousel">
+<div >
+  <div class="carousel" {{did-insert (action this.registerGlide)}}>
     <div class="swiper-container">
       <div class="swiper-wrapper">
 
@@ -21,8 +21,8 @@
       <button class="glide__arrow glide__arrow--right" data-glide-dir=">">&gt;</button>
     </div>
 
-    <div class="glide__bullets" data-glide-el="controls[nav]">
-      {{#each @images as |image n|}}
+    <div {{ref this.setupBullets}} class="glide__bullets" data-glide-el="controls[nav]">
+      {{#each this.navBullets as |bullet n|}}
         <button class="glide__bullet" data-glide-dir="={{n}}"></button>
       {{/each}}
     </div>
