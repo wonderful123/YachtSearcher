@@ -18,9 +18,8 @@
   - Responsive filters
   - Only 1 modal open
   - Responsive favourites
-  - Carousel navigation buttons
-  - Carousel zoom on slide
   - Clear all filters
   - Only update filter when done clicked
+  - Extra boat image in list
 
 -- RAILS
