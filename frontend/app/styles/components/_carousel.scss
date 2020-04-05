@@ -14,7 +14,7 @@ $height-aspect: 70%;
   position: relative;
   padding-bottom: $height-aspect;
 
-  ul, .swiper-container {
+  ul, .carousel-container {
     display: flex;
     align-items: center;
   }
@@ -98,18 +98,13 @@ $height-aspect: 70%;
     }
   }
 
-  .swiper-container {
+  .carousel-container {
     position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
   }
 }
 
-.swiper-slide-active img {
-  transition: transform 0.3s;
-  transform-origin: center center;
-}
-
-.swiper-slide {
+.carousel-slide {
   border-radius: $border-radius;
 
   img {
@@ -117,10 +112,4 @@ $height-aspect: 70%;
     height: 100%;
     object-fit: cover;
   }
-}
-
-.swiper-button-white {
-  transition: opacity 0.3s;
-  opacity: 0;
-  padding: 0.5rem;
 }
