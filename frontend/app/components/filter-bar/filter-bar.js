@@ -35,8 +35,7 @@ class FilterComponent {
   }
 }
 
-const RANGE_FILTERS = [
-  {
+const RANGE_FILTERS = [{
     type: 'price',
     prefix: '$',
     range: { min: 0, max: 500000 },
@@ -82,5 +81,10 @@ export default class FilterBarComponent extends Component {
   resetFilter(component) {
     this.args.updateFilter(component.type, 'min', '');
     this.args.updateFilter(component.type, 'max', '');
+  }
+
+  @action
+  resetAllFilters() {
+
   }
 }
