@@ -45,14 +45,6 @@ $height-aspect: 70%;
     transition: all 0.3s;
   }
 
-  .glide__slide--active {
-    z-index: 1000;
-  }
-
-  .glide__bullets--active {
-    background-color: none;
-  }
-
   // Hidden elements until hover
   .glide__arrow, .glide__bullets {
     opacity: 0;
@@ -83,8 +75,6 @@ $height-aspect: 70%;
       transition: transform 300ms;
     }
   }
-
-
 
   &:hover {
     box-shadow: 0 0 1rem 0.2rem rgba(0,0,0,.3);
