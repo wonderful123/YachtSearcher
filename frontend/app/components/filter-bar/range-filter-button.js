@@ -1,11 +1,7 @@
 import Component from '@glimmer/component';
 import { addAffix } from 'frontend/utils/formatting';
 
-export default class FilterBarComponent extends Component {
-  get iconDirection() {
-    return this.args.filterComponent.isOpen ? 'chevron-up' : 'chevron-down';
-  }
-
+export default class RangeFilterButton extends Component {
   get minMaxLabel() {
     const f = this.args.filterComponent;
 

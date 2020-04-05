@@ -1,10 +1,13 @@
 <div class="filter-wrapper">
-  <Ui::DropdownButton @onClick={{@toggleModal}} @isSelected={{@filterComponent.isOpen}}>
+  <Ui::DropdownButton
+    @onClick={{@toggleModal}}
+    @isSelected={{@filterComponent.isOpen}}
+  >
     {{this.minMaxLabel}}
   </Ui::DropdownButton>
 
   <Ui::Modal
-    @isShown={{@filterComponent.isOpen}}
+    @isOpen={{@filterComponent.isOpen}}
     @close={{@toggleModal}}
     as |Modal|
   >
