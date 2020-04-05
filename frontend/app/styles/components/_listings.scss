@@ -65,8 +65,8 @@ $bubble-padding: 0.8rem;
     }
 
     &::before {
-      top: -85%;
-      left: -90%;
+      top: -3rem;
+      left: -1rem;
     }
   }
 
@@ -132,7 +132,7 @@ $bubble-padding: 0.8rem;
     }
 
     &::before {
-      left: -9rem;
+      right: 0;
       top: 2.2rem;
     }
   }
