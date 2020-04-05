@@ -14,7 +14,7 @@ export default class CarouselComponent extends Component {
   @action
   registerGlide(element) {
     this.glide = new Glide(element, {
-      gap: 0,
+      gap: '10%',
     }).mount();
 
     this.glide.on('run', this.move);
