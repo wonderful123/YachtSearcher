@@ -1,0 +1,34 @@
+<div class="filter-wrapper">
+  <Ui::DropdownButton
+    @onClick={{this.toggleModal}}
+  >
+    {{svg-jar "options" class="icon options-icon"}} All Options
+  </Ui::DropdownButton>
+
+  <Ui::Modal
+    @isShown={{this.isShown}}
+    @onClose={{this.toggleModal}}
+    as |Modal|
+  >
+
+    <Modal.body>
+      <div class="modal-button">Reset all filters</div>
+
+      <div>
+        <label>Date First Found Within...</label>
+        <ul class="modal-selection">
+          <li>7 days</li>
+          <li>1 month</li>
+          <li>Older than 3 months</li>
+          <li>Older than 6 months</li>
+        </ul>
+      </div>
+
+    </Modal.body>
+
+    <Modal.footer @close={{this.toggleModal}}>
+      Done
+    </Modal.footer>
+
+  </Ui::Modal>
+</div>
