@@ -1,0 +1,42 @@
+.glide__slides {
+  margin: 0;
+}
+
+.selector-bar {
+  background-color: $bar-background-color;
+  display: flex;
+  padding: 2rem 1rem;
+  transition: transform 150ms ease;
+  transform: translateY(100%);
+
+  &.slide-up {
+    transform: translateY(0) !important;
+  }
+
+  .selector-button {
+    cursor: pointer;
+    user-select: none;
+    border-radius: 1rem;
+    padding: 0.4rem 1rem;
+    background-color: #f5f5f5;
+    margin: 0 1rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.07rem;
+    transition: background-color 200ms linear, color 100ms linear;
+
+    &.scale-in {
+      @include scale-bounce-bottom(0.5, 1rem, 3rem);
+    }
+
+    &.active {
+      background-color: $button-active-color;
+      border-color: $button-active-color;
+      color: white;
+      box-shadow: 0 10px 3px -6px lighten($button-active-color, 40%);
+    }
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+}

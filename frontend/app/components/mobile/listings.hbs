@@ -1,0 +1,18 @@
+<section class="listings">
+  {{#if @boatsFound}}
+    <div class="boats-found">
+      {{@boatsFound}} boats were found
+    </div>
+
+    {{#each @boats as |boat|}}
+      <Mobile::Listing @boat={{boat}} />
+    {{/each}}
+
+  {{else}}
+
+    <div class="boats-found">
+      No matching boats found
+    </div>
+
+  {{/if}}
+</section>

@@ -13,6 +13,33 @@
   }
 }
 
+%button {
+  cursor: pointer;
+  white-space: nowrap;
+  border: 0.1rem solid lightgrey;
+  border-radius: $border-radius;
+  padding: 0.5rem 1rem;
+  user-select: none;
+}
+
+%menu-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+%hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.visible {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+  transition-duration: 150ms;
+}
+
 .mask-content {
   opacity: 0.1;
 }

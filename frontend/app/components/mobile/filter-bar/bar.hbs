@@ -1,0 +1,25 @@
+<div class="filter-bar">
+
+  <Mobile::FilterBar::Selection
+    @filterComponents={{this.filterComponents}}
+    @updateFilter={{@updateFilter}}
+    @isShown={{@isShown}}
+  />
+
+  <div class="filter-actions">
+
+    <div class="reset {{if @isShown "bounce-up"}}" {{on "click" this.resetAll}}>reset all</div>
+
+    <div class="close {{if @isShown "circle-out"}}" {{on "click" @toggleFilterMenu}}>
+      {{#if @isShown}}
+        {{svg-jar "down-arrows" class="icon"}}
+      {{else}}
+        {{svg-jar "up-arrows" class="icon"}}
+      {{/if}}
+    </div>
+
+    <div class="apply {{if @isShown "bounce-up"}}">apply</div>
+
+  </div>
+
+</div>

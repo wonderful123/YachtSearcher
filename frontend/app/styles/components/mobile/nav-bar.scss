@@ -1,0 +1,32 @@
+.nav-bar {
+  @extend %menu-text;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  .menu {
+    justify-self: start;
+  }
+
+  .filter-button {
+    @extend %button;
+    justify-self: end;
+
+    background: radial-gradient(
+      circle at center,
+      $button-active-color 64%,
+      transparent 65%,
+      transparent 100%) no-repeat;
+    background-size: 0% 0%;
+    transition: background-size 100ms linear;
+    background-position: center center;
+
+    &.active {
+      color: white;
+      border-color: $button-active-color;
+      background-size: 200% 200%;
+      box-shadow: 0 10px 3px -6px lighten($button-active-color, 40%);
+    }
+  }
+}

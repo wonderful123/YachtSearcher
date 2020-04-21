@@ -1,0 +1,138 @@
+@mixin scale-bounce-bottom($exaggeration, $bounce-size, $start-offset) {
+  animation-name: scale-bounce-bottom;
+  animation-duration: 500ms;
+  animation-fill-mode: both;
+
+  @keyframes scale-bounce-bottom {
+    0% {
+      transform: scale(0) translateY($start-offset);
+    }
+
+    40% {
+      transform: scale(1 + (1.22 - 1) * $exaggeration) translateY($bounce-size * -0.3227);
+    }
+
+    65% {
+      transform: scale(1 + (0.90 - 1) * $exaggeration) translateY($bounce-size * 0.1312);
+    }
+
+    85% {
+      transform: scale(1 + (1.05 - 1) * $exaggeration) translateY($bounce-size * -0.0763);
+    }
+
+    100% {
+      transform: scale(1) translateY($bounce-size * 0);
+    }
+  }
+}
+
+////////////////////////////////////
+
+@mixin bounce-in-keyframes($property, $bounce-size, $start-offset) {
+  animation-name: bounce-in-#{$property};
+
+  @keyframes bounce-in-#{$property} {
+    0% {
+      transform: #{$property}($start-offset);
+    }
+
+    20% {
+      transform: #{$property}($bounce-size * -0.3227);
+    }
+
+    45% {
+      transform: #{$property}($bounce-size * 0.1312);
+    }
+
+    65% {
+      transform: #{$property}($bounce-size * -0.0763);
+    }
+
+    100% {
+      transform: #{$property}($bounce-size * 0);
+    }
+  }
+}
+
+@mixin bounce-in-animation($property, $bounce-size, $start-offset) {
+  @include bounce-in-keyframes($property, $bounce-size, $start-offset);
+  animation-duration: 700ms !important;
+  animation-fill-mode: both;
+}
+
+//////////////////////////////////////////
+
+@mixin bounce-up {
+  @keyframes bounce-up {
+    0% {
+      transform: translateY(100%);
+    }
+    30% {
+      transform: translateY(-10%);
+    }
+    60% {
+      transform: translateY(10%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  animation-name: bounce-up;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+
+//////////////////////////////////////////
+
+@mixin slide-out-animation($property, $start-distance) {
+  @keyframes slide-out {
+    100% {
+      transform: #{$property}($start-distance);
+    }
+  }
+  animation-name: slide-out;
+  animation-duration: 150ms;
+  animation-fill-mode: forwards;
+}
+
+/////////////////////////////////////////
+
+@mixin slide-down-animation {
+  @keyframes slide-down {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  animation-name: slide-down;
+  animation-duration: 150ms;
+  animation-fill-mode: both;
+}
+
+///////////////////////////////
+
+.scale-bounce {
+  animation-name: scale-bounce;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+
+  @keyframes scale-bounce {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+//////////////////////////////

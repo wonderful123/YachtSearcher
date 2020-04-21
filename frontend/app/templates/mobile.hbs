@@ -1,0 +1,18 @@
+<Mobile::NavBar
+  @toggleFilterMenu={{this.toggleFilterMenu}}
+  @filterActive={{this.isFilterMenuShown}}
+/>
+
+<Mobile::SearchBar />
+
+<Mobile::Listings
+  @boatsFound={{this.boatsFound}}
+  @boats={{this.model}}
+/>
+
+<Mobile::FilterBar::Bar
+  @filter={{this.filter}}
+  @updateFilter={{this.updateFilter}}
+  @isShown={{this.isFilterMenuShown}}
+  @toggleFilterMenu={{this.toggleFilterMenu}}
+/>

@@ -1,0 +1,67 @@
+.filter-dialog {
+  width: 100%;
+  background-color: $bar-background-color;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  margin-bottom: 1rem;
+
+  transition: transform 300ms ease;
+  transform: translateY(100%);
+  opacity: 0;
+
+  @include slide-down-animation;
+
+  &.slide-up {
+    opacity: 1;
+    transition: opacity 50ms;
+    transform: translateY(0);
+    @include bounce-up;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .reset {
+      @extend %menu-text;
+    }
+  }
+
+  .noUi-horizontal {
+    margin: 4.5rem 1.5rem 2.5rem 1.5rem;
+  }
+
+  .body {
+    padding: 2rem 0.5rem;
+    // overflow-y: auto;
+    // overflow-x: visible;
+  }
+
+  .min-to-max {
+    display: flex;
+    align-content: space-between;
+    vertical-align: middle;
+
+    input {
+      width: 100%;
+      text-align: center;
+      color: $light-grey;
+
+      &::placeholder {
+        color: $light-grey;
+      }
+
+      &:focus {
+        border-color: $teal;
+        outline: 0;
+      }
+    }
+
+    span {
+      padding: 0 2rem;
+      align-self: center;
+    }
+  }
+}

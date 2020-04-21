@@ -1,0 +1,24 @@
+.search-bar {
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+
+  .search-icon {
+    color: $light-grey;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 1rem;
+  }
+
+  input.search-input {
+    color: $light-grey;
+    font-size: 1.4rem;
+    padding: 0 1.6rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  input.search-input::placeholder {
+    color: $light-grey;
+  }
+}

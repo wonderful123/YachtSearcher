@@ -2,24 +2,14 @@
   background-color: rgba(0, 0, 0, .3);
 }
 
-.ui-modal-container {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // position: fixed;
-  z-index: 1000;
-  // top: 0; right: 0; bottom: 0; left: 0;
-}
-
 .ui-modal {
+  position: absolute;
   display: flex;
   flex-direction: column;
   z-index: 1000;
   flex: 0 1 400px;
+  min-width: 200px;
   padding: 2rem;
-  position: static;
-  max-width: 80vw;
-  max-height: 80vh;
   background-color: white;
   border-radius: $border-radius;
   box-shadow: 0 0.1rem 3rem 0 rgba(0,0,0,.15);

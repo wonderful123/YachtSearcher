@@ -1,0 +1,14 @@
+<div class="filter-dialog {{if @active "slide-up"}}">
+  <div class="header">
+    <div class="title">{{@filterComponent.title}}</div>
+    <div class="reset">reset</div>
+  </div>
+
+  <div class="body">
+    {{component
+      @filterComponent.component
+      filterComponent=@filterComponent
+      updateFilter=@updateFilter
+    }}
+  </div>
+</div>
