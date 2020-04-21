@@ -1,6 +1,6 @@
 @import "variables";
 @import "mixins";
-@import "utils";
+@import "animations";
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 @import "components/ui";
@@ -11,6 +11,8 @@
 @import "components/pagination";
 @import "components/flash-message";
 @import "components/favourites-dropdown";
+@import "components/mobile";
+@import "utils";
 
 $main-font-size: 1.6rem;
 
@@ -19,16 +21,24 @@ $main-font-size: 1.6rem;
   src: url("/assets/fonts/ProximaNova-Regular.otf") format('otf');
 }
 
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 html {
   font-size: 62.5%;
 }
 
 body {
+  display: flex;
+  flex-flow: column;
   color: $font-color;
   font-size: $main-font-size;
   font-family: ProximaNova, Montserrat, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  margin: 0;
   position: relative;
 }
 
