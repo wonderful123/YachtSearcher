@@ -1,24 +1,26 @@
-<div class="filter-bar-container">
-  {{svg-jar "search" class="icon search-icon"}}
-  <Input
-    placeholder="Search"
-    type="search"
-    @value={{@filter.search.value}}
-    {{on "input" (fn this.updateSearchFilter "search")}}
-    class="no-border search-input no-select"
-  />
-
-  <FilterBar::AllOptionsButton
-    @filterComponents={{this.filterComponents}}
-    @updateFilter={{@updateFilter}}
-  />
-
-  {{#each this.filterComponents as |fc|}}
-    <FilterBar::RangeFilterButton
-      @filterComponent={{fc}}
-      @updateFilter={{@updateFilter}}
-      @resetFilter={{action (fn this.resetFilter fc)}}
-      @toggleModal={{action (fn this.toggleFilterButton fc)}}
+<div class="relative-wrapper">
+  <div class="filter-bar-container">
+    {{svg-jar "search" class="icon search-icon"}}
+    <Input
+      placeholder="Search"
+      type="search"
+      @value={{@filter.search.value}}
+      {{on "input" (fn this.updateSearchFilter "search")}}
+      class="no-border search-input no-select"
     />
-  {{/each}}
+
+    <FilterBar::AllOptionsButton
+      @filterComponents={{this.filterComponents}}
+      @updateFilter={{@updateFilter}}
+    />
+
+    {{#each this.filterComponents as |fc|}}
+      <FilterBar::RangeFilterButton
+        @filterComponent={{fc}}
+        @updateFilter={{@updateFilter}}
+        @resetFilter={{action (fn this.resetFilter fc)}}
+        @toggleModal={{action (fn this.toggleFilterButton fc)}}
+      />
+    {{/each}}
+  </div>
 </div>
