@@ -26,7 +26,9 @@ export default class FilterBarSelectionComponent extends Component {
     };
 
     this.glide = new Glide(element, {
-      gap: 0
+      gap: 0,
+      swipeThreshold: false,
+      dragThreshold: false
     }).mount({ transitionGetter: transitionGetter });
 
     this.sliderTransition = component;
