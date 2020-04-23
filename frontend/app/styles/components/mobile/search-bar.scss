@@ -2,6 +2,7 @@
   height: 3.5rem;
   display: flex;
   align-items: center;
+  border-bottom: 0.1rem solid $separator-light;
 
   .search-icon {
     color: $light-grey;
