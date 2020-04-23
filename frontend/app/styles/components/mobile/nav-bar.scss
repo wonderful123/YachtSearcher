@@ -4,9 +4,15 @@
   justify-items: center;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 0.1rem solid $separator-light;
 
   .menu {
     justify-self: start;
+  }
+
+  .logo {
+    height: 2.7rem;
+    margin-top: -0.2rem;
   }
 
   .filter-button {
