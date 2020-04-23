@@ -1,18 +1,13 @@
-<section class="listings">
-  {{#if @boatsFound}}
-    <div class="boats-found">
+  <div class="boats-found">
+    {{#if @boatsFound}}
       {{@boatsFound}} boats were found
-    </div>
-
-    {{#each @boats as |boat|}}
-      <Mobile::Listing @boat={{boat}} />
-    {{/each}}
-
-  {{else}}
-
-    <div class="boats-found">
+    {{else}}
       No matching boats found
-    </div>
+    {{/if}}
+  </div>
 
-  {{/if}}
+<section class="listings">
+  {{#each @boats as |boat|}}
+    <Mobile::Listing @boat={{boat}} />
+  {{/each}}
 </section>
