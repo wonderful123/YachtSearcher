@@ -32,11 +32,14 @@ export default class CarouselComponent extends Component {
     this.bulletsElement = element;
     this.bullets = element.getElementsByClassName('glide__bullet');
 
-    // Calculate mid offset of bullet
-    const style = window.getComputedStyle(this.bullets[0]);
-    this.bulletOffset = parseFloat(style.width) / 2 + parseFloat(style.marginLeft) + 'px';
+    // Check if there are no bullets
+    if (this.bullets.length > 0) {
+      // Calculate mid offset of bullet
+      const style = window.getComputedStyle(this.bullets[0]);
+      this.bulletOffset = parseFloat(style.width) / 2 + parseFloat(style.marginLeft) + 'px';
 
-    this.setBullets(0);
+      this.setBullets(0);
+    }
   }
 
   @action
