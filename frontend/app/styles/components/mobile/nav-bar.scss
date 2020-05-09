@@ -14,25 +14,4 @@
     height: 2.7rem;
     margin-top: -0.2rem;
   }
-
-  .filter-button {
-    @extend %button;
-    justify-self: end;
-
-    background: radial-gradient(
-      circle at center,
-      $button-active-color 64%,
-      transparent 65%,
-      transparent 100%) no-repeat;
-    background-size: 0% 0%;
-    transition: background-size 100ms linear;
-    background-position: center center;
-
-    &.active {
-      color: white;
-      border-color: $button-active-color;
-      background-size: 200% 200%;
-      box-shadow: 0 10px 3px -6px lighten($button-active-color, 40%);
-    }
-  }
 }

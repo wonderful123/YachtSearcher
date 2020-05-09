@@ -4,10 +4,16 @@
 
 .selector-bar {
   background-color: $bar-background-color;
+  box-shadow: $bar-shadow;
   display: flex;
   padding: 2rem 1rem;
   transition: transform 150ms ease;
   transform: translateY(100%);
+
+  // Remove out of flow so mouse works
+  width: 100%;
+  position: absolute;
+  bottom: 100%;
 
   &.slide-up {
     transform: translateY(0) !important;

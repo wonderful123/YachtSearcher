@@ -1,23 +1,33 @@
+.dialog-container {
+  background-color: $bar-background-color;
+  box-shadow: $bar-shadow;
+
+  // Remove out of flow so mouse works
+  position: absolute;
+  bottom: calc(100% + 7.4rem);
+
+  // buffer For background when bouncing up
+  padding-bottom: 2rem;
+  margin-bottom: -2rem;
+
+  transition: opacity 300ms linear;
+  opacity: 0;
+
+  @include slide-down-animation;
+
+  &.slide-up {
+    transition: opacity 200ms linear;
+    opacity: 1;
+    @include bounce-up(0.25);
+  }
+}
+
 .filter-dialog {
   width: 100%;
   background-color: $bar-background-color;
   display: flex;
   flex-direction: column;
   padding: 2rem 2rem;
-  margin-bottom: 1rem;
-
-  transition: transform 300ms ease;
-  transform: translateY(100%);
-  opacity: 0;
-
-  @include slide-down-animation;
-
-  &.slide-up {
-    opacity: 1;
-    transition: opacity 50ms;
-    transform: translateY(0);
-    @include bounce-up;
-  }
 
   .header {
     display: flex;
