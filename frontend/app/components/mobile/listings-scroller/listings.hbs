@@ -1,0 +1,12 @@
+<div class="listings-container">
+  <Mobile::ListingsScroller::Selected @boat={{this.selectedBoat}} />
+
+  <div class="scroller">
+    {{#each @boats as |boat|}}
+      <Mobile::ListingsScroller::Listing
+        @boat={{boat}}
+        @onClick={{action "setSelected"}}
+      />
+    {{/each}}
+  </div>
+</div>

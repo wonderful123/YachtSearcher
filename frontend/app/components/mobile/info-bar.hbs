@@ -1,3 +1,4 @@
+<div class="info-bar">
   <div class="boats-found">
     {{#if @boatsFound}}
       {{@boatsFound}} boats were found
@@ -6,8 +7,5 @@
     {{/if}}
   </div>
 
-<section class="listings">
-  {{#each @boats as |boat|}}
-    <Mobile::Listing @boat={{boat}} />
-  {{/each}}
-</section>
+  <Mobile::Sort />
+</div>
