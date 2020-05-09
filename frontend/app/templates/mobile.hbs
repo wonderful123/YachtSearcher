@@ -1,12 +1,13 @@
-<Mobile::NavBar
+<!-- <Mobile::NavBar /> -->
+
+<Mobile::SearchBar
   @toggleFilterMenu={{this.toggleFilterMenu}}
   @filterActive={{this.isFilterMenuShown}}
 />
 
-<Mobile::SearchBar />
+<Mobile::InfoBar @boatsFound={{this.boatsFound}} />
 
-<Mobile::Listings
-  @boatsFound={{this.boatsFound}}
+<Mobile::ListingsScroller::Listings
   @boats={{this.model}}
 />
 
