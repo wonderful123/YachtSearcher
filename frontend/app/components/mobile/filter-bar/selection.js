@@ -7,7 +7,7 @@ export default class FilterBarSelectionComponent extends Component {
   @tracked selectedIndex = null;
   @tracked dialogActive = null;
 
-  get isShown() {
+  get isDialogShown() {
     // Check active dialog and active filter component
     if (this.args.isShown && this.dialogActive) return true;
     else return false;
@@ -26,10 +26,38 @@ export default class FilterBarSelectionComponent extends Component {
     };
 
     this.glide = new Glide(element, {
-      gap: 0,
+      gap: '2rem',
       swipeThreshold: false,
       dragThreshold: false
     }).mount({ transitionGetter: transitionGetter });
+
+    // Automated height on Carousel build
+  this.glide.on('build.after', function () {
+    glideHandleHeight();
+});
+
+// Automated height on Carousel change
+  this.glide.on('run.after', function () {
+    glideHandleHeight();
+});
+
+// Mount!
+  this.glide.mount({
+    type: 'carousel',
+});
+
+// Resize height
+function glideHandleHeight() {
+    const activeSlide = document.querySelector('.glide__slide--active');
+    const activeSlideHeight = activeSlide ? activeSlide.offsetHeight : 0;
+
+    const glideTrack = document.querySelector('.glide__track');
+    const glideTrackHeight = glideTrack ? glideTrack.offsetHeight : 0;
+
+    if (activeSlideHeight !== glideTrackHeight) {
+        glideTrack.style.height = `${activeSlideHeight}px`;
+    }
+}
 
     this.sliderTransition = component;
 

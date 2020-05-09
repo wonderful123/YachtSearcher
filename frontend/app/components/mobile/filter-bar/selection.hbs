@@ -1,27 +1,28 @@
-<div class="glide" {{did-insert (action this.registerGlide)}}>
+<div class="glide-container">
+  <div class="glide" {{did-insert (action this.registerGlide)}}>
 
-  <div class="dialog-container glide__track" data-glide-el="track">
-    <ul class="glide__slides">
-      {{#each @filterComponents as |fc|}}
-        <li class="glide__slide">
-          <Mobile::Dialog::Dialog
-            @filterComponent={{fc}}
-            @updateFilter={{@updateFilter}}
-            @active={{this.isShown}}
-          />
-        </li>
+    <div class="dialog-container glide__track {{if this.isDialogShown "slide-up"}}" data-glide-el="track">
+      <ul class="glide__slides">
+        {{#each @filterComponents as |fc|}}
+          <li class="glide__slide">
+            <Mobile::Dialog::Dialog
+              @filterComponent={{fc}}
+              @updateFilter={{@updateFilter}}
+            />
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="selector-bar {{if @isShown "slide-up"}}" data-glide-el="controls">
+      {{#each @filterComponents as |fc index|}}
+        <div class="selector-button {{if @isShown "scale-in"}} {{if (eq index this.selectedIndex) "active"}}"
+          data-glide-dir="={{index}}"
+        >
+          {{fc.minMaxLabel}}
+        </div>
       {{/each}}
-    </ul>
-  </div>
+    </div>
 
-  <div class="selector-bar {{if @isShown "slide-up"}}" data-glide-el="controls">
-    {{#each @filterComponents as |fc index|}}
-      <div class="selector-button {{if @isShown "scale-in"}} {{if (eq index this.selectedIndex) "active"}}"
-        data-glide-dir="={{index}}"
-      >
-        {{fc.minMaxLabel}}
-      </div>
-    {{/each}}
   </div>
-
 </div>
