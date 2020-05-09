@@ -62,16 +62,16 @@
 
 //////////////////////////////////////////
 
-@mixin bounce-up {
+@mixin bounce-up($exaggeration: 1) {
   @keyframes bounce-up {
     0% {
       transform: translateY(100%);
     }
     30% {
-      transform: translateY(-10%);
+      transform: translateY(-10% * $exaggeration);
     }
     60% {
-      transform: translateY(10%);
+      transform: translateY(7% * $exaggeration);
     }
     100% {
       transform: translateY(0);
@@ -79,7 +79,7 @@
   }
 
   animation-name: bounce-up;
-  animation-duration: 300ms;
+  animation-duration: 600ms;
   animation-fill-mode: forwards;
 }
 
@@ -104,11 +104,11 @@
       transform: translateY(0);
     }
     100% {
-      transform: translateY(100%);
+      transform: translateY(150%);
     }
   }
   animation-name: slide-down;
-  animation-duration: 150ms;
+  animation-duration: 300ms;
   animation-fill-mode: both;
 }
 
