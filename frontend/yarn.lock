@@ -5102,11 +5102,11 @@ dom-serializer@~0.1.0:
     entities "^1.1.1"
 
 dom7@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.1.3.tgz#a736f9c3bfbc4ca039a81cd095f97d1d7f3de19c"
-  integrity sha512-QTxHHDox+M6ZFz1zHPAHZKI3JOHY5iY4i9BK2uctlggxKQwRhO3q3HHFq1BKsT25Bm/ySSj70K6Wk/G4bs9rMQ==
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.1.5.tgz#a79411017800b31d8400070cdaebbfc92c1f6377"
+  integrity sha512-xnhwVgyOh3eD++/XGtH+5qBwYTgCm0aW91GFgPJ3XG+jlsRLyJivnbP0QmUBFhI+Oaz9FV0s7cxgXHezwOEBYA==
   dependencies:
-    ssr-window "^1.0.1"
+    ssr-window "^2.0.0"
 
 domain-browser@^1.1.1:
   version "1.2.0"
@@ -5938,9 +5938,9 @@ ember-resolver@^7.0.0:
     resolve "^1.14.0"
 
 ember-rfc176-data@^0.3.12:
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.12.tgz#90d82878e69e2ac9a5438e8ce14d12c6031c5bd2"
-  integrity sha512-g9HeZj/gU5bfIIrGXkP7MhS2b3Vu5DfNUrYr14hy99TgIvtZETO+96QF4WOEUXGjIJdfTRjerVnQlqngPQSv1g==
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.13.tgz#ed1712a26e65fec703655f35410414aa1982cf3b"
+  integrity sha512-m9JbwQlT6PjY7x/T8HslnXP7Sz9bx/pz3FrNfNi2NesJnbNISly0Lix6NV1fhfo46572cpq4jrM+/6yYlMefTQ==
 
 ember-router-generator@^2.0.0:
   version "2.0.0"
@@ -6017,15 +6017,16 @@ ember-svg-jar@^2.2.3:
     path-posix "^1.0.0"
 
 ember-template-lint@^2.4.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-2.6.0.tgz#e36ddca9af1e32be2931c539342de92e3d351525"
-  integrity sha512-VhQDaGwOS+39dUQI61X2NnW8WloecKPkiU5+xR7X8th5GY2WV5wJhPLAsHHoz1EPPrGtU53NWSdMsIER5q080g==
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-2.7.0.tgz#635653616c613afe2dfe6e42e2fa8a8ac8c2f341"
+  integrity sha512-UBQNoGMju5sCxAEZDyJwLaIOeavnWBauHajxBafG9IT+zpwwWC9nK/ETiylDqgW+9yvPCTMHLQLxfgTwCJJoPA==
   dependencies:
     chalk "^4.0.0"
     ember-template-recast "^4.1.4"
     find-up "^4.1.0"
     get-stdin "^7.0.0"
     globby "^11.0.0"
+    is-valid-glob "^1.0.0"
     micromatch "^4.0.2"
     resolve "^1.17.0"
     yargs "^15.3.1"
@@ -6250,9 +6251,9 @@ escodegen@^1.11.0:
     source-map "~0.6.1"
 
 eslint-plugin-ember@^8.1.1:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.4.0.tgz#bf66c1abf76b1039c8c253bf755b06382dd5c2b9"
-  integrity sha512-jzSpyA3+aQrEHydo3Tz8cNAbgmtYVlp0eSe8X52OsHYLdVc7i4vzMwA+ptfO06dzpLQNHWW5ziprB5hoAEt95A==
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.5.1.tgz#acaeb430e150115350fb184450cd17eaf6bb5d7e"
+  integrity sha512-92tU1ktJBfwcWIdAzVVuo6gLIGWrf2AtnNyHnw7vBmSVcP00P5hM7fDXL0CaLWblAVIrfik4NrOWCe9sSkh6ww==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
     ember-rfc176-data "^0.3.12"
@@ -6694,9 +6695,9 @@ fastboot-transform@^0.1.3:
     convert-source-map "^1.5.1"
 
 fastq@^1.6.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.7.0.tgz#fcd79a08c5bd7ec5b55cd3f5c4720db551929801"
-  integrity sha512-YOadQRnHd5q6PogvAR/x62BGituF2ufiEA6s8aavQANw5YKHERI4AREboX6KotzP8oX2klxYF2wcV/7bn1clfQ==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.8.0.tgz#550e1f9f59bbc65fe185cb6a9b4d95357107f481"
+  integrity sha512-SMIZoZdLh/fgofivvIkmknUXyPnvxRE3DhtZ5Me3Mrsk5gyPL42F0xr51TdRXskBxHfMp+07bcYzfsYEsSQA9Q==
   dependencies:
     reusify "^1.0.4"
 
@@ -8352,6 +8353,11 @@ is-typedarray@^1.0.0, is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
   integrity sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=
+
+is-valid-glob@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/is-valid-glob/-/is-valid-glob-1.0.0.tgz#29bf3eff701be2d4d315dbacc39bc39fe8f601aa"
+  integrity sha1-Kb8+/3Ab4tTTFdusw5vDn+j2Aao=
 
 is-windows@^1.0.1, is-windows@^1.0.2:
   version "1.0.2"
@@ -12398,6 +12404,11 @@ ssr-window@^1.0.1:
   resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-1.0.1.tgz#30752a6a4666e7767f0b7e6aa6fc2fdbd0d9b369"
   integrity sha512-dgFqB+f00LJTEgb6UXhx0h+SrG50LJvti2yMKMqAgzfUmUXZrLSv2fjULF7AWGwK25EXu8+smLR3jYsJQChPsg==
 
+ssr-window@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-2.0.0.tgz#98c301aef99523317f8d69618f0010791096efc4"
+  integrity sha512-NXzN+/HPObKAx191H3zKlYomE5WrVIkoCB5IaSdvKokxTpjBdWfr0RaP+1Z5KOfDT0ZVz+2tdtiBkhsEQ9p+0A==
+
 ssri@^4.1.2, ssri@^4.1.6, ssri@~4.1.6:
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-4.1.6.tgz#0cb49b6ac84457e7bdd466cb730c3cb623e9a25b"
@@ -12722,9 +12733,9 @@ svgo@1.3.0:
     util.promisify "~1.0.0"
 
 swiper@^5.3.6:
-  version "5.3.8"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-5.3.8.tgz#25c555d73787d35aa56418b904cb3ed4423bade8"
-  integrity sha512-bCxrayTgzC2bZBRuFwAx7T4exWeHqMADBpcuTQ7PNCOIIzJRPqNh4ySIvW06LEEU3Q0KncaNre4hrn+jXcWivQ==
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-5.4.0.tgz#fa7222bf39e068404362f6c8e11964cfbe41ab0e"
+  integrity sha512-2L2JX3BsTUjyZVFcwGI0eYg5G7w5EF/Pb4ogqwHlqGk3GbfI84N+p3khpaVsBvZK1tIkjyf9OwR0uD+BC38Dng==
   dependencies:
     dom7 "^2.1.3"
     ssr-window "^1.0.1"
@@ -13104,7 +13115,12 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-tslib@^1.10.0, tslib@^1.9.0:
+tslib@^1.10.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
+  integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^1.9.0:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
@@ -13176,9 +13192,9 @@ uc.micro@^1.0.1, uc.micro@^1.0.5:
   integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
 
 uglify-js@^3.1.4:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.9.1.tgz#a56a71c8caa2d36b5556cc1fd57df01ae3491539"
-  integrity sha512-JUPoL1jHsc9fOjVFHdQIhqEEJsQvfKDjlubcCilu8U26uZ73qOg8VsN8O1jbuei44ZPlwL7kmbAdM4tzaUvqnA==
+  version "3.9.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.9.3.tgz#4a285d1658b8a2ebaef9e51366b3a0f7acd79ec2"
+  integrity sha512-r5ImcL6QyzQGVimQoov3aL2ZScywrOgBXGndbWrdehKoSvGe/RmiE5Jpw/v+GvxODt6l2tpBXwA7n+qZVlHBMA==
   dependencies:
     commander "~2.20.3"
 

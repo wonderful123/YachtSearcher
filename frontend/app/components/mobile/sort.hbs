@@ -1,5 +1,34 @@
 <div class="sort">
-  <!-- <span class="sort-by">Sort by: </span> -->
-  {{svg-jar "sort" class="icon sort-icon"}} <span class="sort-field">Latest</span>
+  <div class="selected-field" {{on "click" (stop-propagation this.toggleOpen)}}>
+    {{svg-jar "sort" class="icon sort-icon"}}Sort: {{this.selected.label}}
+  </div>
 
+  <Ui::Dialog @isShown={{this.isOpen}} @close={{this.done}}>
+
+    <div class="title">Sort By</div>
+
+    <div class="options">
+      {{#each this.options as |option|}}
+        <label class="option {{if (eq option this.selected) "selected"}}">
+          <input type="radio" name="option" {{on "input" (fn this.select option)}} />
+          <span>
+            {{svg-jar option.icon class="icon type"}}
+            <div class="label">{{option.label}}</div>
+          </span>
+        </label>
+      {{/each}}
+    </div>
+
+    <div class="direction">
+      <div class={{if (eq this.direction "desc") "selected"}} {{on "click" (fn this.setDirection "desc")}}>
+        {{svg-jar "arrow-down" class="icon"}} Descending
+      </div>
+      <div class={{if (eq this.direction "asc") "selected"}}  {{on "click" (fn this.setDirection "asc")}}>
+        {{svg-jar "arrow-up" class="icon"}} Ascending
+      </div>
+    </div>
+
+    <div class="done"><span {{on "click" this.done}}>Done</span></div>
+
+  </Ui::Dialog>
 </div>

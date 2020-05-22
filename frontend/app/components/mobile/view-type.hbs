@@ -1,0 +1,25 @@
+<div class="view-type">
+
+  <Ui::DropdownButton @onClick={{this.toggleMenu}}>
+    {{#if this.user.galleryView}}
+      {{svg-jar "thumbnail-view" class="icon"}}
+    {{else}}
+      {{svg-jar "list-view" class="icon"}}
+    {{/if}}
+  </Ui::DropdownButton>
+
+  <Ui::Dialog
+    @isShown={{this.isMenuOpen}}
+    @close={{this.closeMenu}}
+  >
+    <div class="option {{if this.user.galleryView "selected"}}" {{on "click" (fn this.setView "gallery")}}>
+      {{svg-jar "thumbnail-view" class="icon"}}
+      <span>Gallery view</span>
+    </div>
+    <div class="option {{unless this.user.galleryView "selected"}}" {{on "click" (fn this.setView "list")}}>
+      {{svg-jar "list-view" class="icon"}}
+      <span>List view</span>
+    </div>
+  </Ui::Dialog>
+
+</div>

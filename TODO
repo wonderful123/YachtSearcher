@@ -22,4 +22,9 @@
   - Only update filter when done clicked
   - Extra boat image in list
 
+  - Swipe down to close
+  - Fill space between filter and selector
+  - Fix bounce animation
+  - Scroll to top on change
+
 -- RAILS

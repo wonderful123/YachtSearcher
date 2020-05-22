@@ -1,4 +1,5 @@
 <div class="listing" {{on "click" (fn @onClick @boat)}}>
+
   <div class="carousel-bubble date-listed" data-tooltip="date first found">
     <div class="month">{{this.date.month}}</div>
     <div class="day">{{this.date.day}}</div>
@@ -21,4 +22,5 @@
   </div>
 
   <div class="location">{{svg-jar "map-marker" class="icon"}}{{@boat.location}}</div>
+
 </div>

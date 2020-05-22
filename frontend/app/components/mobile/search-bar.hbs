@@ -5,11 +5,18 @@
       placeholder="Search"
       type="search"
       @value={{@filter.search.value}}
+      {{on "input" (fn this.updateSearchFilter "search")}}
       class="no-border search-input no-select"
     />
   </div>
 
-  <div class="filter-button {{if @filterActive "active"}}" {{on "click" @toggleFilterMenu}}>
+  <div class="filter-button
+    {{if @filterActive "active"}}"
+    {{on "click" @toggleFilterMenu}}>
     FILTER
   </div>
+
+  <Mobile::ViewType
+    @isActive={{this.isCustomMenuOpen}}
+  />
 </div>

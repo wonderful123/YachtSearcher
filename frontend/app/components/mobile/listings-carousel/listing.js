@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 
 export default
-class BoatListingComponent extends Component {
+class ListingComponent extends Component {
   get firstFound() {
     const d = new Date(this.args.boat.firstFound);
     return d.getUTCDate() + "/" + d.getUTCMonth()  + "/" + d.getUTCFullYear();

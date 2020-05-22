@@ -1,0 +1,129 @@
+.sort {
+  $line-height: 2rem;
+  $font-color: $light-grey;
+  $hover-color: rgba($teal, 0.05);
+  $font-size: 1.5rem;
+  $title-background-color: $teal;
+  $selected-color: rgb(90, 90, 90);
+  $selected-background-color: rgba($teal, 0.2);
+  $option-background-color: rgba(0, 0, 0, 0.05);
+  $icon-color: #99aed4;
+  $icon-size: 4rem;
+  $grid-padding: 2rem;
+
+  font-size: $font-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-right: 1.3rem;
+  cursor: pointer;
+  user-select: none;
+
+  .sort-icon {
+    color: $font-color;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: -0.2rem;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  .title {
+    text-align: center;
+    padding: 0.7rem 0;
+    background-color: $title-background-color;
+    color: white;
+    cursor: default;
+  }
+
+  .direction {
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    margin: 0 $grid-padding $grid-padding;
+
+    .icon {
+      color: $icon-color;
+    }
+
+    & > div {
+      border-radius: $border-radius;
+      width: 50%;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      transition: 300ms all;
+
+      &:hover {
+        background-color: $hover-color;
+        box-shadow: 0 0 0.2rem 0.1rem inset darken($icon-color, 10);
+      }
+    }
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 11rem 11rem;
+    grid-gap: $grid-padding;
+    padding: $grid-padding;
+  }
+
+  .option {
+    border-radius: $border-radius;
+    background-color: $option-background-color;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: 300ms all;
+
+    &:hover {
+      background-color: $hover-color;
+      box-shadow: 0 0 0.2rem 0.1rem inset darken($icon-color, 10);
+    }
+
+    span {
+      white-space: nowrap;
+
+      .icon {
+        width: $icon-size;
+        height: $icon-size;
+        color: $icon-color;
+      }
+    }
+  }
+
+  .selected {
+    transition: 300ms all;
+    background-color: $selected-background-color !important;
+    color: $selected-color;
+    box-shadow: 0 0 0.2rem 0.1rem inset darken($icon-color, 10);
+
+    .icon {
+      color: darken($icon-color, 10) !important;
+    }
+  }
+
+  .done {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.05);
+
+    span {
+      padding: 0.5rem 2rem;
+      border-radius: $border-radius;
+      border: 1px solid $teal;
+      color: $teal;
+      transition: 300ms all;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+    }
+  }
+
+  .selected-field {
+    text-decoration: underline;
+  }
+}

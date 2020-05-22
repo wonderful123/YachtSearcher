@@ -1,28 +1,30 @@
-<div class="boat-listing">
+<div class="mobile-listing" {{on "click" (fn @onClick @boat)}}>
 
-  <div class="carousel-bubble date-listed" data-tooltip="date first found">
-    <div class="month">{{this.date.month}}</div>
-    <div class="day">{{this.date.day}}</div>
+  <div class="image">
+    <img src={{@boat.thumbnail}} alt="thumb">
+
+    <div class="carousel-bubble date-listed" data-tooltip="date first found">
+      <div class="month">{{this.date.month}}</div>
+      <div class="day">{{this.date.day}}</div>
+    </div>
   </div>
 
-  <Ui::Carousel @images={{@boat.images}}>
+  <div class="info">
 
-    <div class="carousel-bubble price">{{format-currency @boat.price @boat.priceSymbol}}</div>
-    <div class="carousel-bubble year-length">{{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}</div>
-
-    <div class="listing-actions">
-      <Ui::FavouriteToggle @boat={{@boat}} />
+    <div class="title">
+      {{titlecase @boat.make}} {{titlecase @boat.model}}
     </div>
 
-  </Ui::Carousel>
+    <div class="price">
+      {{format-currency @boat.price @boat.priceSymbol}}
+    </div>
 
-  <div class="title">
-    {{@boat.make}} {{@boat.model}}
-  </div>
+    <div class="details">
+      {{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}
+    </div>
 
-  <div class="details">
-    <div class="description">{{@boat.description}}</div>
     <div class="location">{{svg-jar "map-marker" class="icon"}}{{@boat.location}}</div>
+
   </div>
 
 </div>

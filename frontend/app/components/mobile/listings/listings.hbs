@@ -1,5 +1,12 @@
-<section class="listings">
-  {{#each @boats as |boat|}}
-    <Mobile::Listings::Listing @boat={{boat}} />
-  {{/each}}
-</section>
+<div class="mobile-listings-container">
+  <!-- <Mobile::Listings::Selected @boat={{this.selectedBoat}} /> -->
+
+  <div class="mobile-listings">
+    {{#each @boats as |boat|}}
+      <Mobile::Listings::Listing
+        @boat={{boat}}
+        @onClick={{action "setSelected"}}
+      />
+    {{/each}}
+  </div>
+</div>

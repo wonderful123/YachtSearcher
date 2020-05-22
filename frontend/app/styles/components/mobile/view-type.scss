@@ -1,0 +1,68 @@
+.view-type {
+  $line-height: 2rem;
+  $font-color: $light-grey;
+  $hover-color: rgba($teal, 0.05);
+  $font-size: 1.3rem;
+  $title-background-color: $teal;
+  $selected-color: rgb(90, 90, 90);
+  $selected-background-color: rgba($teal, 0.2);
+  $option-background-color: rgba(0, 0, 0, 0.05);
+  $icon-color: #99aed4;
+  $icon-size: 1rem;
+  $padding: 1.5rem;
+
+  line-height: 1.2rem;
+  margin-left: 1rem;
+
+  .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .option {
+    border-radius: $border-radius;
+    background-color: $option-background-color;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: 300ms all;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: $hover-color;
+      box-shadow: 0 0 0.2rem 0.1rem inset darken($icon-color, 10);
+    }
+
+    .icon {
+      width: $icon-size;
+      height: $icon-size;
+      color: $icon-color;
+      padding-right: 0.5rem;
+    }
+
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  .option + .option {
+    margin-top: $padding;
+  }
+
+  .selected {
+    transition: 300ms all;
+    background-color: $selected-background-color !important;
+    color: $selected-color;
+    box-shadow: 0 0 0.2rem 0.1rem inset darken($icon-color, 10);
+
+    .icon {
+      color: darken($icon-color, 10) !important;
+    }
+  }
+
+  .active {
+    max-height: 50rem;
+    transition: 300ms max-height ease, 100ms opacity ease;
+    opacity: 1;
+  }
+}

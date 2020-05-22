@@ -1,0 +1,5 @@
+{{#if this.user.galleryView}}
+  <Mobile::ListingsScroller::Listings @boats={{@boats}} />
+{{else}}
+  <Mobile::Listings::Listings @boats={{@boats}} />
+{{/if}}
