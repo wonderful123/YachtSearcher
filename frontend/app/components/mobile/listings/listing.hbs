@@ -1,4 +1,4 @@
-<div class="mobile-listing" {{on "click" (fn @onClick @boat)}}>
+<div class="mobile-listing">
 
   <div class="image">
     <img src={{@boat.thumbnail}} alt="thumb">
@@ -15,15 +15,17 @@
       {{titlecase @boat.make}} {{titlecase @boat.model}}
     </div>
 
-    <div class="price">
-      {{format-currency @boat.price @boat.priceSymbol}}
-    </div>
-
     <div class="details">
       {{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}
     </div>
 
-    <div class="location">{{svg-jar "map-marker" class="icon"}}{{@boat.location}}</div>
+    <div class="location">
+      {{svg-jar "map-marker" class="icon"}}{{@boat.location}}
+    </div>
+
+    <div class="price">
+      {{format-currency @boat.price @boat.priceSymbol}}
+    </div>
 
   </div>
 

@@ -16,4 +16,9 @@ class BoatListingComponent extends Component {
       month: MONTHS[d.getUTCMonth()]
     };
   }
+
+  get title() {
+    let title = this.args.boat.make + ' - ' + this.args.boat.model;
+    return title.toUpperCase();
+  }
 }

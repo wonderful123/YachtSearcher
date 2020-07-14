@@ -1,0 +1,56 @@
+<div class="listing" {{on "click" (fn @onClick @boat)}}>
+
+  <div class="carousel-bubble date-listed" data-tooltip="date first found">
+    <div class="month">{{this.date.month}}</div>
+    <div class="day">{{this.date.day}}</div>
+  </div>
+
+  <div class="image">
+    <img src={{@boat.thumbnail}} alt="thumb">
+  </div>
+
+  <div class="details">
+
+  <div class="title">
+    {{titlecase @boat.make}} {{titlecase @boat.model}}
+  </div>
+
+  <div class="location">
+    {{svg-jar "map-marker" class="icon"}}{{@boat.location}}
+  </div>
+
+  <div class="data">
+    <div class="left-group">
+      <div class="year">
+        <div>
+          {{svg-jar "year" class="icon type"}}
+          <span class="value">
+            {{@boat.year}}
+          </span>
+        </div>
+        <div class="label">
+          year
+        </div>
+      </div>
+
+      <div class="length">
+        <div>
+          {{svg-jar "length" class="icon type"}}
+          <span class="value">
+            {{format-inches-to-feet @boat.lengthInches}}
+          </span>
+        </div>
+        <div class="label">
+          length
+        </div>
+      </div>
+    </div>
+
+    <div class="price">
+      {{format-currency-units @boat.price @boat.priceSymbol}}
+    </div>
+  </div>
+
+  </div>
+
+</div>

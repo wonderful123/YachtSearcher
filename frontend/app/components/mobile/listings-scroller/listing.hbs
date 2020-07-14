@@ -9,18 +9,48 @@
     <img src={{@boat.thumbnail}} alt="thumb">
   </div>
 
-  <div class="title">
-    {{titlecase @boat.make}} {{titlecase @boat.model}}
-  </div>
-
-  <div class="price">
-    {{format-currency @boat.price @boat.priceSymbol}}
-  </div>
-
   <div class="details">
-    {{@boat.year}} - {{format-inches-to-feet @boat.lengthInches}}
-  </div>
 
-  <div class="location">{{svg-jar "map-marker" class="icon"}}{{@boat.location}}</div>
+    <div class="title">
+      {{this.title}}
+    </div>
+
+    <div class="price">
+      {{format-currency @boat.price @boat.priceSymbol}}
+    </div>
+
+    <div class="location">
+      {{svg-jar "map-marker" class="icon"}}{{@boat.location}}
+    </div>
+
+    <div class="data">
+      <div class="left-group">
+        <div class="year">
+          <div>
+            {{svg-jar "year" class="icon type"}}
+            <span class="value">
+              {{@boat.year}}
+            </span>
+          </div>
+          <div class="label">
+            year
+          </div>
+        </div>
+
+        <div class="length">
+          <div>
+            {{svg-jar "length" class="icon type"}}
+            <span class="value">
+              {{format-inches-to-feet @boat.lengthInches}}
+            </span>
+          </div>
+          <div class="label">
+            length
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>

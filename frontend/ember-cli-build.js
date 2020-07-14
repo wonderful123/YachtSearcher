@@ -6,8 +6,7 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     sassOptions: {
       includePaths: [
-        'node_modules/swiper/css',
-        'node_modules/@glidejs/glide/src/assets/sass'
+        'node_modules/swiper',
       ]
     }
   });

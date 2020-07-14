@@ -1,6 +1,9 @@
 <div class="view-type">
 
-  <Ui::DropdownButton @onClick={{this.toggleMenu}}>
+  <Ui::DropdownButton
+    @onClick={{this.toggleMenu}}
+    @isSelected={{this.isMenuOpen}}
+  >
     {{#if this.user.galleryView}}
       {{svg-jar "thumbnail-view" class="icon"}}
     {{else}}

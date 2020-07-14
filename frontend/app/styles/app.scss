@@ -1,8 +1,6 @@
 @import "variables";
 @import "mixins";
 @import "animations";
-@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
-@import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 @import "components/ui";
 @import "components/navbar";
 @import "components/filter-bar";
@@ -118,91 +116,3 @@ footer {
   font-weight: bold;
   font-size: 14px;
 }
-
-// .listing-images {
-//   display: flex;
-//   margin-right: 10px;
-//
-//   .main-image {
-//     width: 200px;
-//     height: 156px;
-//     margin-left: auto;
-//     margin-top: auto;
-//     object-fit: cover;
-//   }
-//
-//   .highlight {
-//     -moz-box-shadow: 0 0 3px orange;
-//     -webkit-box-shadow: 0 0 3px orange;
-//     box-shadow: 0 0 3px orange;
-//   }
-//
-//   .zoom-overlay {
-//     // background-image: radial-gradient(orange 1px, transparent 1%);
-//     // background-size: 4px 4px;
-//     width: 10px;
-//     height: 10px;
-//     position: absolute;
-//   	background-image: radial-gradient(green 33%, transparent 33%);
-//   	background-size: 3px 3px;
-//     background-repeat: repeat;
-//     pointer-events: none;
-//   }
-//
-//   .thumbnail-list {
-//     display: grid;
-//     grid-gap: 4px;
-//     grid-template-columns: 50px 50px;
-//     margin-left: 4px;
-//
-//     .thumbnail {
-//       width: 50px;
-//       height: 36px;
-//       object-fit: cover;
-//     }
-//   }
-//
-//   .more-images {
-//     filter: brightness(30%);
-//   }
-//
-//   .last-image-container {
-//     cursor: pointer;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//
-//     .remaining-count {
-//       position: absolute;
-//       color: white;
-//       text-shadow: 0 0 3px black;
-//       font-weight: bold;
-//       text-align: center;
-//     }
-//   }
-//
-//   .image-preview {
-//     position: fixed;
-//     overflow: hidden;
-//     border: 2px solid orange;
-//     // visibility: hidden;
-//     //
-//     // .is-active {
-//     //   visibility: visible;
-//     // }
-//
-//     img {
-//       position: relative;
-//       top: 50%;
-//       left: 50%;
-//     }
-//     // img {
-//     //   width: 50px;
-//     //   height: 36px;
-//     //   margin-left: auto;
-//     //   margin-top: auto;
-//     //   object-fit: cover;
-//     // }
-//   }
-//
-// }

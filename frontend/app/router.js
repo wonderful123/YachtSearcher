@@ -11,5 +11,6 @@ Router.map(function() {
   this.route('boat-listings');
   this.route('boat-images');
   this.route('mobile');
+  this.route('mobile-listing', { path: '/mobile-listing/:boat_id' });
   this.route('map');
 });
