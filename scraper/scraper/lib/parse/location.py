@@ -2,7 +2,7 @@ from opencage.geocoder import OpenCageGeocode
 from opencage.geocoder import InvalidInputError, RateLimitExceededError, \
     UnknownError
 
-API_KEY = "a7230342313c439593062d9bd7a4530f"
+API_KEY = "1373a948f572402db84b6abc40498a08"
 geocoder = OpenCageGeocode(API_KEY)
 
 
