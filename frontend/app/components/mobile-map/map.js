@@ -3,7 +3,7 @@ import { divIcon } from 'ember-leaflet/helpers/div-icon';
 import { point } from 'ember-leaflet/helpers/point';
 
 export default
-class LocationMap extends Component {
+class MobileMap extends Component {
   lat = -25.2743988;
   lng = 133.7751312;
   zoom = 4;
