@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 
 export default
-class BoatsRoute extends Route {
+class MobileRoute extends Route {
   queryParams = {
     per_page: { refreshModel: true },
     page: { refreshModel: true },
