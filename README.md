@@ -30,7 +30,7 @@
 
 # Resetting database
 
--   Call task "rails data:delete_all"
+-   Call task "rails database:delete_all"
 -   Move scraper archived files back to main data directory and they will be reprocessed
 
 # Tests
