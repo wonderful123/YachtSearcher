@@ -7,7 +7,7 @@ Stores files in data directory. There is a file that stores which urls have been
 `pip install -r requirements.txt`
 
 ## Arguments:
-`scrapy crawl yachthub --a page_depth=x start_index=x scrape_location=true`
+`scrapy crawl yachthub -a page_depth=x -a start_index=x -a scrape_location=true`
 
 `page_depth (number)`
 - Default all
