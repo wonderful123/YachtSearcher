@@ -13,7 +13,7 @@ class BaseSpider(scrapy.Spider):
 
         # Set default options or from command line if given
         self.start_index = int(self.start_index) if hasattr(self, 'start_index') else 1
-        self.scrape_location = int(self.scrape_location) \
+        self.scrape_location = self.scrape_location \
             if hasattr(self, 'scrape_location') else 'false'
 
         # convert to int in case it was passed as string from command line
