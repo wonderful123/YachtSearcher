@@ -1,11 +1,11 @@
-<div class="map">
+<div class="mobile-map">
   <LeafletMap @lat={{this.lat}} @lng={{this.lng}} @zoom={{this.zoom}} as |layers|>
     <layers.tile @url={{this.tileUrl}}/>
     <layers.tile @url={{this.tileUrl2}}/>
 
     <layers.marker-cluster @iconCreateFunction={{this.iconCreateFunction}} as |cluster|>
-      {{#each @boats as |b|}}
-        <cluster.marker @lat={{b.latitude}} @lng={{b.longitude}} @title={{b.price}} as |marker|>
+      {{#each this.geocodedBoats as |b|}}
+        <cluster.marker @location={{array b.latitude b.longitude}} @title={{b.price}} as |marker|>
           <marker.popup>
             <img class="leaflet-popup-thumnbnail" src={{b.thumbnail}} alt="Thumnbnail">
             <strong>{{b.year}} - {{b.title}}</strong><br>
@@ -15,4 +15,10 @@
       {{/each}}
     </layers.marker-cluster>
   </LeafletMap>
+</div>
+
+<div>
+  {{#each this.geocodedBoats as |b|}}
+    {{b.title}}
+  {{/each}}
 </div>
