@@ -24,4 +24,5 @@ export default class BoatModel extends Model {
   @attr('number') totalImages;
   @attr histories;
   @attr listings;
+  @attr isGeocoded;
 }
