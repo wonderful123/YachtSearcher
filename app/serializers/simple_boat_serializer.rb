@@ -5,7 +5,7 @@ class SimpleBoatSerializer
   has_many :listings
   attributes :length_inches, :year, :title, :make, :model, :price, :thumbnail,
              :description, :price_symbol, :location, :first_found, :images,
-             :total_images
+             :total_images, :latitude, :longitude, :is_geocoded
 
   attribute :description do |object|
     object.description.to_s.truncate(100)
