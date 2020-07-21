@@ -100,7 +100,7 @@ class BoatsController < ApplicationController
       :length, :year, :title, :description, :make, :model, :cabins, :heads,
       :location, :country, :city, :state, :state_code, :hull_material, :price,
       :sale_status, :boat_name, :first_found, :type, :price_symbol,
-      :price_formatted, :first_found
+      :price_formatted, :first_found, :latitude, :longitude, :is_geocoded
     )
   end
 end
