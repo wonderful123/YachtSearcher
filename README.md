@@ -33,6 +33,11 @@
 -   Call task "rails database:delete_all"
 -   Move scraper archived files back to main data directory and they will be reprocessed
 
+# Geocoding
+
+-   Call task with "rails database:geocode amount=XXX"
+-   Geocode rake task has constant for API requests per second. Opencage current is 1 per sec, 2500 requests per day
+
 # Tests
 
 -   Go to tests directory and run "pytest"
