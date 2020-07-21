@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default
 class FavouriteList extends Component {
-  @service favourites
+  @service favourites;
 
   @tracked isModalOpen = false;
 
