@@ -1,5 +1,13 @@
 # TODO #
 
+Remove geocoding from scraper
+Map data serialization - simplified data
+Serialization - only ungeocoded
+Fix map zoom
+Adjust clustering
+Change icon for single boat
+Add icon for boats in map icon
+
 -- SCRAPER
   - Handle import if not listed and doesn't have a price
   - Handle zero price listings in yoti. Mark status as sold?
