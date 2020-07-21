@@ -35,6 +35,7 @@ gem 'pagy', '~> 3.7.3' # pagination
 gem 'pastel' # Colours the progress bar
 gem 'sucker_punch' # Backgorund jobs
 gem 'tty-progressbar' # For rake task console progress bar
+gem 'opencage-geocoder' # For rake task geocoding
 
 group :development do
   gem 'better_errors'

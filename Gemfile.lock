@@ -109,6 +109,7 @@ GEM
     nokogiri (1.10.10-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     oj (3.10.6)
+    opencage-geocoder (2.1.2)
     pagy (3.7.5)
     pastel (0.8.0)
       tty-color (~> 0.5)
@@ -191,6 +192,7 @@ DEPENDENCIES
   has_scope
   jsonl
   oj
+  opencage-geocoder
   pagy (~> 3.7.3)
   pastel
   puma (~> 4.3.1)
