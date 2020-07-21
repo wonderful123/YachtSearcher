@@ -12,7 +12,14 @@ class Serializer
     d = JSON.parse listing_data.to_json, object_class: OpenStruct
 
     # Check if location given as string or extended data with latitude, etc
-    location = d.location.instance_of?(String) ? d.location : (d.location.location rescue nil)
+    # Also convert location hash to OpenStruct so dot notation can be used
+    if d.location.instance_of?(String)
+      location = d.location
+    elsif d.location.nil?
+      location = nil
+    else
+      location = OpenStruct.new(d.location)
+    end
 
     # First found data available? otherwise set to timestamp provided by file
     first_found = d.first_found || meta[:timestamp]
@@ -45,7 +52,7 @@ class Serializer
       price_name: (d.price.name rescue nil),
       price_symbol: (d.price.symbol rescue nil),
       title: d.title,
-      location: location,
+      location: location.instance_of?(String) ? d.location : (d.location.location rescue nil),
       city: (location.city rescue nil),
       country: (location.country rescue nil),
       state: (location.state rescue nil),
