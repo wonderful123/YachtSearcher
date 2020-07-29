@@ -44,6 +44,11 @@
 
 * * *
 
+# Update
+-   `gem update --system`
+-   `gem install bundler`
+-   `bundler update --all`
+
 # Deployment
 
 -   Do db:migrate, db:seed, database:stats, scraper:import with the flag `RAILS_ENV=production`
