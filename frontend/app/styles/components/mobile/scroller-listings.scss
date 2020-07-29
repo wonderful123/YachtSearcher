@@ -11,9 +11,8 @@
     .image {
       width: 100%;
       position: relative;
-      padding-bottom: 70%;
     }
-
+    
     img {
       object-fit: cover;
       width: 100%;
@@ -23,8 +22,9 @@
       position: absolute;
       width: 100%;
     }
-
+    
     .details {
+      padding-bottom: 70%;
       padding: 0.5rem 1rem;
     }
 
