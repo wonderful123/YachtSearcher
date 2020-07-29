@@ -61,7 +61,7 @@ export default
 class BoatsController extends Controller {
   queryParams = ['page', 'per_page', 'search', 'sortby', 'length', 'price', 'year'];
   @tracked page = 1;
-  @tracked per_page = 25;
+  @tracked per_page = 24;
   @tracked sortby = 'first-found_desc';
   @tracked search = '';
   @tracked year = '';

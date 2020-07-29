@@ -1,3 +1,10 @@
+<Ui::Toggle
+  @icon1 = "list-view"
+  @label1 = "List"
+  @icon2 = "map"
+  @label2 = "Map"
+/>
+
 <div class="mobile-map">
   <LeafletMap @lat={{this.lat}} @lng={{this.lng}} @zoom={{this.zoom}} as |layers|>
     <layers.tile @url={{this.tileUrl}}/>
@@ -17,8 +24,13 @@
   </LeafletMap>
 </div>
 
-<div>
+{{!-- <div class="map-listings">
+  <div class="boats-found">{{this.geocodedBoats.length}} boats found.</div>
   {{#each this.geocodedBoats as |b|}}
-    {{b.title}}
+    <div class="listing">
+      <div class="id">ID#{{b.id}}:</div>
+      <div class="make-model">{{b.make}} {{b.model}}</div>
+      <div class="price">${{b.price}}</div>
+    </div>
   {{/each}}
-</div>
+</div> --}}

@@ -4,11 +4,6 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    sassOptions: {
-      includePaths: [
-        'node_modules/swiper',
-      ]
-    }
   });
 
   // Use `app.import` to add additional libraries to the generated

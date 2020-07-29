@@ -27,7 +27,7 @@ export default class ListingFilterButtonComponent extends Component {
     // Helper function to check if input property is defined
     const defined = (property) => (filter[property] && filter[property] !== '' && filter[property] !== "0");
 
-    const formatCurrency = (price) => { if (price) return price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") };
+    const formatCurrency = (price) => { if (price) return price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"); };
 
     // Helper checks how property range is defined and creates string to append to summary info
     const rangeSummary = (min, max, suffix = '', prefix = '') => {

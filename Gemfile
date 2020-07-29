@@ -29,6 +29,7 @@ gem 'rack-cors'
 gem 'active_model_serializers'
 gem 'fast_jsonapi'
 gem 'has_scope' # filtering results
+# gem 'scoped_search' # search query language
 gem 'jsonl' # Loading json lines in import rake task
 gem 'oj'
 gem 'pagy', '~> 3.7.3' # pagination

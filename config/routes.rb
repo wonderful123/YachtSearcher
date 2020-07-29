@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     get :images
   end
 
+  resources :maps
+
   resources :regions do
     resources :boats
   end

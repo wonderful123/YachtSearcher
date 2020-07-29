@@ -1,0 +1,7 @@
+<div class="toggle-button" {{on "click" this.toggle}}>
+  {{#if this.isToggled}}
+    {{svg-jar @icon2 class="icon"}} {{@label2}}
+  {{else}}
+    {{svg-jar @icon1 class="icon"}} {{@label1}}
+  {{/if}}
+</div>

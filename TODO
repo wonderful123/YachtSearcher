@@ -1,6 +1,5 @@
 # TODO #
 
-Remove geocoding from scraper
 Map data serialization - simplified data
 Serialization - only ungeocoded
 Fix map zoom

@@ -1,7 +1,7 @@
-import DS from 'ember-data';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import config from '../config/environment';
 
 export default
-class extends DS.JSONAPIAdapter {
+class extends JSONAPIAdapter {
   host = config.rails_host;
 }
