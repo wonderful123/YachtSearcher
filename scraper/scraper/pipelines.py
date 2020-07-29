@@ -108,6 +108,7 @@ class BoatImagesPipeline(ImagesPipeline):
         bbox = diff.getbbox()
         if bbox:
             cropped = im.crop(bbox)
+            return cropped
 
         return im
 
