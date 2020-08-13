@@ -1,10 +1,21 @@
-.filter-bar {
+.filter-bar {  
   position: fixed;
   bottom: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   z-index: 100;
+  opacity: 0;
+  transition: opacity 200ms linear;
+  // buffer For background when bouncing up
+  padding-bottom: 3rem;
+  margin-bottom: -3rem;
+  
+  &.slide-up {
+    transition: opacity 200ms linear;
+    opacity: 1;
+    @include bounce-up(0.25);
+  }
 
   .glide--swipeable {
     cursor: default;
@@ -13,6 +24,7 @@
   .filter-actions {
     position: relative;
     @extend %menu-text;
+    @include no-select;
     background-color: $bar-background-color;
     height: $bottom-bar-height;
     box-shadow: 0 3rem 4rem 0 grey;

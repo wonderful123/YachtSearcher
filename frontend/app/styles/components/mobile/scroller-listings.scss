@@ -1,6 +1,8 @@
+$image-aspect-ratio: 90%;
+
 .scroller {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   gap: 1.3rem;
   margin-bottom: 3rem;
 
@@ -11,7 +13,7 @@
     .image {
       width: 100%;
       position: relative;
-      padding-bottom: 90%;
+      padding-bottom: $image-aspect-ratio;
     }
     
     img {
