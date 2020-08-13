@@ -28,7 +28,7 @@ export default class FilterBarSelectionComponent extends Component {
     this.glide = new Glide(element, {
       gap: '2rem',
       swipeThreshold: false,
-      dragThreshold: false
+      dragThreshold: false,
     }).mount({ transitionGetter: transitionGetter });
 
     // Automated height on Carousel build
@@ -42,9 +42,7 @@ export default class FilterBarSelectionComponent extends Component {
 });
 
 // Mount!
-  this.glide.mount({
-    type: 'carousel',
-});
+  this.glide.mount();
 
 // Resize height
 function glideHandleHeight() {
