@@ -5,13 +5,14 @@ class BoatsController < ApplicationController
   before_action :set_boat, only: [:show, :update, :destroy]
   after_action { pagy_headers_merge(@pagy) if @pagy }
 
-  has_scope :search, :sortby
+  has_scope :sortby
 
   def apply_filters(params)
-    filtered = Boat.all.includes(:listings)
+    filtered = Boat.search_for(params[:search]).includes(:listings)
     filtered = filtered.filter_range('length_inches', params[:length]) unless params[:length].blank?
     filtered = filtered.filter_range('price', params[:price]) unless params[:price].blank?
     filtered = filtered.filter_range('year', params[:year]) unless params[:year].blank?
+    
     # Combine sort column and direction into one for easier scoping
     if params[:sortby] && params[:sort_dir]
       params[:sortby] += "_#{params[:sort_dir].downcase}"

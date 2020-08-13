@@ -37,6 +37,7 @@ gem 'pastel' # Colours the progress bar
 gem 'sucker_punch' # Backgorund jobs
 gem 'tty-progressbar' # For rake task console progress bar
 gem 'opencage-geocoder' # For rake task geocoding
+gem 'scoped_search'
 
 group :development do
   gem 'better_errors'
