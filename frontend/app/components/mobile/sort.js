@@ -11,10 +11,21 @@ class SortComponent extends Component {
     { icon: 'year', label: 'Year', property: 'year' }
   ];
 
-  @tracked selected = this.options[0] || "";
+  @tracked selected = this.options[0]; // Defaults if sortby argument not set
   @tracked direction = 'desc';
 
   @tracked isOpen = false;
+
+  constructor() {
+    super(...arguments);
+
+    // Init sort if set
+    if (this.args.sortby) {
+      // Split sortby parameter into direction and property then find that property in options
+      this.selected = this.options[this.options.map(e => e.property).indexOf(this.args.sortby.split('_')[0])];
+      this.direction = this.args.sortby.split('_')[1];
+    }
+  }
 
   @action
   toggleOpen() {

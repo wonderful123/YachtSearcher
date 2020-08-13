@@ -1,11 +1,11 @@
 <div class="info-bar">
   <div class="boats-found">
     {{#if @boatsFound}}
-      {{@boatsFound}} boats were found
+      <span class="number">{{@boatsFound}}</span> boats were found
     {{else}}
       No matching boats found
     {{/if}}
   </div>
 
-  <Mobile::Sort @doSort={{@doSort}} />
+  <Mobile::Sort @doSort={{@doSort}} @sortby={{@sortby}} />
 </div>
